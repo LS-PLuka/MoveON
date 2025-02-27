@@ -23,7 +23,6 @@ body {
     margin: 0;
     padding: 0;
     background-color: var(--background);
-    position: relative;
 }
 
 /* Menu */
@@ -85,6 +84,27 @@ body {
     position: absolute;
     left: 225px;
     top: 0;
+    position: fixed;
 }
 
 /* Mini Postagem */
+
+.titulo {
+    color: var(--branco);
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    margin-left: 300px;
+    margin-top: 50px;
+}
+
+.botao-digite {
+    background-color: var(--cor-secundaria);
+    color: rgba(255, 255, 255, 0.5);
+    padding-left: 150px;
+    padding-right: 150px;
+    border: none;
+    border-radius: 50px;
+    margin-left: 300px;
+    margin-top: 10px;
+    cursor: pointer;
+}
