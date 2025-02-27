@@ -87,24 +87,69 @@ body {
     position: fixed;
 }
 
-/* Mini Postagem */
+/* Feed */
 
-.titulo {
-    color: var(--branco);
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    margin-left: 300px;
-    margin-top: 50px;
+.feed {
+    margin-left: 225px;
+    padding: 20px;
+    background-color: var(--preto);
 }
 
-.botao-digite {
-    background-color: var(--cor-secundaria);
-    color: rgba(255, 255, 255, 0.5);
-    padding-left: 150px;
-    padding-right: 150px;
-    border: none;
+.user-feed {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.icon-feed {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    color: var(--branco);
+}
+
+.user-post {
+    color: var(--branco);
+}
+
+.descricao-post {
+    display: flex;
+}
+
+.p-post {
+    color: var(--branco);
+    margin-left: 70px;
+    font-size: 18px;
+}
+
+.img-post {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
     border-radius: 50px;
-    margin-left: 300px;
-    margin-top: 10px;
+}
+
+.interacoes {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.curtir {
     cursor: pointer;
+    color: var(--cor-primaria);
+    margin-right: 200px;
+}
+
+.comentar {
+    cursor: pointer;
+    color: var(--cor-primaria);
+}
+
+.interacoes ion-icon {
+    font-size: 70px;
+}
+
+.interacoes ion-icon:hover {
+    color: var(--cor-secundaria);
 }
