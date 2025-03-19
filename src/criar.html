@@ -33,21 +33,36 @@
         <ul class="menu-list">
             <li class="Ìnicio"><a href="../index.html"><ion-icon name="home-outline" class="icon"></ion-icon>Página Inicial</a></li>
             <li><a href="#link2"><ion-icon name="search-outline" class="icon"></ion-icon>Pesquisar</a></li>
-            <li><a href="criar.html"><ion-icon name="create-outline" class="icon"></ion-icon>Criar</a></li>
-            <li><a href="#link4"><ion-icon name="chatbubbles-outline" class="icon"></ion-icon>Mensagens</a></li>
-            <li><a href="#link5"><ion-icon name="people-outline" class="icon"></ion-icon>Comunidades</a></li>
-            <li><a href="#link6"><ion-icon name="notifications-outline" class="icon"></ion-icon>Notificações</a></li>
+            <li><a href="../src/criar.html"><ion-icon name="create-outline" class="icon"></ion-icon>Criar</a></li>
+            <li><a href="../src/amigos.html"><ion-icon name="chatbubbles-outline" class="icon"></ion-icon>Mensagens</a></li>
+            <li><a href="../src/comunidade.html"><ion-icon name="people-outline" class="icon"></ion-icon>Comunidades</a></li>
+            <li><a href="../src/notficacoes.html"><ion-icon name="notifications-outline" class="icon"></ion-icon>Notificações</a></li>
             <li><a href="#link7"><ion-icon name="person-circle-outline" class="icon"></ion-icon>Meu Perfil</a></li>
         </ul>
     </div>
-
     <div class="separador"></div>
+
+    <!-- Postagem -->
     
-    <!-- Selecionar Imagem -->
-    
-    <div class="criar">
-        <ion-icon name="image-outline"></ion-icon>
-        <h1 class="selecionar">Selecione uma Imagem</h1>
+    <div class="container mx-auto mt-8 p-4 bg-[#316697] shadow-md ml-[225px] w-[1140px] h-[640px]">
+        <div class="flex flex-col">
+            <!-- Selecionar Imagem -->
+            <div class="p-4">
+                <label for="image-upload" class="block text-gray-300">Selecione uma imagem:</label>
+                <input type="file" id="image-upload" class="mt-2 p-2 border border-gray-300 rounded-md w-full cursor-pointer">
+            </div>
+            
+            <!-- Texto/Descrição -->
+            <div class="p-4">
+                <label for="post-description" class="block text-gray-300">Descrição:</label>
+                <textarea id="post-description" rows="10" class="mt-2 p-2 border border-gray-300 rounded-md w-full" placeholder="Escreva sua descrição aqui..."></textarea>
+            </div>
+        </div>
+        
+        <!-- Botão Postar -->
+        <div class="flex justify-end mt-4">
+            <button class="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 cursor-pointer">POSTAR</button>
+        </div>
     </div>
 </body>
 </html>

@@ -88,20 +88,43 @@ body {
 }
 
 /* Amigos */
-.amigos-container {
-    margin-left: 225px;
+
+h1{
     color: var(--branco);
+    font-size: 30px;
+    margin-left: 230px;
+    font-type: bold;
+}
+
+.amigo ion-icon {
+    color: var(--branco);
+    font-size: 30px;
+    
 }
 
 .amigo {
-    background-color: var(--preto);
-    padding: 10px;
+    background-color: var(--cor-secundaria);
+    padding: 15px;
+    margin-left: 230px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-.amigos-container ion-icon {
+.amigo p {
+    margin: 0 10px; 
+    display: inline-block; 
+}
+
+.amigo ion-icon {
     cursor: pointer;
 }
 
-.amigos-container span {
-    margin-left: 10px;
+.amigo ion-icon:hover {
+    color: var(--cor-primaria); 
+    transition: color 0.3s ease; 
 }

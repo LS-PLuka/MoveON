@@ -87,7 +87,8 @@ body {
     position: fixed;
 }
 
-/* notificações */
+/* Notificações */
+
 h1{
     color: var(--branco);
     font-size: 30px;
@@ -132,4 +133,3 @@ h1{
     color: var(--cor-primaria); 
     transition: color 0.3s ease; 
 }
-
