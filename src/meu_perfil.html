@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Título -->
+    <title>MoveON - Meu Perfil</title>
+    
+    <!-- Links -->
+    <link rel="stylesheet" href="../src/css/meu_perfil.css">
+    <link rel="stylesheet" href="../src/css/style.css">
+
+    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon">
+    
+    <link rel="stylesheet" href=""> <!-- Sem nada mesmo -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Output -->
+    <link href="" rel="stylesheet"> <!-- Sem nada mesmo -->
+
+    <!-- Scripts -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <!-- Botão de Voltar -->
+    <div class="back-button">
+        <a href="../index.html"><ion-icon name="arrow-back-outline" class="icon"></ion-icon> Voltar</a>
+    </div>
+
+    <!-- Meu Perfil -->
+    <div class="profile-container">
+        <div class="profile-picture">
+            <ion-icon name="person-circle-outline" class="user-icon"></ion-icon>
+            <ion-icon name="create-outline" class="edit-photo-icon"></ion-icon>
+        </div>
+        <div class="profile-info">
+            <p><strong>Nome:</strong> [user-name] <ion-icon name="create-outline" class="edit-icon"></ion-icon></p>
+            <p><strong>Email:</strong> useremail@exemplo.com <ion-icon name="create-outline" class="edit-icon"></ion-icon></p>
+            <p><strong>Senha:</strong> ********* <ion-icon name="create-outline" class="edit-icon"></ion-icon></p>
+        </div>
+    </div>
+
+     <!-- Tags -->
+     <div class="tags-container">
+        <h2>Esportes e Atividades Físicas</h2>
+        <form>
+            <label for="tags">Adicione seus esportes e atividades físicas:</label>
+            <input type="text" id="tags" name="tags" placeholder="Ex: Futebol, Corrida, Yoga">
+            <button type="submit">Adicionar</button>
+        </form>
+        <div class="tags-list">
+            <!-- Exemplo de tags adicionadas -->
+            <span class="tag">Futebol</span>
+            <span class="tag">Corrida</span>
+            <span class="tag">Yoga</span>
+        </div>
+    </div>
+</body>
+</html>

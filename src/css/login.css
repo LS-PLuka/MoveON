@@ -1,0 +1,158 @@
+/* Guia de Estilos */
+
+:root {
+    /* Fontes */
+    --ff-khand: "Raleway", serif;
+
+    /* Cores */
+    --cor-primaria: #56AEFF;
+    --cor-secundaria: #316697;
+    --preto: #000;
+    --branco: #fff;
+    
+    --background: #262626;
+
+    --botao: #f0f0f0;
+    --botao-hover: #ddd;
+}
+
+
+body {
+    font-family: var(--ff-khand);
+    margin: 0;
+    padding: 0;
+    background-color: var(--background);
+}
+
+.desktop {
+    display: flex;
+    flex-direction: row;
+    justify-content:  center;
+    align-items: center;
+    height: 100vh;
+    background-color: #262626;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    padding: 20px;
+    background-color: #56AEFF;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #FFF;
+
+    text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+    font-family: Khand;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.google {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 35px;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #262626;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.google img {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+}
+
+.google:hover {
+    background-color: #C13505;
+}
+
+.google h4 {
+    font-size: 16px;
+}
+
+.linha {
+
+}
+
+.paragrafo {
+    display: flex;
+}
+
+.ou {}
+
+.conta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    height: 40px;
+    margin-top: 20px;
+    background-color: #262626;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.conta:hover {
+    background-color: #C13505;
+}
+
+p .desc {
+    font-size: 1px;
+    color: white;
+    text-align: center;
+    
+}
+
+h3 {
+    color: #ffffff;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.entrar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    margin-top:5px;
+    background-color: #262626;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.entrar:hover {
+    background-color: #C13505;
+}
+
+.linha-maior {
+
+}
+

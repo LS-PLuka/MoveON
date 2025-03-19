@@ -1,0 +1,163 @@
+/* Guia de Estilos */
+
+:root {
+    /* Fontes */
+    --ff-khand: "Raleway", serif;
+
+    /* Cores */
+    --cor-primaria: #56AEFF;
+    --cor-secundaria: #316697;
+    --preto: #000;
+    --branco: #fff;
+    
+    --background: #262626;
+
+    --botao: #f0f0f0;
+    --botao-hover: #ddd;
+}
+
+/* Tags - Padrão */
+
+body {
+    font-family: var(--ff-khand);
+    background-color: var(--background);
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/* Botão de Voltar */
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+}
+
+.back-button a:hover {
+    color: var(--cor-secundaria);
+}
+
+.back-button a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.back-button .icon {
+    margin-right: 5px;
+}
+
+/* Meu Perfil */
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.profile-picture {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.user-icon {
+    font-size: 100px;
+}
+
+.edit-photo-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--cor-primaria);
+}
+
+.edit-photo-icon:hover {
+    color: var(--cor-secundaria);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+.profile-info p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.edit-icon {
+    cursor: pointer;
+    color: var(--cor-primaria);
+}
+
+.edit-icon:hover {
+    color: var(--cor-secundaria);
+}
+
+/* Tags */
+
+.tags-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.tags-container h2 {
+    margin-bottom: 20px;
+}
+
+.tags-container form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+.tags-container label {
+    margin-bottom: 5px;
+}
+
+.tags-container input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.tags-container button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--cor-primaria);
+    color: white;
+    cursor: pointer;
+}
+
+.tags-container button:hover {
+    background-color: var(--cor-secundaria);
+}
+
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag {
+    background-color: var(--cor-secundaria);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}

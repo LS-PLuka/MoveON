@@ -8,7 +8,7 @@
     <title>MoveON</title>
     
     <!-- Links -->
-    <link rel="stylesheet" href="../src/css/amigos.css">
+    <link rel="stylesheet" href="../src/css/.css">
     <link rel="stylesheet" href="../src/css/style.css">
 
     <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon">
