@@ -1,0 +1,135 @@
+/* Guia de Estilos */
+
+:root {
+    /* Fontes */
+    --ff-khand: "Raleway", serif;
+
+    /* Cores */
+    --cor-primaria: #56AEFF;
+    --cor-secundaria: #316697;
+    --preto: #000;
+    --branco: #fff;
+    
+    --background: #262626;
+
+    --botao: #f0f0f0;
+    --botao-hover: #ddd;
+}
+
+/* Tags - Padrão */
+
+body {
+    font-family: var(--ff-khand);
+    margin: 0;
+    padding: 0;
+    background-color: var(--background);
+}
+
+/* Menu */
+
+.menu {
+    width: 200px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+}
+
+.logo {
+    width: 50%;
+    margin-top: 180px;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+}
+        
+.menu-list {
+    list-style-type: none;
+    padding: 0;
+}
+        
+.menu-list li {
+    margin-bottom: 10px;
+
+}
+        
+.menu-list a {
+    text-decoration: none;
+    color: var(--preto);
+    display: block;
+    padding: 10px;
+    background-color: var(--botao);
+    border-radius: 5px;
+    width: 100%;   
+    display: flex;
+    justify-content: flex-start;
+}
+        
+.menu-list a:hover {
+    background-color: var(--botao-hover);
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    color: var(--cor-primaria);
+}
+
+.separador {
+    width: 1px;
+    height: 100vh;
+    background-color: var(--cor-primaria);
+    position: absolute;
+    left: 225px;
+    top: 0;
+    position: fixed;
+}
+
+/* notificações */
+h1{
+    color: var(--branco);
+    font-size: 30px;
+    margin-left: 230px;
+    font-type: bold;
+}
+
+.notificacao ion-icon {
+    color: var(--branco);
+    font-size: 30px;
+    
+}
+
+.notificacoes-container {
+    margin-left: 225px; 
+    color: var(--branco);
+}
+
+.notificacao {
+    background-color: var(--cor-secundaria);
+    padding: 15px;
+    margin-left: 230px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.notificacao p {
+    margin: 0 10px; 
+    display: inline-block; 
+}
+
+.notificacao ion-icon {
+    cursor: pointer;
+}
+
+.notificacao ion-icon:hover {
+    color: var(--cor-primaria); 
+    transition: color 0.3s ease; 
+}
+
