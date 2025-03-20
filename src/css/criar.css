@@ -89,6 +89,13 @@ body {
 
 /* Postagem */
 
+h1{
+    color: var(--branco);
+    font-size: 30px;
+    margin-left: 230px;
+    font-type: bold;
+}
+
 .container {
-    margin-left: 226px;
+    margin-left: 480px;
 }
