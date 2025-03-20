@@ -105,7 +105,7 @@ body {
     border-radius: 20px;
     padding: 5px 10px;
     color: var(--cor-secundaria);
-    margin-left: calc(58% - 200px);
+    margin-left: calc(58% - 400px); 
 }
 
 #searchInput {
