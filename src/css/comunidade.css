@@ -94,7 +94,7 @@ body {
 .search {
     display: flex;
     align-items: center;
-    border: 1px solid var(--cor-secundaria);
+    border: 1px solid var(--cor-primaria);
     background-color: var(--branco);
     width: 400px;
     margin: 40px auto;

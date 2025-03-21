@@ -46,79 +46,59 @@
 
     <!-- Barra de Pesquisa -->
 
-    <div id="searchBar" class="search-bar">
-        <input type="text" placeholder="Pesquise amigos e comunidades">
+    <div id="searchBar" class="searchBar">
+        <label for="searchInput">
+            <ion-icon name="search-outline" class="icon"></ion-icon>
+        </label>
+        
+        <input type="text" id="searchInput" placeholder="Encontre amigos e comunidades">
     </div>
     
     <!-- Feed -->
-    
-    <div class="feed-container">
-        <div class="feed">
-            <div class="user-info">
+     
+    <div class="feed">
+        <div class="post">
+            <div class="post-header">
+                <div class="user-icon">
                 <ion-icon name="person-circle-outline" class="user-icon"></ion-icon>
-                <div>
-                    <h2 class="user-name">[Usuário] @usuario</h2>
-                    <p class="post-date">[DD-MM-AAAA]</p>
+                </div>
+                <div class="user-info">
+                    <span class="username">Usuário1</span>
+                    <span class="post-date">Publicado em 20/03/2025</span>
                 </div>
             </div>
-                
-            <div class="post-description">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio ab rem quos modi.
-                    Voluptas qui quo voluptatibus praesentium doloremque ab similique doloribus quasi
-                </p>
+            <img src="../img/imagens/pedal.jpg" alt="Imagem do Post">
+            <div class="post-content">
+                Dia de pedal com os reliquias... 🚴😜
             </div>
-                
-            <div class="post-image">
-                <img src="img/imagens/pedal.jpg" alt="Imagem do post">
-            </div>
-                
             <div class="post-actions">
-                <div class="like">
-                    <ion-icon name="heart-outline" class="action-icon"></ion-icon>
-                </div>
-                    
-                <div class="comment">
-                    <ion-icon name="chatbox-outline" class="action-icon"></ion-icon>
-                </div>
+                <button><ion-icon name="heart-outline"></ion-icon>Curtir</button>
+                <button><ion-icon name="chatbubble-outline"></ion-icon>Comentar</button>
             </div>
         </div>
-    </div>
-
-    <div class="feed-container">
-        <div class="feed">
-            <div class="user-info">
+        <div class="post">
+            <div class="post-header">
+                <div class="user-icon">
                 <ion-icon name="person-circle-outline" class="user-icon"></ion-icon>
-                <div>
-                    <h2 class="user-name">[Usuário 2] @usuario2</h2>
-                    <p class="post-date">[DD-MM-AAAA]</p>
+                </div>
+                <div class="user-info">
+                    <span class="username">Usuário2</span>
+                    <span class="post-date">Publicado em 21/03/2025</span>
                 </div>
             </div>
-                
-            <div class="post-description">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio ab rem quos modi.
-                    Voluptas qui quo voluptatibus praesentium doloremque ab similique doloribus quasi
-                </p>
+            <img src="../img/imagens/crossfit.jpg" alt="Imagem do Post">
+            <div class="post-content">
+                Constância é a chave para o sucesso. 💪🏋️‍♂️
             </div>
-                
-            <div class="post-image">
-                <img src="img/imagens/crossfit.jpg" alt="Imagem do post">
-            </div>
-                
             <div class="post-actions">
-                <div class="like">
-                    <ion-icon name="heart-outline" class="action-icon"></ion-icon>
-                </div>
-                    
-                <div class="comment">
-                    <ion-icon name="chatbox-outline" class="action-icon"></ion-icon>
-                </div>
+                <button><ion-icon name="heart-outline"></ion-icon>Curtir</button>
+                <button><ion-icon name="chatbubble-outline"></ion-icon>Comentar</button>
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
+     
     <script src="src/js/search.js"></script>
 </body>
 </html>
