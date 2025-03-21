@@ -174,7 +174,37 @@ body {
 }
 
 .post-actions ion-icon {
-    font-size: 16px;
+    font-size: 20px;
+}
+
+.user-icon {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.user-icon:hover {
+    color: var(--cor-secundaria);
+}
+
+/* Função - Curtir */
+
+.like-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--cor-primaria);
+    font-size: 1em;
+}
+
+.like-button ion-icon {
+    margin-right: 5px;
+}
+
+.like-count {
+    margin-left: 10px;
+    font-size: 1em;
 }
 
 /* Barra de Pesquisa */
@@ -202,4 +232,17 @@ body {
 
 .search-label {
     height: 20px;
+}
+
+#searchBar {
+    display: none;
+    opacity: 0;
+    height: 0;
+    transition: opacity 0.5s ease, height 0.5s ease;
+}
+
+#searchBar.show {
+    display: flex;
+    opacity: 1;
+    height: auto;
 }
