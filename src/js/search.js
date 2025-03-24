@@ -14,13 +14,3 @@ function toggleSearchBar() {
         }, 10);
     }
 }
-
-// Curtida
-document.querySelectorAll('.like-button').forEach(button => {
-    button.addEventListener('click', function() {
-        const likeCount = this.nextElementSibling;
-        let count = parseInt(likeCount.textContent);
-        count++;
-        likeCount.textContent = count;
-    });
-});

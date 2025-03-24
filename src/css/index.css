@@ -186,27 +186,6 @@ body {
     color: var(--cor-secundaria);
 }
 
-/* Função - Curtir */
-
-.like-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    color: var(--cor-primaria);
-    font-size: 1em;
-}
-
-.like-button ion-icon {
-    margin-right: 5px;
-}
-
-.like-count {
-    margin-left: 10px;
-    font-size: 1em;
-}
-
 /* Barra de Pesquisa */
 
 .searchBar {
