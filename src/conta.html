@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Título -->
+    <title>MoveON</title>
+    
+    <!-- Links -->
+    <link rel="stylesheet" href="../src/css/conta.css">
+    <link rel="stylesheet" href="../src/css/style.css">
+
+    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon">
+    
+    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Output -->
+    <link href="../src/css/output.css" rel="stylesheet">
+
+    <!-- Scripts -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</head>
+<body>
+    <div class="desktop">
+        <div class="logo">
+            <img src="../img/logos/logo.png" alt="">
+        </div>
+
+        <div class="login">
+            <h1>Criar conta</h1>
+
+            
+            <img src="..//img/imagens/icone.png" alt="foto_perfil" class="img-i">
+            <p class="text-i">Editar foto</p>
+            <input type="file" id="fileInput" style="display: none" accept="image/*">
+            
+            <input type="text" placeholder="nome de usuário" class="butao">
+            <input type="text" placeholder="E-mail" class="butao">
+            <input type="text" placeholder="Senha" class="butao">
+
+
+            <a href="../index.html">
+                <div class="entrar">
+                    <h4>Criar</h4>
+                </div>
+            </a>
+            
+            <a href="entrar.html" class="conta"><p>Já possuo uma conta</p></a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector(".img-i" , "text-i").addEventListener("click", function() {
+            document.getElementById("fileInput").click();
+        });
+
+        document.getElementById("fileInput").addEventListener("change", function(event) {
+            if (event.target.files.length > 0) {
+                
+                let imagemSelecionada = event.target.files[0];
+                
+                
+                let urlImagem = URL.createObjectURL(imagemSelecionada);
+                
+                
+                window.location.href = "outra_pagina.html?imagem=" + encodeURIComponent(urlImagem);
+            }
+        });
+    </script>
+</body>
+</html>
