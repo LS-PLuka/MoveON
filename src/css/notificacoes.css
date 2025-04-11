@@ -87,13 +87,57 @@ body {
     position: fixed;
 }
 
+/* Menu Responsivo */
+
+.menu-responsivo {
+    display: none;
+    background-color: var(--background);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.menu-list-responsivo {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.menu-list-responsivo li {
+    display: inline-block;
+}
+
+.menu-list-responsivo a {
+    color: var(--branco);
+    font-size: 24px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.menu-list-responsivo a:hover {
+    background-color: var(--cor-secundaria);
+}
+
 /* Notificações */
 
 h1{
     color: var(--branco);
     font-size: 30px;
     margin-left: 230px;
-    font-type: bold;
 }
 
 .notificacao ion-icon {
@@ -132,4 +176,96 @@ h1{
 .notificacao ion-icon:hover {
     color: var(--cor-primaria); 
     transition: color 0.3s ease; 
+}
+
+/* Media Queries */
+
+/* Celulares pequenos */
+@media (max-width: 479px) {
+    .menu {
+        display: none;
+    }
+
+    .separador {
+        display: none;
+    }
+
+    .feed {
+        justify-content: center;
+        margin-left: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .menu-responsivo {
+        display: flex;
+    }
+
+    h1 {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .notificacao {
+        margin-left: 0;
+    }
+}
+  
+/* Celulares e tablets pequenos */
+@media (min-width: 480px) and (max-width: 767px) {
+    .menu {
+        display: none;
+    }
+
+    .separador {
+        display: none;
+    }
+
+    .feed {
+        justify-content: center;
+        margin-left: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .menu-responsivo {
+        display: flex;
+    }
+
+    h1 {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .notificacao {
+        margin-left: 0;
+    }
+}
+  
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .menu {
+        display: none;
+    }
+
+    .separador {
+        display: none;
+    }
+
+    .menu-responsivo {
+        display: flex;
+    }
+
+    h1 {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .notificacao {
+        margin-left: 0;
+    }
 }
