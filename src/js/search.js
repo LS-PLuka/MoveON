@@ -12,5 +12,5 @@ function toggleSearchBar() {
         setTimeout(() => {
             searchBar.classList.add('show');
         }, 10);
-    }
-}
+    };
+};

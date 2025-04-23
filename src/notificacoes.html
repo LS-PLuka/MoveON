@@ -27,14 +27,13 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 </head>
-    <body>
+<body>
     <!-- Menu -->
     
     <div class="menu">
         <img src="../img/logos/logo.png" alt="Logo" class="logo">
         <ul class="menu-list">
             <li><a href="../index.html"><ion-icon name="home-outline" class="icon"></ion-icon>Página Inicial</a></li>
-            <li><a href="../src/pesquisar.html"><ion-icon name="search-outline" class="icon"></ion-icon>Pesquisar</a></li>
             <li><a href="../src/criar.html"><ion-icon name="create-outline" class="icon"></ion-icon>Criar</a></li>
             <li><a href="../src/amigos.html"><ion-icon name="chatbubbles-outline" class="icon"></ion-icon>Mensagens</a></li>
             <li><a href="../src/comunidade.html"><ion-icon name="people-outline" class="icon"></ion-icon>Comunidades</a></li>
@@ -48,47 +47,46 @@
 
     <div class="menu-responsivo">
         <ul class="menu-list-responsivo">
-            <li><a href="index.html"><ion-icon name="home-outline" class="icon"></ion-icon></a></li>
-            <li><a href="#" onclick="toggleSearchBar()"><ion-icon name="search-outline" class="icon"></ion-icon></a></li>
-            <li><a href="src/criar.html"><ion-icon name="create-outline" class="icon"></ion-icon></a></li>
-            <li><a href="src/amigos.html"><ion-icon name="chatbubbles-outline" class="icon"></ion-icon></a></li>
-            <li><a href="src/comunidade.html"><ion-icon name="people-outline" class="icon"></ion-icon></a></li>
-            <li><a href="src/notificacoes.html"><ion-icon name="notifications-outline" class="icon"></ion-icon></a></li>
-            <li><a href="src/meu_perfil.html"><ion-icon name="person-circle-outline" class="icon"></ion-icon></a></li>
+            <li><a href="../index.html"><ion-icon name="home-outline" class="icon"></ion-icon></a></li>
+            <li><a href="../src/criar.html"><ion-icon name="create-outline" class="icon"></ion-icon></a></li>
+            <li><a href="../src/amigos.html"><ion-icon name="chatbubbles-outline" class="icon"></ion-icon></a></li>
+            <li><a href="../src/comunidade.html"><ion-icon name="people-outline" class="icon"></ion-icon></a></li>
+            <li><a href="../src/notificacoes.html"><ion-icon name="notifications-outline" class="icon"></ion-icon></a></li>
+            <li><a href="../src/meu_perfil.html"><ion-icon name="person-circle-outline" class="icon"></ion-icon></a></li>
         </ul>
     </div>
 
     <!-- Notificações -->
     <div class="notificacao-container">
-            <h1>Notificações</h1>
-            <div class="notificacao">
+        <h1>Notificações</h1>
+        <div class="notificacao">
+            <ion-icon name="person-circle-outline"></ion-icon>
+            <p><strong>Pedro</strong> te adicionou como amigo.</p>
+        </div>
+
+        <div class="notificacao flex items-center justify-between p-4 border-b">
+            <div class="flex items-center">
                 <ion-icon name="person-circle-outline"></ion-icon>
-                <p><strong>Pedro</strong> te adicionou como amigo.</p>
-            </div>
-
-            <div class="notificacao flex items-center justify-between p-4 border-b">
-               <div class="flex items-center">
-                 <ion-icon name="person-circle-outline"></ion-icon>
                 <p><strong>João</strong> comentou na sua foto.</p>
-                </div>
-                <ion-icon name="image-outline"></ion-icon>
             </div>
+            <ion-icon name="image-outline"></ion-icon>
+        </div>
 
-            <div class="notificacao flex items-center justify-between p-4 border-b">
-                <div class="flex items-center">
+        <div class="notificacao flex items-center justify-between p-4 border-b">
+            <div class="flex items-center">
                 <ion-icon name="person-circle-outline"></ion-icon>
                 <p><strong>Maria</strong> compartilhou sua publicação.</p>
-                </div>
-                <ion-icon name="image-outline"></ion-icon>
             </div>
+            <ion-icon name="image-outline"></ion-icon>
+        </div>
 
-            <div class="notificacao flex items-center justify-between p-4 border-b">
-                <div class="flex items-center">
+        <div class="notificacao flex items-center justify-between p-4 border-b">
+            <div class="flex items-center">
                 <ion-icon name="person-circle-outline"></ion-icon>
                 <p><strong>Ricardo</strong> curtiu sua publicação.</p>
-                </div>
-                <ion-icon name="image-outline"></ion-icon>
             </div>
+            <ion-icon name="image-outline"></ion-icon>
+        </div>
     </div>
 </body>
 </html>
