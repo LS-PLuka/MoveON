@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Título -->
     <title>MoveON - Criar</title>
-    
-    <!-- Links -->
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css">
     <link rel="stylesheet" href="css/criar.css">
 
-    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon">
-
-    <link rel="stylesheet" href="../css/Josh.Reset/Reset.css">
-
+    <!-- Fonte -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <!-- Output -->
-    <link href="../src/css/output.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon">
 
-    <!-- Scripts -->
+    <!-- Ícones -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
@@ -31,7 +27,7 @@
     <div class="menu">
         <img src="../img/logos/logo.png" alt="Logo" class="logo">
         <ul class="menu-list">
-            <li class="Ìnicio"><a href="../index.html"><ion-icon name="home-outline" class="icon"></ion-icon>Página Inicial</a></li>
+            <li><a href="../index.html"><ion-icon name="home-outline" class="icon"></ion-icon>Página Inicial</a></li>
             <li><a href="../src/criar.html"><ion-icon name="create-outline" class="icon"></ion-icon>Criar</a></li>
             <li><a href="../src/amigos.html"><ion-icon name="chatbubbles-outline" class="icon"></ion-icon>Mensagens</a></li>
             <li><a href="../src/comunidade.html"><ion-icon name="people-outline" class="icon"></ion-icon>Comunidades</a></li>
@@ -39,7 +35,7 @@
             <li><a href="../src/meu_perfil.html"><ion-icon name="person-circle-outline" class="icon"></ion-icon>Meu Perfil</a></li>
         </ul>
     </div>
-    <div class="separador"></div>
+    <div class="separador "></div>
 
     <!-- Menu Responsivo -->
 
@@ -54,31 +50,28 @@
         </ul>
     </div>
 
-    <!-- Postagem -->
-
-    <div class="h1-text texto">
-        <h1>Criar - Publicação de Fotos/Vídeos ou Textos</h1>
-    </div>
-
-    <div class="container mx-auto mt-8 p-4 bg-[#316697] shadow-md ml-[225px] w-[1140px] h-[640px] rounded-lg container-criar">
-        <div class="flex flex-col">
-            <!-- Selecionar Imagem -->
-            <div class="p-4">
-                <label for="image-upload" class="block text-gray-300">Selecione uma imagem:</label>
-                <input type="file" id="image-upload" class="mt-2 p-2 border border-gray-300 rounded-md w-full cursor-pointer">
-            </div>
-            
-            <!-- Texto/Descrição -->
-            <div class="p-4">
-                <label for="post-description" class="block text-gray-300">Descrição:</label>
-                <textarea id="post-description" rows="10" class="mt-2 p-2 border border-gray-300 rounded-md w-full" placeholder="Escreva sua descrição aqui..."></textarea>
-            </div>
+    <!-- Conteúdo principal -->
+    <main class="container-postagem">
+        <div class="h1-text">
+            <h1>Publique Fotos/Vídeos ou Textos</h1>
         </div>
-        
-        <!-- Botão Postar -->
-        <div class="flex justify-end mt-4">
-            <button class="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 cursor-pointer rounded-md">POSTAR</button>
+
+        <!-- Upload de imagem -->
+        <label for="image-upload" class="block text-gray-300">
+        <div class="image-upload-container">
+            <input type="file" id="image-upload" class="hidden" accept="image/*">
+            <ion-icon name="cloud-upload-outline" class="icon-upload"></ion-icon>
+            <span>Clique para selecionar uma imagem</span>
         </div>
-    </div>
+        </label>
+
+        <!-- Caixa de texto -->
+        <textarea placeholder="Escreva algo para sua publicação..."></textarea>
+
+        <!-- Botão de postagem -->
+        <div class="button-container">
+            <button type="button">POSTAR</button>
+        </div>
+    </main>
 </body>
 </html>
