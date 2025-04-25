@@ -219,11 +219,8 @@ h1{
 
 /* Media Queries */
 
-@media (max-width: 720px) {
-    .menu {
-        display: none;
-    }
-
+@media (max-width: 1023px) {
+    .menu,
     .separador {
         display: none;
     }
