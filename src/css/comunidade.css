@@ -163,14 +163,45 @@ body {
 
 /* Cards */
 
-.container {
-    margin-left: 300px;
+.comunidade-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    margin-left: 14rem; 
+}
+
+@media (min-width: 640px) {
+    .comunidade-container {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media (min-width: 1024px) {
+    .comunidade-container {
+        grid-template-columns: repeat(3, 1fr); 
+    }
+}
+
+.card-comunidade {
+    background-color: var(--botao);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    position: relative;
+    cursor: pointer;
 }
 
 .card-comunidade:hover {
-    transform: translateY(-10px);
-    background-color: #555;
-    filter: blur(5px);
+    background-color: var(--botao-hover);
+    transform: scale(1.05);
+}
+
+.card-img {
+    width: 100%; 
+    height: auto; 
+    display: block; 
+    cursor: pointer;
 }
 
 .card-comunidade .card-title {
@@ -180,26 +211,26 @@ body {
     width: 100%;
     color: var(--branco);
     text-align: center;
-    padding: 15px; 
-    font-family: var(--ff-khand); 
-    font-size: 1.2rem; 
-    font-weight: 600; 
-    letter-spacing: 1px; 
-    text-transform: uppercase; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
-    opacity: 0; 
-    transition: opacity 0.3s ease, transform 0.3s ease; 
-    transform: translateY(20px); 
+    padding: 15px;
+    font-family: var(--ff-khand);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(20px);
 }
 
 .card-comunidade:hover .card-title {
-    opacity: 1; 
-    transform: translateY(0); 
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .container:hover .card-comunidade {
     filter: blur(5px);
-    opacity: .5;
+    opacity: 0.5;
 }
 
 .container .card-comunidade:hover {
@@ -211,45 +242,71 @@ body {
 
 /* Celulares pequenos */
 @media (max-width: 479px) {
-    .menu {
-        display: none;
-    }
-
+    .menu,
     .separador {
         display: none;
     }
 
     .menu-responsivo {
         display: flex;
+    }
+
+    .search {
+        width: 100%;
+        margin: 20px auto;
+        margin-left: 0;
+    }
+
+    .comunidade-container {
+        margin-left: 0;
+        padding: 10px;
+        grid-template-columns: repeat(2, 1fr);
     }
 }
   
 /* Celulares e tablets pequenos */
 @media (min-width: 480px) and (max-width: 767px) {
-    .menu {
-        display: none;
-    }
-
+    .menu,
     .separador {
         display: none;
     }
 
     .menu-responsivo {
         display: flex;
+    }
+
+    .search {
+        width: 100%;
+        margin: 20px auto;
+        margin-left: 0;
+    }
+
+    .comunidade-container {
+        margin-left: 0;
+        padding: 10px;
+        grid-template-columns: repeat(2, 1fr);
     }
 }
   
 /* Tablets */
 @media (min-width: 768px) and (max-width: 1023px) {
-    .menu {
-        display: none;
-    }
-
+    .menu,
     .separador {
         display: none;
     }
 
     .menu-responsivo {
         display: flex;
+    }
+
+    .search {
+        width: 100%;
+        margin: 20px auto;
+        margin-left: 0;
+    }
+
+    .comunidade-container {
+        margin-left: 0;
+        padding: 10px;
     }
 }
