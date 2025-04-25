@@ -194,31 +194,104 @@ body {
     margin-bottom: 10px;
 }
 
+/* curtir */
+
+.post-actions button {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 1.1rem;
+    color: #000;
+    cursor: pointer;
+    transition: all .25s ease-in-out;
+}
+
+.post-actions .label {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.post-actions .label svg {
+    margin-right: 4px;
+}
+
+.post-actions .label path {
+    fill: var(--cor-secundaria);   
+    transition: all .25s ease-in-out;       
+}
+
+.post-actions .number {
+    color: #8a8d9b;
+}
+
+.post-actions button:hover path{
+    fill: var(--cor-primaria);
+}
+  
+.post-actions button.like .number {
+    color: var(--cor-primaria)
+}
+
+.post-actions button.like svg {
+    animation: transitionLike 1s ease-in;
+}
+  
+.post-actions button.like path {
+    fill: var(--cor-primaria);
+}
+  
+@keyframes transitionLike {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.3);
+    }
+    100% {
+      transform: scale(1);
+    }
+}
+
+/* comentarios */
+
 .post-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 0;
 }
-
-.post-actions button {
-    background-color: var(--cor-primaria);
-    color: var(--branco);
-    border: none;
-    border-radius: 5px;
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: 14px;
+  
+.post-actions .coment-button {
     display: flex;
     align-items: center;
     gap: 5px;
+    background-color: var(--botao);
+    color: var(--preto);
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.post-actions button:hover {
-    background-color: var(--cor-secundaria);
+.post-actions .coment-button ion-icon {
+    font-size: 18px;
+    color: var(--cor-secundaria);
 }
 
-.post-actions ion-icon {
-    font-size: 20px;
+.post-actions .coment-button:hover {
+    background-color: var(--cor-primaria); 
+    color: var(--branco); 
+    transform: scale(1.05);
+}
+
+.post-actions .coment-button:active {
+    transform: scale(0.95);
 }
 
 .user-icon {

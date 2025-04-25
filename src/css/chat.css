@@ -76,29 +76,42 @@ body {
     text-align: center;
 }
 
+/* Mensagens no chat */
 .chat-messages {
     flex: 1;
     padding: 10px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column; 
 }
 
 .message {
-    margin-bottom: 10px;
+    margin-bottom: 20px; 
     padding: 10px;
     border-radius: 5px;
-    display: inline-block;
+    display: flex;
+    flex-direction: column; 
     max-width: 80%;
+    position: relative;
 }
 
 .message.received {
     background-color: var(--branco);
-    align-self: left;
+    align-self: flex-start; 
 }
 
 .message.sent {
     background-color: var(--cor-primaria);
-    align-self: right;
-    margin-left: auto;
+    align-self: flex-end;
+    color: var(--branco);
+}
+
+/* Hora de envio */
+.message .timestamp {
+    font-size: 12px;
+    color: var(--cor-secundaria);
+    margin-top: 5px;
+    align-self: flex-end; 
 }
 
 .chat-input {
