@@ -138,15 +138,16 @@ h1{
     color: var(--branco);
     font-size: 30px;
     margin-left: 230px;
+    font-weight: 600;
 }
 
 .amigo ion-icon {
-    color: var(--branco);
+    color: var(--cor-primaria);
     font-size: 30px;
 }
 
 .amigo {
-    background-color: var(--cor-secundaria);
+    background-color: var(--cor-primaria);
     padding: 15px;
     margin-left: 230px;
     margin-bottom: 15px;
@@ -168,8 +169,61 @@ h1{
 }
 
 .amigo ion-icon:hover {
-    color: var(--cor-primaria); 
+    color: var(--branco); 
     transition: color 0.3s ease; 
+}  
+
+.amigos-container {
+    margin-left: 5px; 
+    padding: 20px;
+    background-color: var(--background);
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+}
+
+/* Título */
+.amigos-container h1 {
+    color: var(--branco);
+    font-size: 30px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+/* Estilo para cada amigo */
+.amigo {
+    background-color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.amigo:hover {
+    background-color: var(--cor-secundaria);
+    transform: scale(1.02); 
+}
+
+.amigo ion-icon {
+    font-size: 36px;
+    color: var(--cor-primaria);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.amigo ion-icon:hover {
+    color: var(--branco); 
+}
+
+.amigo p {
+    font-size: 18px;
+    color: var(--branco);
+    margin: 10;
+    font-weight: 500;
 }
 
 /* Media Queries */

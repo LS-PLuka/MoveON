@@ -146,42 +146,80 @@ h1{
     
 }
 
-.notificacoes-container {
-    margin-left: 225px; 
-    color: var(--branco);
-}
-
-.notificacao {
-    background-color: var(--cor-secundaria);
-    padding: 15px;
-    margin-left: 230px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Container principal */
+.notificacao-container {
+    margin-left: 230px; 
+    padding: 20px;
+    background-color: var(--background);
+    min-height: 100vh; 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Título */
+.notificacao-container h1 {
+    margin-left: 5px;
+    font-size: 28px;
+    color: var(--branco);
+    text-align: left;
+    margin-bottom: 0px;
+    font-weight: 600;
+}
+
+/* Estilo para cada notificação */
+.notificacao {
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    background-color: #333; 
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.notificacao p {
-    margin: 0 10px; 
-    display: inline-block; 
+.notificacao:hover {
+    background-color: var(--cor-secundaria); 
+    transform: scale(1.02); 
 }
 
+/* Ícones */
 .notificacao ion-icon {
-    cursor: pointer;
+    font-size: 36px;
+    color: var(--cor-primaria);
+    margin-right: 10px;
+    transition: color 0.3s ease;
 }
 
 .notificacao ion-icon:hover {
-    color: var(--cor-primaria); 
-    transition: color 0.3s ease; 
+    color: var(--branco); 
+}
+
+/* Texto da notificação */
+.notificacao p {
+    font-size: 16px;
+    color: var(--branco);
+    margin: 0;
+    font-weight: 500;
+    flex: 1; 
+}
+
+
+.notificacao .image-outline {
+    font-size: 24px;
+    color: var(--cor-primaria);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.notificacao .image-outline:hover {
+    color: var(--branco); 
 }
 
 /* Media Queries */
 
-/* Celulares pequenos */
-@media (max-width: 479px) {
+@media (max-width: 720px) {
     .menu {
         display: none;
     }
@@ -190,82 +228,24 @@ h1{
         display: none;
     }
 
-    .feed {
+    .menu-responsivo {
+        display: flex;
+    }
+
+    h1 {
+        text-align: center;
         justify-content: center;
-        margin-left: 0;
+        align-items: center;
+
+    }
+
+    .notificacao-container {
+        margin-left: 0; 
         padding: 20px;
+        background-color: var(--background);
+        min-height: 100vh; 
         display: flex;
         flex-direction: column;
-        gap: 20px;
-    }
-
-    .menu-responsivo {
-        display: flex;
-    }
-
-    h1 {
-        margin-left: 0;
-        text-align: center;
-    }
-
-    .notificacao {
-        margin-left: 0;
-    }
-}
-  
-/* Celulares e tablets pequenos */
-@media (min-width: 480px) and (max-width: 767px) {
-    .menu {
-        display: none;
-    }
-
-    .separador {
-        display: none;
-    }
-
-    .feed {
-        justify-content: center;
-        margin-left: 0;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .menu-responsivo {
-        display: flex;
-    }
-
-    h1 {
-        margin-left: 0;
-        text-align: center;
-    }
-
-    .notificacao {
-        margin-left: 0;
-    }
-}
-  
-/* Tablets */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .menu {
-        display: none;
-    }
-
-    .separador {
-        display: none;
-    }
-
-    .menu-responsivo {
-        display: flex;
-    }
-
-    h1 {
-        margin-left: 0;
-        text-align: center;
-    }
-
-    .notificacao {
-        margin-left: 0;
+        gap: 15px;
     }
 }
