@@ -30,47 +30,69 @@
 <body>
     <div class="desktop">
         <div class="logo">
-            <img src="../img/logos/logo.png" alt="">
+            <img src="../img/logos/logo.png" alt="Logo MoveON">
         </div>
 
         <div class="login">
             <h1>Criar conta</h1>
 
-            
-            <img src="..//img/imagens/icone.png" alt="foto_perfil" class="img-i">
-            <p class="text-i">Editar foto</p>
+            <img src="../img/imagens/icone.png" alt="foto_perfil" class="img-i" id="foto-perfil">
+            <p class="text-i" id="editar-foto">Editar foto</p>
             <input type="file" id="fileInput" style="display: none" accept="image/*">
-            
-            <input type="text" placeholder="Nome de usuário" class="butao">
-            <input type="text" placeholder="E-mail" class="butao">
-            <input type="text" placeholder="Senha" class="butao">
 
+            <input type="text" placeholder="Nome de usuário" class="butao" id="input-nome" autocomplete="off">
+            <input type="email" placeholder="E-mail" class="butao" id="input-email" autocomplete="off">
+            <input type="password" placeholder="Senha" class="butao" id="input-senha" autocomplete="off">
 
-            <a href="../index.html">
-                <div class="entrar">
-                    <h4>Criar</h4>
-                </div>
-            </a>
+            <div class="entrar" id="criarContaBtn" style="cursor:pointer;">
+                <h4>Criar</h4>
+            </div>
             
             <a href="entrar.html" class="conta"><p>Já possuo uma conta</p></a>
         </div>
     </div>
 
     <script>
-        document.querySelector(".text-i"  ).addEventListener("click", function() {
+        document.getElementById("editar-foto").addEventListener("click", function() {
             document.getElementById("fileInput").click();
         });
 
+        let imagemSelecionada = null;
         document.getElementById("fileInput").addEventListener("change", function(event) {
             if (event.target.files.length > 0) {
-                
-                let imagemSelecionada = event.target.files[0];
-                
-                
+                imagemSelecionada = event.target.files[0];
                 let urlImagem = URL.createObjectURL(imagemSelecionada);
-                
-                
-                window.location.href = "outra_pagina.html?imagem=" + encodeURIComponent(urlImagem);
+                document.getElementById("foto-perfil").src = urlImagem;
+            }
+        });
+
+        document.getElementById("criarContaBtn").addEventListener("click", async function() {
+            const nome = document.getElementById("input-nome").value;
+            const email = document.getElementById("input-email").value;
+            const senha = document.getElementById("input-senha").value;
+
+            const formData = new FormData();
+            formData.append('nome', nome);
+            formData.append('email', email);
+            formData.append('senha', senha);
+            if (imagemSelecionada) {
+                formData.append('imagem', imagemSelecionada);
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/usuarios', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    window.location.href = "../index.html";
+                } else {
+                    const erro = await response.json();
+                    alert("Erro ao criar conta: " + erro.message);
+                }
+            } catch (error) {
+                alert("Erro na requisição: " + error.message);
             }
         });
     </script>

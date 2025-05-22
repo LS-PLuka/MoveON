@@ -1,6 +1,7 @@
 {
   "name": "moveon",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "npx @tailwindcss/cli -i ./src/css/style.css -o ./src/css/output.css --watch"
@@ -19,6 +20,19 @@
   "description": "",
   "dependencies": {
     "@tailwindcss/cli": "^4.0.14",
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1",
+    "sequelize": "^6.37.7",
     "tailwindcss": "^4.0.14"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "eslint": "^9.27.0",
+    "globals": "^16.1.0",
+    "nodemon": "^3.1.10",
+    "sequelize-cli": "^6.6.3",
+    "sucrase": "^3.35.0"
   }
 }

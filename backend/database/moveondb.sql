@@ -84,58 +84,6 @@ CREATE TABLE mensagens (
     FOREIGN KEY (destinatario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
--- Tabela de Comunidades
-CREATE TABLE comunidades (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao TEXT,
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Tabela de Membros de Comunidades
-CREATE TABLE membros_comunidade (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    comunidade_id INT NOT NULL,
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(usuario_id, comunidade_id),
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (comunidade_id) REFERENCES comunidades(id) ON DELETE CASCADE
-);
-
--- Tabela de Postagens em Comunidades
-CREATE TABLE postagens_comunidade (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    comunidade_id INT NOT NULL,
-    usuario_id INT NOT NULL,
-    conteudo TEXT NOT NULL,
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (comunidade_id) REFERENCES comunidades(id) ON DELETE CASCADE,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
-);
-
--- Tabela de Curtidas em Postagens de Comunidades
-CREATE TABLE curtidas_comunidade (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    postagem_comunidade_id INT NOT NULL,
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(usuario_id, postagem_comunidade_id),
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (postagem_comunidade_id) REFERENCES postagens_comunidade(id) ON DELETE CASCADE
-);
-
--- Tabela de Comentários em Postagens de Comunidades
-CREATE TABLE comentarios_comunidade (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    postagem_comunidade_id INT NOT NULL,
-    conteudo TEXT NOT NULL,
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (postagem_comunidade_id) REFERENCES postagens_comunidade(id) ON DELETE CASCADE
-);
-
 -- Tabela de Tags no Perfil
 CREATE TABLE atividades (
     id INT AUTO_INCREMENT PRIMARY KEY,
