@@ -1,26 +1,15 @@
 import db from '../config/database.js';
 
-const Comentarios = {
-  async criar({ usuario_id, postagem_id, conteudo }) {
-    const [result] = await db.execute(
-      'INSERT INTO comentarios (usuario_id, postagem_id, conteudo) VALUES (?, ?, ?)',
-      [usuario_id, postagem_id, conteudo]
-    );
-    return result.insertId;
-  },
+async function comentarPostagem(usuario_id, postagem_id, texto) {
+  const sql = 'INSERT INTO comentarios (usuario_id, postagem_id, texto) VALUES (?, ?, ?)';
+  const [result] = await db.execute(sql, [usuario_id, postagem_id, texto]);
+  return result.insertId;
+}
 
-  async buscarPorPostagem(postagem_id) {
-    const [rows] = await db.execute(
-      'SELECT * FROM comentarios WHERE postagem_id = ?',
-      [postagem_id]
-    );
-    return rows;
-  },
+async function listarComentariosPorPostagem(postagem_id) {
+  const sql = 'SELECT * FROM comentarios WHERE postagem_id = ? ORDER BY created_at DESC';
+  const [rows] = await db.execute(sql, [postagem_id]);
+  return rows;
+}
 
-  async deletar(id) {
-    const [result] = await db.execute('DELETE FROM comentarios WHERE id = ?', [id]);
-    return result.affectedRows;
-  }
-};
-
-export default Comentarios;
+export { comentarPostagem, listarComentariosPorPostagem };
