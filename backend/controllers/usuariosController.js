@@ -1,6 +1,8 @@
 import { criarUsuario } from '../models/usuarios.js';
 
 export async function registrarUsuario(req, res) {
+  console.log(req.body);
+  
   const { nome, usuario, email, senha, bio } = req.body;
 
   try {

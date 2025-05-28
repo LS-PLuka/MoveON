@@ -2,6 +2,6 @@ import express from 'express';
 import { getAtividades } from '../controllers/atividadesController.js';
 
 const router = express.Router();
-router.get('/atividades', getAtividades);
+router.get('/', getAtividades);
 
 export default router;

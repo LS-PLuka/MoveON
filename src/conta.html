@@ -1,100 +1,151 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <!-- Título -->
     <title>MoveON</title>
-    
+
     <!-- Links -->
-    <link rel="stylesheet" href="../src/css/conta.css">
-    <link rel="stylesheet" href="../src/css/style.css">
+    <link rel="stylesheet" href="../src/css/conta.css" />
+    <link rel="stylesheet" href="../src/css/style.css" />
 
-    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon">
-    
-    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css">
+    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Output -->
-    <link href="../src/css/output.css" rel="stylesheet">
+    <link href="../src/css/output.css" rel="stylesheet" />
 
     <!-- Scripts -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </head>
 
-</head>
-<body>
+  <body>
     <div class="desktop">
-        <div class="logo">
-            <img src="../img/logos/logo.png" alt="Logo MoveON">
-        </div>
+      <div class="logo">
+        <img src="../img/logos/logo.png" alt="Logo MoveON" />
+      </div>
 
-        <div class="login">
-            <h1>Criar conta</h1>
+      <div class="login">
+        <h1>Criar conta</h1>
 
-            <img src="../img/imagens/icone.png" alt="foto_perfil" class="img-i" id="foto-perfil">
-            <p class="text-i" id="editar-foto">Editar foto</p>
-            <input type="file" id="fileInput" style="display: none" accept="image/*">
+        <form action="">
+          <img
+            src="../img/imagens/icone.png"
+            alt="foto_perfil"
+            class="img-i"
+            id="foto-perfil"
+          />
+          <p class="text-i" id="editar-foto">Editar foto</p>
+          <input
+            type="file"
+            id="fileInput"
+            style="display: none"
+            accept="image/*"
+          />
 
-            <input type="text" placeholder="Nome de usuário" class="butao" id="input-nome" autocomplete="off">
-            <input type="email" placeholder="E-mail" class="butao" id="input-email" autocomplete="off">
-            <input type="password" placeholder="Senha" class="butao" id="input-senha" autocomplete="off">
+          <input
+            type="text"
+            placeholder="Nome"
+            class="butao"
+            id="input-nome"
+            autocomplete="off"
+          />
+          <input
+            type="text"
+            placeholder="Username"
+            class="butao"
+            id="input-usuario"
+            autocomplete="off"
+          />
+          <input
+            type="email"
+            placeholder="E-mail"
+            class="butao"
+            id="input-email"
+            autocomplete="off"
+          />
+          <input
+            type="password"
+            placeholder="Senha"
+            class="butao"
+            id="input-senha"
+            autocomplete="off"
+          />
 
-            <div class="entrar" id="criarContaBtn" style="cursor:pointer;">
-                <h4>Criar</h4>
-            </div>
-            
-            <a href="entrar.html" class="conta"><p>Já possuo uma conta</p></a>
-        </div>
+          <div class="entrar" id="criarContaBtn" style="cursor: pointer">
+            <h4>Criar</h4>
+          </div>
+        </form>
+
+        <a href="entrar.html" class="conta">
+          <p>Já possuo uma conta</p>
+        </a>
+      </div>
     </div>
 
     <script>
-        document.getElementById("editar-foto").addEventListener("click", function() {
-            document.getElementById("fileInput").click();
-        });
+      document
+        .getElementById("criarContaBtn")
+        .addEventListener("click", async () => {
+          const nome = document.getElementById("input-nome").value.trim();
+          const usuario = document.getElementById("input-usuario").value.trim();
+          const email = document.getElementById("input-email").value.trim();
+          const senha = document.getElementById("input-senha").value;
 
-        let imagemSelecionada = null;
-        document.getElementById("fileInput").addEventListener("change", function(event) {
-            if (event.target.files.length > 0) {
-                imagemSelecionada = event.target.files[0];
-                let urlImagem = URL.createObjectURL(imagemSelecionada);
-                document.getElementById("foto-perfil").src = urlImagem;
+          // Validação simples
+          if (!nome || !usuario || !email || !senha) {
+            alert("Preencha todos os campos.");
+            return;
+          }
+
+          const payload = {
+            nome,
+            usuario,
+            email,
+            senha,
+            bio
+          };
+
+          try {
+            const response = await fetch("http://localhost:3000/api/usuarios", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(payload),
+            });
+
+            if (response.ok) {
+              alert("Usuário cadastrado com sucesso!");
+              window.location.href = "entrar.html";
+            } else {
+              const erro = await response.json();
+              alert(
+                "Erro ao cadastrar: " + (erro.mensagem || response.statusText)
+              );
             }
-        });
-
-        document.getElementById("criarContaBtn").addEventListener("click", async function() {
-            const nome = document.getElementById("input-nome").value;
-            const email = document.getElementById("input-email").value;
-            const senha = document.getElementById("input-senha").value;
-
-            const formData = new FormData();
-            formData.append('nome', nome);
-            formData.append('email', email);
-            formData.append('senha', senha);
-            if (imagemSelecionada) {
-                formData.append('imagem', imagemSelecionada);
-            }
-
-            try {
-                const response = await fetch('http://localhost:3000/usuarios', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    window.location.href = "../index.html";
-                } else {
-                    const erro = await response.json();
-                    alert("Erro ao criar conta: " + erro.message);
-                }
-            } catch (error) {
-                alert("Erro na requisição: " + error.message);
-            }
+          } catch (err) {
+            alert("Erro ao conectar com o servidor.");
+            console.error(err);
+          }
         });
     </script>
-</body>
+  </body>
 </html>

@@ -11,10 +11,14 @@ import mensagensRoutes from './backend/routers/mensagensRoutes.js';
 import atividadesRoutes from './backend/routers/atividadesRoutes.js';
 import usuarioAtividadesRoutes from './backend/routers/usuarioAtividadesRoutes.js';
 
+// Importar cors
+import cors from 'cors';
+
 const app = express();
 const PORT = 3000;
 
 // Middleware para ler JSON
+app.use(cors())
 app.use(express.json());
 
 // Rotas da API

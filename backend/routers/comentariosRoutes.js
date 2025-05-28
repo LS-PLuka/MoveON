@@ -2,6 +2,6 @@ import express from 'express';
 import { novoComentario } from '../controllers/comentariosController.js';
 
 const router = express.Router();
-router.post('/comentarios', novoComentario);
+router.post('/', novoComentario);
 
 export default router;

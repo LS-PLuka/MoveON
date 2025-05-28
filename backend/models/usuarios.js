@@ -2,10 +2,10 @@
 import db from '../config/database.js';
 
 // Criar um novo usuário
-export async function criarUsuario(nome, email, senha) {
+export async function criarUsuario(nome, usuario, email, senha, bio) {
   const [result] = await db.execute(
-    'INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)',
-    [nome, email, senha]
+    'INSERT INTO usuarios (nome, usuario, email, senha, bio) VALUES (?, ?, ?, ?, ?)',
+    [nome, usuario, email, senha, bio]
   );
   return result.insertId;
 }
