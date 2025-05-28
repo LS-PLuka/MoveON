@@ -2,12 +2,20 @@
 import db from '../config/database.js';
 
 // Criar um novo usuário
-export async function criarUsuario(nome, usuario, email, senha, bio) {
+export async function criarUsuario(nome, usuario, email, senha) {
   const [result] = await db.execute(
-    'INSERT INTO usuarios (nome, usuario, email, senha, bio) VALUES (?, ?, ?, ?, ?)',
-    [nome, usuario, email, senha, bio]
+    'INSERT INTO usuarios (nome, usuario, email, senha) VALUES (?, ?, ?, ?)',
+    [nome, usuario, email, senha]
   );
   return result.insertId;
+}
+
+export async function autenticarUsuario(email, senha) {
+  const [rows] = await db.execute(
+    'SELECT * FROM usuarios WHERE email = ? AND senha = ?',
+    [email, senha]
+  );
+  return rows[0];
 }
 
 // Buscar todos os usuários
