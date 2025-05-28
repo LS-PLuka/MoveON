@@ -110,6 +110,11 @@ body {
     margin: 0;
 }
 
+.deletar-btn {
+    cursor: pointer;
+    color: red;
+}
+
 .edit-icon {
     cursor: pointer;
     color: var(--cor-primaria);
