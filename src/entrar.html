@@ -29,24 +29,57 @@
 </head>
 <body>
     <div class="desktop">
-        <div class="logo">
-            <img src="../img/logos/logo.png" alt="">
-        </div>
-
         <div class="login">
             <h1>Fazer login</h1>
-
-            <input type="text" placeholder="E-mail" class="butao">
-            <input type="text" placeholder="Senha" class="butao">
-
+            <div class="form-group">
+                <input type="text" id="email" placeholder=" " class="butao" autocomplete="off" required>
+                <label for="email">E-mail</label>
+                <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="form-group">
+                <input type="password" id="senha" placeholder=" " class="butao" autocomplete="off" required>
+                <label for="senha">Senha</label>
+                <ion-icon name="lock-closed-outline"></ion-icon>
+            </div>
             <a href="../index.html">
                 <div class="entrar">
                     <h4>Entrar</h4>
                 </div>
             </a>
-            
-            <a href="conta.html" class="conta"><p>Ainda não possuo uma conta</p></a>
+                <p class="conta">
+                Ainda não possui uma conta? <br>
+                   <a href="conta.html" class="link-conta">
+                    Clique Aqui!
+                   </a>
+                </p>
         </div>
     </div>
+
+    <script type="module">
+   // Aplica fade-in na entrada da página
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('page-fade').classList.remove('active');
+});
+
+// Aplica fade-out com scale ao sair
+document.querySelectorAll('a').forEach(link => {
+  if (
+    link.hostname === window.location.hostname &&
+    link.target !== "_blank" &&
+    !link.href.startsWith("javascript:")
+  ) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const fade = document.getElementById('page-fade');
+      fade.classList.add('active');
+      setTimeout(() => {
+        window.location = this.href;
+      }, 440); // igual ao transition do CSS
+    });
+  }
+});
+    </script>
+    
+    <div id="page-fade"></div
 </body>
 </html>
