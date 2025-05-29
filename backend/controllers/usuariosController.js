@@ -1,7 +1,15 @@
-import { criarUsuario, autenticarUsuario } from '../models/usuarios.js';
+import {
+  criarUsuario,
+  autenticarUsuario,
+  buscarTodosUsuarios,
+  buscarUsuarioPorId,
+  atualizarUsuario,
+  deletarUsuario
+} from '../models/usuarios.js';
 
+// Criar novo usuário
 export async function registrarUsuario(req, res) {
-  const { nome, usuario, email, senha} = req.body;
+  const { nome, usuario, email, senha } = req.body;
 
   try {
     const id = await criarUsuario(nome, usuario, email, senha);
@@ -11,6 +19,7 @@ export async function registrarUsuario(req, res) {
   }
 }
 
+// Login do usuário
 export async function loginUsuario(req, res) {
   const { email, senha } = req.body;
 
@@ -23,7 +32,64 @@ export async function loginUsuario(req, res) {
 
     res.status(200).json({ mensagem: 'Login bem-sucedido', usuario });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ erro: 'Erro ao fazer login: ' + error.message });
+  }
+}
+
+// Listar todos os usuários
+export async function listarUsuarios(req, res) {
+  try {
+    const usuarios = await buscarTodosUsuarios();
+    res.json(usuarios);
+  } catch (error) {
+    res.status(500).json({ erro: 'Erro ao buscar usuários: ' + error.message });
+  }
+}
+
+// Buscar um usuário por ID
+export async function buscarUsuario(req, res) {
+  const { id } = req.params;
+
+  try {
+    const usuario = await buscarUsuarioPorId(id);
+
+    if (!usuario) {
+      return res.status(404).json({ mensagem: 'Usuário não encontrado' });
+    }
+
+    res.json(usuario);
+  } catch (error) {
+    res.status(500).json({ erro: 'Erro ao buscar usuário: ' + error.message });
+  }
+}
+
+// Atualizar um usuário
+export async function atualizarUsuarioController(req, res) {
+  const { id } = req.params;
+  const { nome, email, senha } = req.body;
+
+  try {
+    const usuarioExistente = await buscarUsuarioPorId(id);
+
+    if (!usuarioExistente) {
+      return res.status(404).json({ mensagem: 'Usuário não encontrado' });
+    }
+
+    await atualizarUsuario(id, nome, email, senha);
+    res.status(200).json({ mensagem: 'Usuário atualizado com sucesso' });
+  } catch (error) {
+    res.status(500).json({ erro: 'Erro ao atualizar usuário: ' + error.message });
+  }
+}
+
+// Deletar usuário
+export async function deletarUsuarioController(req, res) {
+  const { id } = req.params;
+
+  try {
+    await deletarUsuario(id);
+    res.status(200).json({ mensagem: 'Usuário deletado com sucesso' });
+  } catch (error) {
+    res.status(500).json({ erro: 'Erro ao deletar usuário: ' + error.message });
   }
 }

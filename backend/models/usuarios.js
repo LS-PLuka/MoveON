@@ -1,4 +1,3 @@
-// backend/models/usuarios.js
 import db from '../config/database.js';
 
 // Criar um novo usuário
@@ -10,6 +9,7 @@ export async function criarUsuario(nome, usuario, email, senha) {
   return result.insertId;
 }
 
+// Autenticar usuário no login
 export async function autenticarUsuario(email, senha) {
   const [rows] = await db.execute(
     'SELECT * FROM usuarios WHERE email = ? AND senha = ?',

@@ -11,4 +11,8 @@ async function buscarPostagens() {
   return rows;
 }
 
-export { criarPostagem, buscarPostagens };
+async function deletarPostagem(id) {
+  await db.execute('DELETE FROM postagens WHERE id = ?', [id]);
+}
+
+export { criarPostagem, buscarPostagens, deletarPostagem };
