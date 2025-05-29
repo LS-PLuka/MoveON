@@ -133,166 +133,196 @@ body {
     background-color: var(--cor-secundaria);
 }
 
-/* Container principal */
+:root {
+    --ff-khand: "Raleway", serif;
+    --cor-primaria: #56AEFF;
+    --cor-secundaria: #316697;
+    --preto: #000;
+    --branco: #fff;
+    --background: #262626;
+    --botao: #f0f0f0;
+    --botao-hover: #ddd;
+}
+
+body {
+    font-family: var(--ff-khand);
+    background-color: var(--background);
+}
+
 .container-postagem {
-    background-color: #1d1d1d;
-    justify-content: center;
+    background: #161b22;
+    box-shadow: 0 2px 16px 0 rgba(24, 32, 44, 0.14);
+    margin-left: 50rem; 
+    margin-right: auto;
+    margin-top: 9.5rem; 
+    padding: 2.8rem 2.3rem 2.2rem 2.3rem;
+    max-width: 650px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    min-width: 330px;
+    min-height: 380px;
     align-items: center;
-    margin-left: 650px;
-    margin-right: 200px;
-    margin-top: 260px;
-    padding: 2rem;
-    max-width: 800px;
-    border-radius: 10px;
-    top: -10px;
 }
 
-/* Título */
 .h1-text h1 {
-    font-size: 28px;
+    font-size: 1.55rem;
     color: var(--branco);
-    margin-bottom: 20px;
+    margin-bottom: 12px;
+    font-weight: 700;
     text-align: center;
+    letter-spacing: 1px;
 }
 
-/* Upload */
 .image-upload-container {
     justify-content: center;
-    display: flex;
     align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
     cursor: pointer;
     color: #e0e0e0;
-    margin-top: 10px;
+    border: 2px dashed var(--cor-primaria);
+    border-radius: 10px;
+    padding: 16px 0 10px 0;
+    width: 100%;
+    min-height: 110px;
+    transition: border-color 0.23s;
+    background: #23272f;
+    position: relative;
+}
+
+.image-upload-container:focus-within,
+.image-upload-container:hover {
+    border-color: var(--cor-secundaria);
+    color: var(--cor-primaria);
 }
 
 .icon-upload {
     font-size: 40px;
-    margin-right: 10px;
-    transition: color 0.3s ease;
+    color: var(--cor-primaria);
+    opacity: 0.7;
+    transition: color 0.3s;
+}
+
+.upload-preview {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-img {
+    max-width: 120px;
+    max-height: 80px;
+    border-radius: 6px;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.16);
+    object-fit: cover;
+    background: #18191a;
+    border: 1.5px solid var(--cor-primaria);
 }
 
 .text-upload {
-    font-size: 16px;
-    color: #e0e0e0;
+    font-size: 1.02rem;
+    color: #d1d8e0;
+    opacity: 0.88;
+    margin-top: 4px;
 }
 
 input[type="file"].hidden {
     display: none;
 }
 
-input[type="file"]:focus {
-    outline: none;
-}
-
-.image-upload-container:hover {
-    color: var(--cor-primaria);
-    transition: color 0.3s ease;
-}
-
-/* Caixa de texto */
 textarea {
     width: 100%;
-    margin-top: 1rem;
-    padding: 10px;
-    border-radius: 5px;
+    margin-top: 0.6rem;
+    padding: 13px 15px;
+    border-radius: 7px;
     border: none;
     resize: vertical;
     font-family: var(--ff-khand);
-    font-size: 16px;
-    background-color: #f5f5f5;
-    color: #333;
+    font-size: 1.13rem;
+    background-color: #f6f6f7;
+    color: #23272f;
     min-height: 120px;
+    outline: none;
+    transition: box-shadow 0.18s, border 0.18s;
+    box-shadow: 0 2px 8px 0 rgba(24, 32, 44, 0.08);
+}
+textarea:focus {
+    border: 2px solid var(--cor-primaria);
+    background: #fff;
 }
 
-/* Botão */
 .button-container {
     display: flex;
     justify-content: flex-end;
-    margin-top: 1rem;
-}
-
-button {
-    background-color: var(--cor-secundaria);
-    color: white;
-    padding: 13px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
     width: 100%;
-    margin-left: 30px;
+    margin-top: 4px;
 }
 
-button:hover {
-    background-color: #255a75;
+button#postar-btn {
+    background-color: var(--cor-secundaria);   /* <<-- cor padrão antiga */
+    color: #fff;
+    padding: 13px 0;
+    font-size: 1.13rem;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    box-shadow: 0 1.5px 5px 0 rgba(86,174,255,0.05);
+    transition: background-color 0.17s, transform 0.13s;
+    width: 48%;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
-
-button:focus {
+button#postar-btn:hover, button#postar-btn:focus {
+    background-color: #255a75;  /* <<-- cor padrão antiga */
+    transform: translateY(-1.5px) scale(1.04);
     outline: none;
 }
 
-/* Media Queries */
-
-/* Celulares pequenos */
-@media (max-width: 479px) {
-    .menu,
-    .separador {
+/* Responsividade */
+/* Responsividade para mobile: menu lateral some, menu responsivo aparece */
+@media (max-width: 900px) {
+    .menu, .separador {
         display: none;
     }
-
     .menu-responsivo {
         display: flex;
     }
-
     .container-postagem {
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-top: center;
+        margin: 24px 2vw 68px 3vw; /* espaço inferior para o menu responsivo */
+        margin-top: 10rem;
+        max-width: 99vw;
+        min-width: unset;
+        padding: 1.2rem 4vw 1.2rem 4vw;
+        border-radius: 9px;
         align-items: center;
-        justify-content: center;
-        padding: 20px;
     }
 }
-  
-/* Celulares e tablets pequenos */
-@media (min-width: 480px) and (max-width: 767px) {
-    .menu,
-    .separador {
-        display: none;
-    }
 
-    .menu-responsivo {
-        display: flex;
-    }
-
+/* Para garantir espaço extra para o menu responsivo fixo no rodapé */
+@media (max-width: 600px) {
     .container-postagem {
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-top: center;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
+        margin-bottom: 80px;
     }
 }
-  
-/* Tablets */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .menu,
-    .separador {
-        display: none;
-    }
-
-    .menu-responsivo {
-        display: flex;
-    }
-
+@media (max-width: 420px) {
     .container-postagem {
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-top: center;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
+        margin: 7px 0 90px 0; /* mais espaço para o menu responsivo */
+        max-width: 100vw;
+        padding: 1rem 2vw 1rem 2vw;
+        border-radius: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .container-postagem {
+        align-items: stretch;
     }
 }

@@ -4,7 +4,6 @@ import usuariosRouter from '../backend/routers/usuarios.routes.js';
 const app = express();
 
 app.use(express.json());
-app.use('/uploads', express.static('uploads')); // Servir imagens
 
 app.use('/usuarios', usuariosRouter);
 

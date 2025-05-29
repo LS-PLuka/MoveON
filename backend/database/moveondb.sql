@@ -21,6 +21,7 @@ CREATE TABLE postagens (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,
     conteudo TEXT NOT NULL,
+    imagem VARCHAR(255), -- novo campo para a imagem (URL ou nome do arquivo)
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );

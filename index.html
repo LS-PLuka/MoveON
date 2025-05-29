@@ -97,6 +97,18 @@
                 </button>
                 <button class="coment-button"><ion-icon name="chatbubble-outline"></ion-icon>Comentar</button>
             </div>
+                <!-- Bloco de comentários começa aqui -->
+            <div class="comments-section">
+                <div class="comments-list">
+                    <!-- Comentários aparecerão aqui -->
+                </div>
+                <form class="comment-form">
+                    <input type="text" placeholder="Adicione um comentário..." />
+                    <button type="submit">
+                        <ion-icon name="send-outline"></ion-icon>
+                    </button>
+                </form>
+            </div>
         </div>
         
         <div class="post">
@@ -124,11 +136,51 @@
                     <div class="like-number">0</div>
                 </button>
                 <button class="coment-button"><ion-icon name="chatbubble-outline"></ion-icon>Comentar</button> 
-        </div>
-    </div>
+            </div> 
+                <!-- Bloco de comentários começa aqui -->
+                <div class="comments-section">
+                    <div class="comments-list">
+                        <!-- Comentários aparecerão aqui -->
+                    </div>
+                    <form class="comment-form">
+                        <input type="text" placeholder="Adicione um comentário..." />
+                        <button type="submit">
+                            <ion-icon name="send-outline"></ion-icon>
+                        </button>
+                    </form>
+                </div> 
+            </div>
 
     <!-- Scripts -->
      
     <script src="src/js/index.js"></script>
+
+    <script>
+    // Mostrar/esconder a sessão de comentários ao clicar em "Comentar"
+    document.querySelectorAll('.post').forEach(post => {
+        const commentBtn = post.querySelector('.coment-button');
+        const commentsSection = post.querySelector('.comments-section');
+        if (commentBtn && commentsSection) {
+            commentBtn.addEventListener('click', function() {
+                commentsSection.classList.toggle('show');
+            });
+        }
+    });
+
+    document.querySelectorAll('.comment-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = this.querySelector('input');
+            const comment = input.value.trim();
+            if (comment) {
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.innerHTML = `<span class="comment-user">Você:</span> <span class="comment-text">${comment}</span>`;
+                this.parentElement.querySelector('.comments-list').appendChild(commentDiv);
+            input.value = '';
+            }
+        });
+    });
+</script>
 </body>
 </html>

@@ -1,129 +1,295 @@
-/* Guia de Estilos */
-
 :root {
-    /* Fontes */
-    --ff-khand: "Raleway", serif;
-
-    /* Cores */
     --cor-primaria: #56AEFF;
     --cor-secundaria: #316697;
-    --preto: #000;
-    --branco: #fff;
-    
-    --background: #262626;
-
-    --botao: #f0f0f0;
-    --botao-hover: #ddd;
-}
-
-
-body {
-    font-family: var(--ff-khand);
+    --cor-preta: #18191a;
+    --cor-branca: #fff;
+    --cor-background: #23272f;
+    --cor-input-border: #3f4a5a;
+    --cor-input-focus: #56AEFF;
+    --cor-texto-cinza: #ccc;
+    --cor-placeholder: #8ca1bd;
+    --radius: 10px;
+  }
+  
+  body {
+    min-height: 100vh;
+    background: var(--cor-background);
     margin: 0;
-    padding: 0;
-    background-color: var(--background);
-}
-
-.desktop {
+    font-family: 'Khand', 'Raleway', Arial, Helvetica, sans-serif;
     display: flex;
-    flex-direction: row;
-    justify-content:  space-around;
     align-items: center;
-    height: 100vh;
-    background-color: #262626;
-}
-
-.logo {
+    justify-content: center;
+  }
+  
+  .desktop {
+    width: 100vw;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
-    margin-right: 20px;
-}
-
-.login {
+    align-items: center;
+    background: none;
+  }
+  
+  .login {
+    background: var(--cor-preta);
+    border-radius: var(--radius);
+    padding: 2rem 1.5rem;
+    width: 95vw;
+    max-width: 400px;
+    margin: 24px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 300px;
-    padding: 25px;
-    background-color: #56AEFF;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    color: #FFF;
-
-    text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-    font-family: Khand;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-}
-
-
-.entrar {
+    border: 1px solid #232e3d;
+  }
+  
+  .header-login {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    gap: 14px;
     width: 100%;
-    height: 40px;
-    padding: 10px;
-    margin-top: 10px;
+    margin-bottom: 1.2rem;
+  }
+  
+  .header-login h1 {
+    font-size: 1.6rem;
+    color: var(--cor-texto-cinza);
+    margin: 0;
+    letter-spacing: 1px;
+    font-weight: 600;
+    font-family: 'Khand', Arial, Helvetica, sans-serif;
+  }
+  
+  .img-i {
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    background: var(--cor-texto-cinza);
+    object-fit: cover;
+    border: 2px solid var(--cor-secundaria);
+    margin-bottom: 4px;
+    margin-top: 2px;
+  }
+  
+  .text-i {
+    color: var(--cor-texto-cinza);
+    font-size: 1rem;
     margin-bottom: 10px;
-    background-color: #262626;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
+    font-weight: 500;
     cursor: pointer;
-}
+    opacity: 0.85;
+    text-align: center;
+    transition: color 0.2s, opacity 0.2s;
+  }
+  .text-i:hover {
+    color: var(--cor-primaria);
+    opacity: 1;
+  }
+  
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+  }
+  
+  .input-group {
+    width: 100%;
+    position: relative;
+    margin-top: 16px;
+  }
 
-.entrar:hover {
-    background-color: #316697;
-}
+  .input-group ion-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.15rem;
+    color: var(--cor-primaria);
+    opacity: 0.7;
+    pointer-events: none;
+  }
 
-.butao {
-    background-color: var(--botao);
+  .input-group input:focus ~ ion-icon {
+    color: var(--cor-secundaria);
+    opacity: 0.9;
+  }
+  
+  .butao {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--cor-input-border);
+    border-radius: 0;
+    padding: 13px 30px 5px 2px;
+    font-size: 1rem;
+    color: var(--cor-branca);
+    margin-bottom: 2px;
+    outline: none;
+    font-family: 'Raleway', Arial, Helvetica, sans-serif;
+  }
+  .butao:focus {
+    border-color: var(--cor-secundaria);
+    background: rgba(86,174,255,0.04);
+  }
+
+  .butao::placeholder {
+    color: transparent;
+  }
+  
+  /* Label flutuante clean e sem sobreposição */
+  .input-group label {
+    position: absolute;
+    left: 2px;
+    top: 16px;
+    color: var(--cor-placeholder);
+    font-size: 1rem;
+    pointer-events: none;
+    transition: 0.2s cubic-bezier(.4,1.2,.5,1);
+    z-index: 2;
+    background: transparent;
+    padding: 0 2px;
+  }
+
+  .input-group input:focus ~ label,
+  .input-group input:not(:placeholder-shown) ~ label {
+    top: -7px; /* Sobe só um pouco, não muito */
+    font-size: 0.92rem;
+    color: var(--cor-primaria);
+    background: var(--cor-preta);
+    padding: 0 4px;
+    border-radius: 2px;
+  }
+  
+  .entrar {
+    width: 100%;
+    height: 42px;
+    background: var(--cor-primaria);
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1.08rem;
+    color: var(--cor-texto-cinza);
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 25px 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, transform .16s;
+  }
+
+  .entrar:hover, .entrar:focus {
+    background: var(--cor-secundaria);
+    transform: translateY(-1.5px) scale(1.01);
+  }
+  
+  .conta {
+    width: 100%;
+    text-align: center;
     margin-top: 15px;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.butao:hover {
-    background-color: var(--botao-hover);
-    transition: 0.2s;
-    
-}
-
-.conta p {
-    font-size: 14px;
-    color: #FFF;
     text-decoration: none;
-}
+  }
 
-.conta p:hover {
-    transition: 0.2s;
-    font-size: 16px;
+  .conta p {
+    color: var(--cor-primaria);
+    font-size: 1rem;
+    margin: 0;
+    opacity: 0.9;
+    transition: font-size 0.16s, color .16s;
+    font-weight: 600;
+    letter-spacing: .03em;
+  }
+
+  .conta p:hover {
+    font-size: 1.08rem;
+    color: var(--cor-secundaria);
     text-decoration: underline;
+  }
+
+  /* Transição de Páginas */
+  #page-fade {
+    pointer-events: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 9999;
+    background: #23272f; /* Altere para a cor do seu fundo */
+    opacity: 0;
+    transform: scale(1);
+    transition: opacity 0.44s cubic-bezier(.6,.04,.49,.92), transform 0.44s cubic-bezier(.6,.04,.49,.92);
+  }
+  #page-fade.active {
+    opacity: 1;
+    transform: scale(1.04);
+    pointer-events: all;
+  }
+
+  /* Responsividade MoveON */
+
+/* Para telas menores que 600px (celulares pequenos) */
+@media (max-width: 419px) {
+  .desktop {
+    align-items: flex-start;
+    padding-top: 24px;
+    min-height: 100vh;
+  }
+  .login {
+    padding: 1.2rem 0.7rem;
+    width: 98vw;
+    max-width: 99vw;
+    margin: 8px;
+    border-radius: 0 0 var(--radius) var(--radius);
+    font-size: 0.97rem;
+  }
+  .header-login h1 {
+    font-size: 1.15rem;
+  }
+  .img-i {
+    width: 64px;
+    height: 64px;
+  }
+  .input-group label,
+  .butao {
+    font-size: 0.98rem;
+  }
+  .entrar {
+    font-size: 0.98rem;
+    height: 38px;
+  }
+  .conta p {
+    font-size: 0.95rem;
+  }
 }
 
-.text-i  {
-    color: #fafafa;
-    font-size: 16px;
-    margin-top: 5px;
-
+/* Para tablets (600px até 900px) */
+@media (min-width: 420px) and (max-width: 767px) {
+  .desktop {
+    padding-top: 32px;
+    min-height: 100vh;
+  }
+  .login {
+    padding: 1.8rem 1.1rem;
+    width: 90vw;
+    max-width: 430px;
+    margin: 16px;
+    font-size: 1.04rem;
+  }
+  .header-login h1 {
+    font-size: 1.9rem;
+  }
 }
 
-.text-i:hover {
-    transition: 0.5s;
-    text-decoration: underline;
-}
-
-.img-i:hover {
-    cursor: pointer;
-}
-
-.text-i:hover {
-    cursor: pointer;
+/* Para desktops grandes (acima de 1200px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .login {
+    max-width: 440px;
+    padding: 2.3rem 2rem;
+    font-size: 1.07rem;
+  }
+  .header-login h1 {
+    font-size: 1.9rem;
+  }
 }

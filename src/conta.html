@@ -4,147 +4,130 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Título -->
     <title>MoveON</title>
 
-    <!-- Links -->
+    <!-- Estilos -->
     <link rel="stylesheet" href="../src/css/conta.css" />
     <link rel="stylesheet" href="../src/css/style.css" />
+    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css" />
+    <link rel="stylesheet" href="../src/css/output.css" />
 
+    <!-- Ícone -->
     <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon" />
 
-    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css" />
-
+    <!-- Fonts e ícones -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Output -->
-    <link href="../src/css/output.css" rel="stylesheet" />
-
-    <!-- Scripts -->
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   </head>
 
   <body>
     <div class="desktop">
-      <div class="logo">
-        <img src="../img/logos/logo.png" alt="Logo MoveON" />
-      </div>
-
       <div class="login">
-        <h1>Criar conta</h1>
-
-        <form action="">
-          <img
-            src="../img/imagens/icone.png"
-            alt="foto_perfil"
-            class="img-i"
-            id="foto-perfil"
-          />
+        <div class="header-login">
+          <h1>Criar conta</h1>
+        </div>
+        <form>
+          <img src="../img/imagens/icone.png" alt="foto_perfil" class="img-i" id="foto-perfil" />
           <p class="text-i" id="editar-foto">Editar foto</p>
-          <input
-            type="file"
-            id="fileInput"
-            style="display: none"
-            accept="image/*"
-          />
+          <input type="file" id="fileInput" style="display: none" accept="image/*" />
 
-          <input
-            type="text"
-            placeholder="Nome"
-            class="butao"
-            id="input-nome"
-            autocomplete="off"
-          />
-          <input
-            type="text"
-            placeholder="Username"
-            class="butao"
-            id="input-usuario"
-            autocomplete="off"
-          />
-          <input
-            type="email"
-            placeholder="E-mail"
-            class="butao"
-            id="input-email"
-            autocomplete="off"
-          />
-          <input
-            type="password"
-            placeholder="Senha"
-            class="butao"
-            id="input-senha"
-            autocomplete="off"
-          />
+          <div class="input-group">
+            <input type="text" class="butao" id="input-nome" autocomplete="off" placeholder=" " required />
+            <label for="input-nome">Nome</label>
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
+          <div class="input-group">
+            <input type="text" class="butao" id="input-usuario" autocomplete="off" placeholder=" " required />
+            <label for="input-usuario">Username</label>
+            <ion-icon name="at-outline"></ion-icon>
+          </div>
+          <div class="input-group">
+            <input type="email" class="butao" id="input-email" autocomplete="off" placeholder=" " required />
+            <label for="input-email">E-mail</label>
+            <ion-icon name="mail-outline"></ion-icon>
+          </div>
+          <div class="input-group">
+            <input type="password" class="butao" id="input-senha" autocomplete="off" placeholder=" " required />
+            <label for="input-senha">Senha</label>
+            <ion-icon name="lock-closed-outline"></ion-icon>
+          </div>
 
           <div class="entrar" id="criarContaBtn" style="cursor: pointer">
-            <h4>Criar</h4>
+            <h4 style="margin: 0; font-size: 1.11rem; letter-spacing: 0.09em;">Criar</h4>
           </div>
         </form>
-
-        <a href="entrar.html" class="conta">
+        <a href="../../entrar.html" class="conta">
           <p>Já possuo uma conta</p>
         </a>
       </div>
     </div>
 
+    <!-- Script -->
     <script>
-      document
-        .getElementById("criarContaBtn")
-        .addEventListener("click", async () => {
-          const nome = document.getElementById("input-nome").value.trim();
-          const usuario = document.getElementById("input-usuario").value.trim();
-          const email = document.getElementById("input-email").value.trim();
-          const senha = document.getElementById("input-senha").value;
+      document.getElementById("criarContaBtn").addEventListener("click", async () => {
+        const nome = document.getElementById("input-nome").value.trim();
+        const usuario = document.getElementById("input-usuario").value.trim();
+        const email = document.getElementById("input-email").value.trim();
+        const senha = document.getElementById("input-senha").value;
 
-          // Validação simples
-          if (!nome || !usuario || !email || !senha) {
-            alert("Preencha todos os campos.");
-            return;
+        if (!nome || !usuario || !email || !senha) {
+          alert("Preencha todos os campos.");
+          return;
+        }
+
+        const payload = { nome, usuario, email, senha };
+
+        try {
+          const response = await fetch("http://localhost:3000/api/usuarios", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (response.ok) {
+            alert("Usuário cadastrado com sucesso!");
+            window.location.href = "entrar.html";
+          } else {
+            const erro = await response.json();
+            alert("Erro ao cadastrar: " + (erro.mensagem || response.statusText));
           }
+        } catch (err) {
+          alert("Erro ao conectar com o servidor.");
+          console.error(err);
+        }
+      });
 
-          const payload = {
-            nome,
-            usuario,
-            email,
-            senha,
-          };
+      // Transições de página (fade)
+      window.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("page-fade")?.classList.remove("active");
+      });
 
-          try {
-            const response = await fetch("http://localhost:3000/api/usuarios", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(payload),
-            });
-
-            if (response.ok) {
-              alert("Usuário cadastrado com sucesso!");
-              window.location.href = "entrar.html";
-            } else {
-              const erro = await response.json();
-              alert(
-                "Erro ao cadastrar: " + (erro.mensagem || response.statusText)
-              );
-            }
-          } catch (err) {
-            alert("Erro ao conectar com o servidor.");
-            console.error(err);
-          }
-        });
+      document.querySelectorAll("a").forEach(link => {
+        if (
+          link.hostname === window.location.hostname &&
+          link.target !== "_blank" &&
+          !link.href.startsWith("javascript:")
+        ) {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const fade = document.getElementById("page-fade");
+            fade?.classList.add("active");
+            setTimeout(() => {
+              window.location = this.href;
+            }, 440);
+          });
+        }
+      });
     </script>
+
+    <div id="page-fade"></div>
   </body>
 </html>

@@ -50,28 +50,80 @@
         </ul>
     </div>
 
-    <!-- Conteúdo principal -->
     <main class="container-postagem">
-        <div class="h1-text">
-            <h1>Publique Fotos/Vídeos ou Textos</h1>
-        </div>
+    <div class="h1-text">
+        <h1>Publique Fotos/Vídeos ou Textos</h1>
+    </div>
 
-        <!-- Upload de imagem -->
-        <label for="image-upload" class="block text-gray-300">
-        <div class="image-upload-container">
-            <input type="file" id="image-upload" class="hidden" accept="image/*">
+    <!-- Upload de imagem -->
+    <label for="image-upload" class="image-upload-container" tabindex="0">
+        <input type="file" id="image-upload" class="hidden" accept="image/*">
+        <div class="upload-preview" id="upload-preview">
             <ion-icon name="cloud-upload-outline" class="icon-upload"></ion-icon>
-            <span>Clique para selecionar uma imagem</span>
         </div>
-        </label>
+        <span class="text-upload">Clique ou toque para selecionar uma imagem</span>
+    </label>
 
-        <!-- Caixa de texto -->
-        <textarea placeholder="Escreva algo para sua publicação..."></textarea>
+    <!-- Caixa de texto -->
+    <textarea placeholder="Escreva algo para sua publicação..." aria-label="Texto da publicação"></textarea>
 
-        <!-- Botão de postagem -->
-        <div class="button-container">
-            <button type="button">POSTAR</button>
-        </div>
-    </main>
+    <!-- Botão de postagem -->
+    <div class="button-container">
+        <button type="button" id="postar-btn">
+            <ion-icon name="send-outline" style="vertical-align: middle; margin-right: 7px;"></ion-icon>POSTAR
+        </button>
+    </div>
+</main>
+
+<script>
+    // Preview da imagem selecionada
+    document.getElementById('image-upload').addEventListener('change', function(event) {
+        const preview = document.getElementById('upload-preview');
+        preview.innerHTML = '';
+        if (event.target.files && event.target.files[0]) {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(event.target.files[0]);
+            img.className = 'preview-img';
+            img.onload = () => URL.revokeObjectURL(img.src);
+            preview.appendChild(img);
+        } else {
+            preview.innerHTML = '<ion-icon name="cloud-upload-outline" class="icon-upload"></ion-icon>';
+        }
+    });
+</script>
+
+<script>
+    document.getElementById("postar-btn").addEventListener("click", async () => {
+    const usuario_id = 1; // pegar de login real
+    const conteudo = document.querySelector("textarea").value.trim();
+    const imagemInput = document.getElementById("image-upload");
+    const formData = new FormData();
+
+    formData.append("usuario_id", usuario_id);
+    formData.append("conteudo", conteudo);
+
+    if (imagemInput.files.length > 0) {
+        formData.append("imagem", imagemInput.files[0]);
+    }
+
+    try {
+        const response = await fetch("http://localhost:3000/api/postagens", {
+            method: "POST",
+            body: formData
+        });
+
+        if (response.ok) {
+            alert("Postagem enviada!");
+            window.location.href = "../index.html";
+        } else {
+            const erro = await response.json();
+            alert("Erro: " + (erro.mensagem || erro.erro));
+        }
+    } catch (err) {
+        alert("Erro ao conectar com o servidor.");
+        console.error(err);
+    }
+});
+</script>    
 </body>
 </html>

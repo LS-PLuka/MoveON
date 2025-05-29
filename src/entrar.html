@@ -3,71 +3,106 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <title>MoveON</title>
 
   <!-- Estilos -->
   <link rel="stylesheet" href="../src/css/entrar.css" />
   <link rel="stylesheet" href="../src/css/style.css" />
   <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css" />
-  <link href="../src/css/output.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../src/css/output.css" />
 
   <!-- Ícone -->
   <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon" />
 
-  <!-- Fontes -->
+  <!-- Fontes e ícones -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
-
-  <!-- Ícones -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet"
+  />
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
+
 <body>
   <div class="desktop">
-    <div class="logo">
-      <img src="../img/logos/logo.png" alt="Logo MoveON" />
-    </div>
-
     <div class="login">
       <h1>Fazer login</h1>
 
-      <input type="text" placeholder="E-mail" class="butao" id="input-email" />
-      <input type="password" placeholder="Senha" class="butao" id="input-senha" />
+      <div class="form-group">
+        <input type="text" id="input-email" placeholder=" " class="butao" autocomplete="off" required />
+        <label for="input-email">E-mail</label>
+        <ion-icon name="mail-outline"></ion-icon>
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="input-senha" placeholder=" " class="butao" autocomplete="off" required />
+        <label for="input-senha">Senha</label>
+        <ion-icon name="lock-closed-outline"></ion-icon>
+      </div>
 
       <div class="entrar" id="entrarBtn" style="cursor: pointer">
         <h4>Entrar</h4>
       </div>
 
-      <a href="conta.html" class="conta">
-        <p>Ainda não possuo uma conta</p>
-      </a>
+      <p class="conta">
+        Ainda não possui uma conta? <br />
+        <a href="conta.html" class="link-conta">Clique Aqui!</a>
+      </p>
     </div>
   </div>
+
+  <script type="module">
+    // Fade-in na entrada
+    window.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("page-fade")?.classList.remove("active");
+    });
+
+    // Fade-out ao clicar nos links
+    document.querySelectorAll("a").forEach(link => {
+      if (
+        link.hostname === window.location.hostname &&
+        link.target !== "_blank" &&
+        !link.href.startsWith("javascript:")
+      ) {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const fade = document.getElementById("page-fade");
+          fade?.classList.add("active");
+          setTimeout(() => {
+            window.location = this.href;
+          }, 440);
+        });
+      }
+    });
+  </script>
+
+  <div id="page-fade"></div>
 
   <!-- Script de login -->
   <script>
     document.getElementById("entrarBtn").addEventListener("click", async () => {
       const email = document.getElementById("input-email").value.trim();
       const senha = document.getElementById("input-senha").value;
-  
+
       if (!email || !senha) {
         alert("Preencha o e-mail e a senha.");
         return;
       }
-  
+
       const payload = { email, senha };
-  
+
       try {
         const response = await fetch("http://localhost:3000/api/usuarios/login", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
         });
-  
+
         if (response.ok) {
           const dados = await response.json();
           alert("Login bem-sucedido!");

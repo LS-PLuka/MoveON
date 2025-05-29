@@ -1,110 +1,200 @@
-/* Guia de Estilos */
-
 :root {
-    /* Fontes */
-    --ff-khand: "Raleway", serif;
-
-    /* Cores */
     --cor-primaria: #56AEFF;
     --cor-secundaria: #316697;
-    --preto: #000;
-    --branco: #fff;
-    
-    --background: #262626;
-
-    --botao: #f0f0f0;
-    --botao-hover: #ddd;
-}
-
-
-body {
-    font-family: var(--ff-khand);
+    --cor-preta: #18191a;
+    --cor-branca: #fff;
+    --cor-background: #23272f;
+    --cor-input-border: #3f4a5a;
+    --cor-input-focus: #56AEFF;
+    --cor-texto-cinza: #ccc;
+    --cor-placeholder: #8ca1bd;
+    --radius: 10px;
+  }
+  
+  body {
+    min-height: 100vh;
+    background: var(--cor-background);
     margin: 0;
-    padding: 0;
-    background-color: var(--background);
-}
-
-.desktop {
+    font-family: 'Khand', 'Raleway', Arial, Helvetica, sans-serif;
     display: flex;
-    flex-direction: row;
-    justify-content:  space-around;
     align-items: center;
+    justify-content: center;
+  }
+  
+  .desktop {
+    width: 100vw;
+    min-height: 100vh;
     height: 100vh;
-    background-color: #262626;
-}
-
-.logo {
     display: flex;
     justify-content: center;
-    margin-right: 20px;
-}
-
-.login {
+    align-items: center;
+    background: none;
+  }
+  
+  .login {
+    background: var(--cor-preta);
+    border-radius: var(--radius);
+    padding: 3.2rem 2rem 3.2rem 2rem;
+    width: 97vw;
+    max-width: 420px;
+    min-height: 530px;
+    margin: 32px 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 300px;
-    padding: 25px;
-    background-color: #56AEFF;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    color: #FFF;
-
-    text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-    font-family: Khand;
-    font-size: 30px;
-    font-style: normal;
+    border: 1px solid #232e3d;
+    box-sizing: border-box;
+    box-shadow: 0 2px 24px #0002;
+  }
+  
+  .login h1 {
+    font-size: 1.7rem;
+    color: var(--cor-texto-cinza);
+    margin-bottom: 3.2rem;
+    letter-spacing: 1px;
     font-weight: 600;
-    line-height: normal;
-}
-
-
-.entrar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-family: 'Khand', Arial, Helvetica, sans-serif;
+  }
+  
+  .form-group {
     width: 100%;
-    height: 40px;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: #262626;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
+    position: relative;
+    margin-bottom: 32px;
+  }
+  
+  /* Flutuante*/
+  .form-group input.butao {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--cor-input-border);
+    border-radius: 0;
+    padding: 15px 2px 9px 2px; 
+    font-size: 1rem;
+    color: var(--cor-branca);
+    outline: none;
+    font-family: 'Raleway', Arial, Helvetica, sans-serif;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .form-group input.butao:focus {
+    border-color: var(--cor-primaria);
+    background: rgba(86,174,255,0.04);
+  }
+  .form-group input.butao::placeholder {
+    color: transparent;
+  }
+  
+  /* Label flutuante */
+  .form-group label {
+    position: absolute;
+    left: 2px;
+    top: 18px;
+    color: var(--cor-placeholder);
+    font-size: 1rem;
+    pointer-events: none;
+    transition: 0.18s cubic-bezier(.4,1.2,.5,1);
+    z-index: 2;
+    background: transparent;
+    padding: 0 2px;
+  }
+  .form-group input.butao:focus ~ label,
+  .form-group input.butao:not(:placeholder-shown) ~ label {
+    top: -5px;
+    font-size: 0.90rem;
+    color: var(--cor-primaria);
+    background: var(--cor-preta);
+    padding: 0 4px;
+    border-radius: 2px;
+  }
+
+  .form-group ion-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.15rem;
+    color: var(--cor-primaria);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .form-group input:focus ~ ion-icon {
+    color: var(--cor-secundaria);
+    opacity: 0.9;
+  }
+  
+  .entrar {
+    width: 22rem;
+    height: 50px;
+    background: var(--cor-primaria);
+    border: none;
+    border-radius: 7px;
     cursor: pointer;
-}
+    font-size: 1.15rem;
+    color: var(--cor-branca);
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    margin: 14px 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, transform .13s, color .15s;
+    box-shadow: 0 2px 10px #0001;
+  }
+  
+  .entrar h4 {
+    margin: 0;
+    font-size: 1.13rem;
+    font-family: 'Khand', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    letter-spacing: .05em;
+  }
 
-.entrar:hover {
-    background-color: #316697;
-}
-
-.butao {
-    background-color: var(--botao);
-    margin-top: 15px;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.butao:hover {
-    background-color: var(--botao-hover);
-    transition: 0.2s;
-    
-}
-
-.conta p {
-    font-size: 14px;
-    color: #FFF;
+  .entrar:hover, .entrar:focus {
+    background: var(--cor-secundaria);
+    color: var(--cor-branca);
+    transform: translateY(-1px) scale(1.015);
+  }
+  
+  .conta {
+    width: 100%;
+    text-align: center;
+    margin-top: 26px;
     text-decoration: none;
-}
+    color: var(--cor-texto-cinza);
+  }
 
-.conta p:hover {
-    transition: 0.2s;
-    font-size: 16px;
+  .conta a{
+    color: var(--cor-primaria);
+    font-size: 1rem;
+    margin: 0;
+    opacity: 0.9;
+    transition: font-size 0.13s, color .16s;
+    font-weight: 600;
+    letter-spacing: .03em;
+  }
+
+  .conta a:hover {
+    font-size: 1.08rem;
+    color: var(--cor-secundaria);
     text-decoration: underline;
-}
+  }
 
+  /* Transição de Páginas */
+  /* Overlay para cascata */
+  #page-fade {
+    pointer-events: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 9999;
+    background: #23272f; /* Altere para a cor do seu fundo */
+    opacity: 0;
+    transform: scale(1);
+    transition: opacity 0.44s cubic-bezier(.6,.04,.49,.92), transform 0.44s cubic-bezier(.6,.04,.49,.92);
+  }
+  #page-fade.active {
+    opacity: 1;
+    transform: scale(1.04);
+    pointer-events: all;
+  }
