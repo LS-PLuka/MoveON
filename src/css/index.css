@@ -303,6 +303,87 @@ body {
     color: var(--cor-secundaria);
 }
 
+/* Sessão de comentários */
+.comments-section {
+    display: none;
+    margin-top: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 10px 10px 6px 10px;
+}
+
+.comments-section.show {
+    display: block;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 7px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.comment {
+    background: var(--botao);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--preto);
+}
+
+.comment-user {
+    font-weight: bold;
+    color: var(--cor-secundaria);
+    margin-right: 4px;
+}
+
+.comment-form {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.comment-form input[type="text"] {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--cor-primaria);
+    font-size: 14px;
+    outline: none;
+    background: var(--branco);
+    color: var(--preto);
+    transition: border 0.2s;
+}
+
+.comment-form input[type="text"]:focus {
+    border: 2px solid var(--cor-secundaria);
+}
+
+.comment-form button {
+    background: var(--cor-primaria);
+    border: none;
+    border-radius: 5px;
+    color: var(--branco);
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+}
+
+.comment-form button ion-icon {
+    font-size: 18px;
+}
+
+.comment-form button:hover {
+    background: var(--cor-secundaria);
+    transform: scale(1.07);
+}
+
+
 /* Barra de Pesquisa */
 
 .searchBar {
