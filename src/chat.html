@@ -3,56 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Título -->
     <title>MoveON - Chat</title>
-    
-    <!-- Links -->
     <link rel="stylesheet" href="../src/css/chat.css">
     <link rel="stylesheet" href="../src/css/style.css">
-
     <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon">
-    
     <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-    <!-- Output -->
     <link href="../src/css/output.css" rel="stylesheet">
-
-    <!-- Scripts -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-    <!-- Botão de Voltar -->
-    <div class="back-button">
-        <a href="../index.html"><ion-icon name="arrow-back-outline" class="icon"></ion-icon> Voltar</a>
-    </div>
-
-    <!-- Chat -->
     <div class="chat-container">
         <div class="chat-header">
+            <a href="../index.html" class="back-btn-header" aria-label="Voltar">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+                Voltar
+            </a>
             <h2>[Nome do Amigo]</h2>
         </div>
-        
         <div class="chat-messages">
             <div class="message received">
-                <p>Olá! Como você está?</p>
-                <span class="timestamp">10:30</span>
+                <div class="bubble">
+                    <p>Olá! Como você está?</p>
+                    <span class="timestamp">10:30</span>
+                </div>
             </div>
             <div class="message sent">
-                <p>Oi! Eu estou bem, e você?</p>
-                <span class="timestamp">10:31</span>
+                <div class="bubble">
+                    <p>Oi! Eu estou bem, e você?</p>
+                    <span class="timestamp">10:31</span>
+                </div>
             </div>
         </div>
-        
-        <div class="chat-input">
-            <input type="text" placeholder="Digite sua mensagem...">
-            <button>Enviar</button>
-        </div>
+        <form class="chat-input" autocomplete="off">
+            <input type="text" placeholder="Digite sua mensagem..." aria-label="Mensagem" />
+            <button type="submit" aria-label="Enviar mensagem">
+                <ion-icon name="send-outline"></ion-icon>
+                Enviar
+            </button>
+        </form>
     </div>
+    <script>
+    // Scroll automático para a última mensagem
+    window.addEventListener('DOMContentLoaded', () => {
+        const messages = document.querySelector('.chat-messages');
+        messages.scrollTop = messages.scrollHeight;
+    });
+    // Simulação: Enter envia mensagem (sem backend)
+    document.querySelector('.chat-input').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const input = this.querySelector('input');
+        const text = input.value.trim();
+        if(text) {
+            const div = document.createElement('div');
+            div.className = 'message sent';
+            div.innerHTML = `<div class="bubble"><p>${text}</p><span class="timestamp">${new Date().toLocaleTimeString().slice(0,5)}</span></div>`;
+            document.querySelector('.chat-messages').appendChild(div);
+            input.value = '';
+            document.querySelector('.chat-messages').scrollTop = document.querySelector('.chat-messages').scrollHeight;
+        }
+    });
+    </script>
 </body>
 </html>
