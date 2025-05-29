@@ -226,3 +226,70 @@
     transform: scale(1.04);
     pointer-events: all;
   }
+
+  /* Responsividade MoveON */
+
+/* Para telas menores que 600px (celulares pequenos) */
+@media (max-width: 419px) {
+  .desktop {
+    align-items: flex-start;
+    padding-top: 24px;
+    min-height: 100vh;
+  }
+  .login {
+    padding: 1.2rem 0.7rem;
+    width: 98vw;
+    max-width: 99vw;
+    margin: 8px;
+    border-radius: 0 0 var(--radius) var(--radius);
+    font-size: 0.97rem;
+  }
+  .header-login h1 {
+    font-size: 1.15rem;
+  }
+  .img-i {
+    width: 64px;
+    height: 64px;
+  }
+  .input-group label,
+  .butao {
+    font-size: 0.98rem;
+  }
+  .entrar {
+    font-size: 0.98rem;
+    height: 38px;
+  }
+  .conta p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Para tablets (600px até 900px) */
+@media (min-width: 420px) and (max-width: 767px) {
+  .desktop {
+    padding-top: 32px;
+    min-height: 100vh;
+  }
+  .login {
+    padding: 1.8rem 1.1rem;
+    width: 90vw;
+    max-width: 430px;
+    margin: 16px;
+    font-size: 1.04rem;
+  }
+  .header-login h1 {
+    font-size: 1.9rem;
+  }
+}
+
+/* Para desktops grandes (acima de 1200px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .login {
+    max-width: 440px;
+    padding: 2.3rem 2rem;
+    font-size: 1.07rem;
+  }
+  .header-login h1 {
+    font-size: 1.9rem;
+  }
+}

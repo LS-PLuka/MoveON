@@ -235,7 +235,7 @@ button:focus {
 /* Media Queries */
 
 /* Celulares pequenos */
-@media (max-width: 479px) {
+@media (max-width: 419px) {
     .menu,
     .separador {
         display: none;
@@ -256,7 +256,7 @@ button:focus {
 }
   
 /* Celulares e tablets pequenos */
-@media (min-width: 480px) and (max-width: 767px) {
+@media (min-width: 420px) and (max-width: 767px) {
     .menu,
     .separador {
         display: none;
