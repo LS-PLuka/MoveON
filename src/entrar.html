@@ -86,14 +86,14 @@
     document.getElementById("entrarBtn").addEventListener("click", async () => {
       const email = document.getElementById("input-email").value.trim();
       const senha = document.getElementById("input-senha").value;
-
+  
       if (!email || !senha) {
         alert("Preencha o e-mail e a senha.");
         return;
       }
-
+  
       const payload = { email, senha };
-
+  
       try {
         const response = await fetch("http://localhost:3000/api/usuarios/login", {
           method: "POST",
@@ -102,14 +102,19 @@
           },
           body: JSON.stringify(payload),
         });
-
+  
+        const dados = await response.json();
+  
         if (response.ok) {
-          const dados = await response.json();
+          // Salvando ID e nome do usuário no localStorage
+          localStorage.setItem("usuario_id", dados.usuario.id);
+          localStorage.setItem("usuario_nome", dados.usuario.nome);
+          localStorage.setItem("usuario_email", dados.usuario.email);
+  
           alert("Login bem-sucedido!");
           window.location.href = "../index.html";
         } else {
-          const erro = await response.json();
-          alert("Erro no login: " + (erro.mensagem || erro.erro || response.statusText));
+          alert("Erro no login: " + (dados.mensagem || dados.erro || "Credenciais inválidas."));
         }
       } catch (err) {
         alert("Erro ao conectar com o servidor.");

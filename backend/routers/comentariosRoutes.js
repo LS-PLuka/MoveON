@@ -1,8 +1,9 @@
 import express from 'express';
-import { novoComentario } from '../controllers/comentariosController.js';
+import { novoComentario, obterComentarios } from '../controllers/comentariosController.js';
 
 const router = express.Router();
 
-router.post('/', novoComentario);
+router.post('/:postagem_id/comentarios', novoComentario);
+router.get('/:postagem_id/comentarios', obterComentarios);
 
 export default router;

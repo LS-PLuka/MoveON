@@ -1,10 +1,16 @@
 import express from 'express';
-import { novaPostagem, excluirPostagem } from '../controllers/postagensController.js';
+import {
+  novaPostagem,
+  excluirPostagem,
+  buscarFeedComCurtidas
+} from '../controllers/postagensController.js';
+
 import upload from '../config/upload.js';
 
 const router = express.Router();
 
 router.post('/', upload.single('imagem'), novaPostagem);
 router.delete('/:id', excluirPostagem);
+router.get('/feed/:usuarioId', buscarFeedComCurtidas);
 
 export default router;

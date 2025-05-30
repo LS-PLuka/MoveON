@@ -7,7 +7,13 @@ export async function comentarPostagem(usuario_id, postagem_id, conteudo) {
 }
 
 export async function listarComentariosPorPostagem(postagem_id) {
-  const sql = 'SELECT * FROM comentarios WHERE postagem_id = ? ORDER BY criado_em DESC';
+  const sql = `
+    SELECT c.id, c.conteudo, c.criado_em, u.nome AS nome_usuario
+    FROM comentarios c
+    JOIN usuarios u ON c.usuario_id = u.id
+    WHERE c.postagem_id = ?
+    ORDER BY c.criado_em DESC
+  `;
   const [rows] = await db.execute(sql, [postagem_id]);
   return rows;
 }

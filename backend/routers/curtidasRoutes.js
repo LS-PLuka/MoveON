@@ -1,7 +1,8 @@
 import express from 'express';
-import { novaCurtida } from '../controllers/curtidasController.js';
+import { toggleCurtida } from '../controllers/curtidasController.js';
 
 const router = express.Router();
-router.post('/', novaCurtida);
+
+router.post('/toggle/:postagemId', toggleCurtida);
 
 export default router;

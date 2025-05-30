@@ -1,6 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
+import cors from 'cors';
 
 // Importações das rotas
 import usuariosRoutes from './backend/routers/usuariosRoutes.js';
@@ -13,38 +14,48 @@ import mensagensRoutes from './backend/routers/mensagensRoutes.js';
 import atividadesRoutes from './backend/routers/atividadesRoutes.js';
 import usuarioAtividadesRoutes from './backend/routers/usuarioAtividadesRoutes.js';
 
-// Importar cors
-import cors from 'cors';
-
 const app = express();
 const PORT = 3000;
 
-// Garantir que a pasta 'public/uploads' exista
+// Cria a pasta para uploads se não existir
 const uploadDir = path.resolve('public/uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
   console.log('Pasta public/uploads criada com sucesso!');
 }
 
-// Middleware para ler JSON
-app.use(cors());
+// Configuração CORS para liberar apenas origens específicas
+const allowedOrigins = ['http://127.0.0.1:5500'];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'A política de CORS não permite esta origem.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+}));
+
 app.use(express.json());
 
-// Rotas da API
+// Definição das rotas da API
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/postagens', postagensRoutes);
 app.use('/api/curtidas', curtidasRoutes);
-app.use('/api/comentarios', comentariosRoutes);
+app.use('/api/postagens', comentariosRoutes);
 app.use('/api/seguidores', seguidoresRoutes);
 app.use('/api/notificacoes', notificacoesRoutes);
 app.use('/api/mensagens', mensagensRoutes);
 app.use('/api/atividades', atividadesRoutes);
 app.use('/api/usuario-atividades', usuarioAtividadesRoutes);
 
-// Tornar 'public' acessível como estático (para servir imagens)
+// Servir arquivos estáticos da pasta 'public' (imagens, etc)
 app.use(express.static('public'));
 
-// Iniciar o servidor
+// Inicia o servidor
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
