@@ -3,7 +3,9 @@ import {
   autenticarUsuario,
   buscarTodosUsuarios,
   buscarUsuarioPorId,
-  atualizarUsuario,
+  atualizarNome,
+  atualizarEmail,
+  atualizarSenha,
   deletarUsuario
 } from '../models/usuarios.js';
 
@@ -75,7 +77,10 @@ export async function atualizarUsuarioController(req, res) {
       return res.status(404).json({ mensagem: 'Usuário não encontrado' });
     }
 
-    await atualizarUsuario(id, nome, email, senha);
+    if (nome) await atualizarNome(id, nome);
+    if (email) await atualizarEmail(id, email);
+    if (senha) await atualizarSenha(id, senha);
+
     res.status(200).json({ mensagem: 'Usuário atualizado com sucesso' });
   } catch (error) {
     res.status(500).json({ erro: 'Erro ao atualizar usuário: ' + error.message });

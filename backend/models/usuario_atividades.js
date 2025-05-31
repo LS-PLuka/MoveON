@@ -1,24 +1,33 @@
 import db from '../config/database.js';
 
-async function adicionarAtividadeUsuario(usuario_id, atividade_id, duracao, data_atividade) {
+// Adicionar uma tag (atividade) para o usuário
+export async function adicionarTagAtividade(usuario_id, atividade_id) {
   const sql = `
-    INSERT INTO usuario_atividades (usuario_id, atividade_id, duracao, data_atividade)
-    VALUES (?, ?, ?, ?)
+    INSERT IGNORE INTO usuario_atividades (usuario_id, atividade_id)
+    VALUES (?, ?)
   `;
-  const [result] = await db.execute(sql, [usuario_id, atividade_id, duracao, data_atividade]);
-  return result.insertId;
+  const [result] = await db.execute(sql, [usuario_id, atividade_id]);
+  return result.affectedRows;
 }
 
-async function listarAtividadesPorUsuario(usuario_id) {
+// Remover uma tag (atividade) do usuário
+export async function removerTagAtividade(usuario_id, atividade_id) {
   const sql = `
-    SELECT ua.*, a.nome as atividade_nome
-    FROM usuario_atividades ua
-    JOIN atividades a ON ua.atividade_id = a.id
+    DELETE FROM usuario_atividades
+    WHERE usuario_id = ? AND atividade_id = ?
+  `;
+  const [result] = await db.execute(sql, [usuario_id, atividade_id]);
+  return result.affectedRows;
+}
+
+// Listar todas as atividades (tags) do usuário
+export async function listarTagsPorUsuario(usuario_id) {
+  const sql = `
+    SELECT a.id, a.nome
+    FROM atividades a
+    JOIN usuario_atividades ua ON a.id = ua.atividade_id
     WHERE ua.usuario_id = ?
-    ORDER BY ua.data_atividade DESC
   `;
   const [rows] = await db.execute(sql, [usuario_id]);
   return rows;
 }
-
-export { adicionarAtividadeUsuario, listarAtividadesPorUsuario };

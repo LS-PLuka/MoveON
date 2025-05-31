@@ -39,9 +39,17 @@
             <ion-icon name="create-outline" class="edit-photo-icon"></ion-icon>
         </div>
         <div class="profile-info">
-            <p><strong>Nome:</strong> [user-name] <ion-icon name="create-outline" class="edit-icon"></ion-icon></p>
-            <p><strong>Email:</strong> useremail@exemplo.com <ion-icon name="create-outline" class="edit-icon"></ion-icon></p>
-            <p><strong>Senha:</strong> ********* <ion-icon name="create-outline" class="edit-icon"></ion-icon></p>
+            <p><strong>Nome:</strong> <span id="nome-texto">[user-name]</span> 
+                <ion-icon name="create-outline" class="edit-icon" data-campo="nome"></ion-icon>
+            </p>
+
+            <p><strong>Email:</strong> <span id="email-texto">useremail@exemplo.com</span> 
+                <ion-icon name="create-outline" class="edit-icon" data-campo="email"></ion-icon>
+            </p>
+
+            <p><strong>Senha:</strong> <span id="senha-texto">********</span> 
+                <ion-icon name="create-outline" class="edit-icon" data-campo="senha"></ion-icon>
+            </p>
             <button class="deletar-btn"><strong>EXCLUIR CONTA</strong></button>
         </div>
     </div>
@@ -61,5 +69,207 @@
             <span class="tag">Yoga</span>
         </div>
     </div>
+
+<!-- Scripts -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Elementos do perfil
+  const nomeSpan = document.getElementById('nome-texto');
+  const emailSpan = document.getElementById('email-texto');
+  const senhaSpan = document.getElementById('senha-texto');
+
+  const usuarioId = localStorage.getItem('usuario_id');
+  const usuarioNome = localStorage.getItem('usuario_nome');
+  const usuarioEmail = localStorage.getItem('usuario_email');
+
+  nomeSpan.textContent = usuarioNome || '[Sem nome]';
+  emailSpan.textContent = usuarioEmail || '[Sem email]';
+
+  // Editar nome, email e senha
+  document.querySelectorAll('.edit-icon').forEach(icon => {
+    icon.addEventListener('click', () => {
+      const campo = icon.getAttribute('data-campo');
+      const span = document.getElementById(`${campo}-texto`);
+      const valorAtual = campo === 'senha' ? '' : span.textContent;
+
+      if (span.querySelector('input')) return;
+
+      const input = document.createElement('input');
+      input.type = campo === 'senha' ? 'password' : 'text';
+      input.value = valorAtual;
+      input.placeholder = campo === 'senha' ? 'Nova senha' : '';
+      input.classList.add('input-editar');
+
+      const botao = document.createElement('button');
+      botao.textContent = '✔️';
+      botao.style.marginLeft = '8px';
+
+      span.textContent = '';
+      span.appendChild(input);
+      span.appendChild(botao);
+
+      botao.addEventListener('click', async () => {
+        const novoValor = input.value.trim();
+        if (!novoValor) return alert('Preencha o campo.');
+
+        const dados = {
+          nome: campo === 'nome' ? novoValor : localStorage.getItem('usuario_nome'),
+          email: campo === 'email' ? novoValor : localStorage.getItem('usuario_email'),
+          senha: campo === 'senha' ? novoValor : undefined
+        };
+
+        try {
+          const resposta = await fetch(`http://localhost:3000/api/usuarios/${usuarioId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dados)
+          });
+
+          const resultado = await resposta.json();
+
+          if (resposta.ok) {
+            alert(`${campo.charAt(0).toUpperCase() + campo.slice(1)} atualizado com sucesso!`);
+            if (campo !== 'senha') {
+              span.textContent = novoValor;
+              localStorage.setItem(`usuario_${campo}`, novoValor);
+            } else {
+              span.textContent = '*********';
+            }
+          } else {
+            alert('Erro: ' + (resultado.mensagem || resultado.erro));
+            span.textContent = valorAtual;
+          }
+        } catch (err) {
+          alert('Erro ao conectar com o servidor.');
+          span.textContent = valorAtual;
+        }
+      });
+    });
+  });
+
+  // Sistema de tags (atividades)
+  const tagsList = document.querySelector('.tags-list');
+  const tagsInput = document.getElementById('tags');
+  const tagsForm = tagsInput.closest('form');
+
+  function criarTagElemento(tag) {
+    const span = document.createElement('span');
+    span.className = 'tag';
+    span.textContent = tag.nome;
+    span.dataset.atividadeId = tag.id;
+    span.style.cursor = 'pointer';
+
+    span.addEventListener('click', async () => {
+      if (!confirm(`Remover a atividade "${tag.nome}" do seu perfil?`)) return;
+
+      try {
+        const res = await fetch('http://localhost:3000/api/usuario-atividades/remover', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ usuario_id: usuarioId, atividade_id: tag.id })
+        });
+        const json = await res.json();
+        if (res.ok) {
+          span.remove();
+          alert('Atividade removida!');
+        } else {
+          alert('Erro ao remover: ' + (json.mensagem || json.erro));
+        }
+      } catch {
+        alert('Erro ao conectar com o servidor.');
+      }
+    });
+
+    return span;
+  }
+
+  // Carrega as tags do usuário
+  async function carregarTags() {
+    tagsList.innerHTML = 'Carregando...';
+    try {
+      const res = await fetch(`http://localhost:3000/api/usuario-atividades/${usuarioId}`);
+      if (!res.ok) throw new Error('Erro ao buscar tags');
+      const tags = await res.json();
+      tagsList.innerHTML = '';
+      if (tags.length === 0) {
+        tagsList.textContent = '';
+      } else {
+        tags.forEach(tag => {
+          const tagEl = criarTagElemento(tag);
+          tagsList.appendChild(tagEl);
+        });
+      }
+    } catch (err) {
+      tagsList.textContent = 'Erro ao carregar atividades.';
+    }
+  }
+
+  tagsForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const texto = tagsInput.value.trim();
+    if (!texto) return alert('Digite ao menos uma atividade.');
+
+    const nomes = texto.split(',').map(t => t.trim()).filter(t => t.length > 0);
+    if (nomes.length === 0) return alert('Digite ao menos uma atividade válida.');
+
+    try {
+      const resAtividades = await fetch('http://localhost:3000/api/atividades');
+      if (!resAtividades.ok) throw new Error('Erro ao buscar atividades disponíveis');
+      const atividadesDisponiveis = await resAtividades.json();
+
+      for (const nomeAtividade of nomes) {
+        const atividadeEncontrada = atividadesDisponiveis.find(a => a.nome.toLowerCase() === nomeAtividade.toLowerCase());
+        if (!atividadeEncontrada) {
+          alert(`Atividade "${nomeAtividade}" não encontrada.`);
+          continue;
+        }
+
+        const resAdd = await fetch('http://localhost:3000/api/usuario-atividades/adicionar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ usuario_id: usuarioId, atividade_id: atividadeEncontrada.id })
+        });
+        const jsonAdd = await resAdd.json();
+
+        if (resAdd.ok) {
+          const novaTag = criarTagElemento(atividadeEncontrada);
+          tagsList.appendChild(novaTag);
+        } else {
+          alert(`Não foi possível adicionar "${nomeAtividade}": ${jsonAdd.mensagem || jsonAdd.erro}`);
+        }
+      }
+      tagsInput.value = '';
+    } catch (err) {
+      alert('Erro ao conectar com o servidor.');
+    }
+  });
+
+  carregarTags();
+
+    // Excluir conta
+  const btnExcluirConta = document.querySelector('.deletar-btn');
+  btnExcluirConta.addEventListener('click', async () => {
+    if (!confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.')) return;
+
+    try {
+      const res = await fetch(`http://localhost:3000/api/usuarios/${usuarioId}`, {
+        method: 'DELETE'
+      });
+
+      const json = await res.json();
+
+      if (res.ok) {
+        alert('Conta excluída com sucesso!');
+        localStorage.clear();
+        window.location.href = 'entrar.html';
+      } else {
+        alert('Erro ao excluir conta: ' + (json.mensagem || json.erro));
+      }
+    } catch (err) {
+      alert('Erro ao conectar com o servidor.');
+    }
+  });
+});
+</script>
 </body>
 </html>

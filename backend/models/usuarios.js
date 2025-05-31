@@ -31,11 +31,16 @@ export async function buscarUsuarioPorId(id) {
 }
 
 // Atualizar um usuário
-export async function atualizarUsuario(id, nome, email, senha) {
-  await db.execute(
-    'UPDATE usuarios SET nome = ?, email = ?, senha = ? WHERE id = ?',
-    [nome, email, senha, id]
-  );
+export async function atualizarNome(id, nome) {
+  await db.execute('UPDATE usuarios SET nome = ? WHERE id = ?', [nome, id]);
+}
+
+export async function atualizarEmail(id, email) {
+  await db.execute('UPDATE usuarios SET email = ? WHERE id = ?', [email, id]);
+}
+
+export async function atualizarSenha(id, senha) {
+  await db.execute('UPDATE usuarios SET senha = ? WHERE id = ?', [senha, id]);
 }
 
 // Deletar um usuário
