@@ -35,6 +35,12 @@ export async function buscarUsuarioPorId(id) {
   return rows[0];
 }
 
+// Buscar um usuário por nome de usuário
+export async function obterUsuarioPorNomeUsuario(usuario) {
+  const [rows] = await db.query('SELECT * FROM usuarios WHERE usuario = ?', [usuario]);
+  return rows[0] || null;
+}
+
 // Atualizar um usuário
 export async function atualizarNome(id, nome) {
   await db.execute('UPDATE usuarios SET nome = ? WHERE id = ?', [nome, id]);

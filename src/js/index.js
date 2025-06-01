@@ -15,6 +15,24 @@ function toggleSearchBar() {
   }
 }
 
+document.getElementById('searchInput').addEventListener('keydown', async (e) => {
+  if (e.key === 'Enter') {
+    const termo = e.target.value.trim();
+    if (!termo) return;
+
+    try {
+      const resposta = await fetch(`http://localhost:3000/api/usuarios/usuario/${termo}`);
+      if (!resposta.ok) throw new Error('Usuário não encontrado');
+
+      const usuario = await resposta.json();
+      window.location.href = `src/perfil-amigo.html?id=${usuario.id}`;
+    } catch (erro) {
+      console.error('Erro ao buscar usuário:', erro);
+      alert("Usuário não encontrado");
+    }
+  }
+});
+
 // Feed e Postagens
 document.addEventListener('DOMContentLoaded', () => {
   const feedContainer = document.getElementById('feed-container');

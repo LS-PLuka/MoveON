@@ -3,6 +3,7 @@ import {
   autenticarUsuario,
   buscarTodosUsuarios,
   buscarUsuarioPorId,
+  obterUsuarioPorNomeUsuario,
   atualizarNome,
   atualizarEmail,
   atualizarSenha,
@@ -62,6 +63,21 @@ export async function buscarUsuario(req, res) {
     res.json(usuario);
   } catch (error) {
     res.status(500).json({ erro: 'Erro ao buscar usuário: ' + error.message });
+  }
+}
+
+// Buscar um usuário por nome de usuário
+export async function buscarUsuarioPorNomeUsuario(req, res) {
+  const { usuario } = req.params;
+  try {
+    const usuarioEncontrado = await obterUsuarioPorNomeUsuario(usuario);
+    if (!usuarioEncontrado) {
+      return res.status(404).json({ erro: 'Usuário não encontrado' });
+    }
+    res.json(usuarioEncontrado);
+  } catch (erro) {
+    console.error(erro);
+    res.status(500).json({ erro: 'Erro ao buscar usuário' });
   }
 }
 

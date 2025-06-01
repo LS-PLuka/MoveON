@@ -55,12 +55,10 @@
   </div>
 
   <script type="module">
-    // Fade-in na entrada
     window.addEventListener("DOMContentLoaded", () => {
       document.getElementById("page-fade")?.classList.remove("active");
     });
 
-    // Fade-out ao clicar nos links
     document.querySelectorAll("a").forEach(link => {
       if (
         link.hostname === window.location.hostname &&
