@@ -1,7 +1,9 @@
 import express from 'express';
-import { novoSeguidor } from '../controllers/seguidoresController.js';
+import { alternarSeguidor, verificarSeguindo } from '../controllers/seguidoresController.js';
 
 const router = express.Router();
-router.post('/', novoSeguidor);
+
+router.post('/', alternarSeguidor);
+router.get('/verificar', verificarSeguindo);
 
 export default router;

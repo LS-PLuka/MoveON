@@ -91,6 +91,20 @@ body {
     margin: 5px 0;
 }
 
+.seguir-btn {
+    background-color: var(--cor-secundaria);
+    color: white;
+    padding: 10px 15px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.seguir-btn:hover {
+    background-color: var(--cor-primaria);
+}
+
 /* Tags */
 
 .tags-container {

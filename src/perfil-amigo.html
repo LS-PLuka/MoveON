@@ -1,57 +1,157 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Título -->
-    <title>MoveON - [username] Perfil</title>
-    
-    <!-- Links -->
-    <link rel="stylesheet" href="../src/css/perfil-amigo.css">
-    <link rel="stylesheet" href="../src/css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoveON - Perfil</title>
 
-    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon">
-    
-    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css">
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../src/css/perfil-amigo.css" />
+  <link rel="stylesheet" href="../src/css/style.css" />
+  <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css" />
+  <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet"
+  />
 
-    <!-- Output -->
-    <link href="" rel="stylesheet"> <!-- Sem nada mesmo -->
-
-    <!-- Scripts -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <!-- Icones -->
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-    <!-- Botão de Voltar -->
-    <div class="back-button">
-        <a href="../index.html"><ion-icon name="arrow-back-outline" class="icon"></ion-icon> Voltar</a>
-    </div>
+  <!-- Botão de Voltar -->
+  <div class="back-button">
+    <a href="../index.html"
+      ><ion-icon name="arrow-back-outline" class="icon"></ion-icon> Voltar</a
+    >
+  </div>
 
-    <!-- Perfil do Amigo -->
-    <div class="profile-container">
-        <div class="profile-picture">
-            <ion-icon name="person-circle-outline" class="user-icon"></ion-icon>
-        </div>
-        <div class="profile-info">
-            <h2>[user-name]</h2>
-            <p>Seguidores: <strong>X</strong> | Posts: <strong>X</strong></p>
-        </div>
+  <!-- Perfil do Amigo -->
+  <div class="profile-container">
+    <div class="profile-picture">
+      <ion-icon name="person-circle-outline" class="user-icon"></ion-icon>
     </div>
+    <div class="profile-info">
+      <h2 id="nome-usuario">[user-name]</h2>
+      <p>
+        Seguidores: <strong id="quantidade-seguidores">0</strong>
+      </p>
+      <button id="seguir-btn" class="seguir-btn">Seguir</button>
+    </div>
+  </div>
 
-    <!-- Tags -->
-    <div class="tags-container">
-        <h2>Esportes e Atividades Físicas</h2>
-        <div class="tags-list">
-            <!-- Exemplo de tags adicionadas -->
-            <span class="tag">Futebol</span>
-            <span class="tag">Corrida</span>
-            <span class="tag">Yoga</span>
-        </div>
+  <!-- Tags -->
+  <div class="tags-container">
+    <h2>Esportes e Atividades Físicas</h2>
+    <div class="tags-list" id="tags-list">
+      <!-- Tags do usuário serão inseridas aqui -->
     </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const seguirBtn = document.getElementById("seguir-btn");
+      const nomeUsuarioEl = document.getElementById("nome-usuario");
+      const seguidoresEl = document.getElementById("quantidade-seguidores");
+      const tagsListEl = document.getElementById("tags-list");
+
+      const seguidoId = new URLSearchParams(window.location.search).get("id");
+      const seguidorId = localStorage.getItem("usuario_id");
+
+      if (!seguidoId) {
+        alert("Usuário inválido.");
+        window.location.href = "../index.html";
+        return;
+      }
+
+      // Se o perfil for do próprio usuário, esconde botão seguir
+      if (seguidoId === seguidorId) {
+        seguirBtn.style.display = "none";
+      }
+
+      // Função para buscar dados do perfil
+      async function carregarPerfil() {
+        try {
+            // Busca dados do usuário
+            const respostaUsuario = await fetch(`http://localhost:3000/api/usuarios/${seguidoId}`);
+            if (!respostaUsuario.ok) throw new Error("Erro ao buscar perfil");
+            const usuario = await respostaUsuario.json();
+
+            // Atualiza nome e seguidores
+            nomeUsuarioEl.textContent = usuario.nome || "[Sem nome]";
+            seguidoresEl.textContent = usuario.total_seguidores ?? 0;
+
+            // Busca tags separadamente
+            const respostaTags = await fetch(`http://localhost:3000/api/usuario-atividades/${seguidoId}`);
+            if (!respostaTags.ok) throw new Error("Erro ao buscar tags");
+            const tags = await respostaTags.json();
+
+            // Atualiza lista de tags
+            tagsListEl.innerHTML = "";
+            if (tags.length > 0) {
+            tags.forEach((tag) => {
+                const tagEl = document.createElement("span");
+                tagEl.classList.add("tag");
+                tagEl.textContent = tag.nome || tag;
+                tagsListEl.appendChild(tagEl);
+            });
+            } else {
+            tagsListEl.textContent = "Nenhuma tag registrada.";
+            }
+
+        } catch (e) {
+            console.error(e);
+            alert("Erro ao carregar perfil.");
+        }
+    }
+
+    async function verificarEstado() {
+        try {
+          const resposta = await fetch(
+            `http://localhost:3000/api/seguidores/verificar?seguidor_id=${seguidorId}&seguido_id=${seguidoId}`
+          );
+          if (!resposta.ok) throw new Error("Erro ao verificar seguimento");
+          const dados = await resposta.json();
+          seguirBtn.textContent = dados.seguindo ? "Seguindo" : "Seguir";
+        } catch (e) {
+          console.error("Erro ao verificar seguimento:", e);
+        }
+      }
+
+      seguirBtn.addEventListener("click", async () => {
+        try {
+          const resposta = await fetch("http://localhost:3000/api/seguidores", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ seguidor_id: seguidorId, seguido_id: seguidoId }),
+          });
+          const resultado = await resposta.json();
+          if (resposta.ok) {
+            seguirBtn.textContent = resultado.mensagem.includes("Deixou") ? "Seguir" : "Seguindo";
+
+            await carregarPerfil();
+          } else {
+            alert(resultado.erro || "Erro ao seguir/desseguir");
+          }
+        } catch (e) {
+          alert("Erro ao seguir/desseguir");
+          console.error(e);
+        }
+      });
+
+      await carregarPerfil();
+      if (seguidorId && seguidoId && seguidoId !== seguidorId) {
+        await verificarEstado();
+      }
+    });
+  </script>
 </body>
 </html>

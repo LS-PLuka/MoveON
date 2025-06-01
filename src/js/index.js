@@ -54,11 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const curtidas = post.total_curtidas ?? 0;
     const nomeDoAutor = post.usuario?.nome || 'Usuário desconhecido';
+    const idAutor = post.usuario?.id || ''; // ID do autor para o link do perfil
 
     postDiv.innerHTML = `
       <div class="post-header">
         <div class="user-icon">
-          <a href="src/perfil-amigo.html"><ion-icon name="person-circle-outline" class="user-icon"></ion-icon></a>
+          <a href="src/perfil-amigo.html?id=${idAutor}">
+            <ion-icon name="person-circle-outline" class="user-icon"></ion-icon>
+          </a>
         </div>
         <div class="user-info">
           <span class="username">${nomeDoAutor}</span>

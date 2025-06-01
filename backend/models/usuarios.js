@@ -26,7 +26,12 @@ export async function buscarTodosUsuarios() {
 
 // Buscar um usuário por ID
 export async function buscarUsuarioPorId(id) {
-  const [rows] = await db.execute('SELECT * FROM usuarios WHERE id = ?', [id]);
+  const [rows] = await db.execute(`
+    SELECT u.*,
+      (SELECT COUNT(*) FROM seguidores s WHERE s.seguido_id = u.id) AS total_seguidores
+    FROM usuarios u
+    WHERE u.id = ?
+  `, [id]);
   return rows[0];
 }
 
