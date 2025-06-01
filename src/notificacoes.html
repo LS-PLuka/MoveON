@@ -59,31 +59,73 @@
     <!-- Notificações -->
     <div class="notificacao-container">
         <h1>Notificações</h1>
-        <div class="notificacao">
-            <a href="../src/perfil-amigo.html"><ion-icon name="person-circle-outline"></ion-icon></a>
-            <p><strong>Pedro</strong> te adicionou como amigo.</p>
-        </div>
-
-        <div class="notificacao">
-            <div class="flex items-center">
-                <a href="../src/perfil-amigo.html"><ion-icon name="person-circle-outline"></ion-icon></a>
-                <p><strong>João</strong> comentou na sua foto.</p>
-            </div>
-        </div>
-
-        <div class="notificacao">
-            <div class="flex items-center">
-                <a href="../src/perfil-amigo.html"><ion-icon name="person-circle-outline"></ion-icon></a>
-                <p><strong>Maria</strong> compartilhou sua publicação.</p>
-            </div>
-        </div>
-
-        <div class="notificacao">
-            <div class="flex items-center">
-                <a href="../src/perfil-amigo.html"><ion-icon name="person-circle-outline"></ion-icon></a>
-                <p><strong>Ricardo</strong> curtiu sua publicação.</p>
-            </div>
-        </div>
+        
+        <!-- Notificações inseridas pelo JavaScript -->
     </div>
+
+    <script type="module">
+  // Função para transformar o tipo em texto amigável
+  function textoNotificacao(notificacao) {
+  switch (notificacao.tipo) {
+    case 'curtida':
+      if (notificacao.referencia_tipo === 'postagem') {
+        return `${notificacao.nome_usuario_acao} curtiu sua postagem.`;
+      }
+      break;
+    case 'comentario':
+      if (notificacao.referencia_tipo === 'postagem') {
+        return `${notificacao.nome_usuario_acao} comentou na sua postagem.`;
+      }
+      break;
+    case 'seguido':
+      return `${notificacao.nome_usuario_acao} começou a te seguir.`;
+    case 'mensagem':
+      return `${notificacao.nome_usuario_acao} enviou uma mensagem para você.`;
+  }
+  return `${notificacao.nome_usuario_acao} fez uma ação.`;
+}
+
+  // Função para carregar notificações do backend
+  async function carregarNotificacoes() {
+    const usuario_id = localStorage.getItem('usuario_id');
+
+    if (!usuario_id) {
+      document.querySelector('.notificacao-container').innerHTML = '<p>Você precisa estar logado para ver as notificações.</p>';
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/notificacoes/${usuario_id}`);
+      if (!response.ok) throw new Error('Erro ao buscar notificações');
+
+      const notificacoes = await response.json();
+
+      const container = document.querySelector('.notificacao-container');
+
+      if (notificacoes.length === 0) {
+        container.innerHTML += '<p>Você não tem notificações.</p>';
+        return;
+      }
+
+      // Exibe as notificações
+      notificacoes.forEach(notif => {
+        const div = document.createElement('div');
+        div.className = 'notificacao flex items-center';
+
+        div.innerHTML = `
+          <a href="../src/perfil-amigo.html"><ion-icon name="person-circle-outline"></ion-icon></a>
+          <p><strong>Usuário</strong> ${textoNotificacao(notif)}</p>
+        `;
+
+        container.appendChild(div);
+      });
+    } catch (error) {
+      console.error('Erro ao carregar notificações:', error);
+      document.querySelector('.notificacao-container').innerHTML = '<p>Erro ao carregar notificações.</p>';
+    }
+  }
+
+  carregarNotificacoes();
+</script>
 </body>
 </html>

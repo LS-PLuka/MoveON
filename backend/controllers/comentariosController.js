@@ -15,7 +15,6 @@ export async function novoComentario(req, res) {
     const comentarioInserido = comentarios.find(c => c.id === insertId);
 
     if (!comentarioInserido) {
-      // Caso não encontre o comentário (pode acontecer), retorna só a confirmação
       return res.status(201).json({ mensagem: 'Comentário adicionado!', id: insertId });
     }
 
