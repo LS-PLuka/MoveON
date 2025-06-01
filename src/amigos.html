@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <!-- Título -->
     <title>MoveON - Mensagens</title>
     
     <!-- Links -->
-    <link rel="stylesheet" href="../src/css/amigos.css">
-    <link rel="stylesheet" href="../src/css/style.css">
+    <link rel="stylesheet" href="../src/css/amigos.css" />
+    <link rel="stylesheet" href="../src/css/style.css" />
 
-    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon" />
     
-    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css">
+    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
 
     <!-- Output -->
-    <link href="../src/css/output.css" rel="stylesheet">
+    <link href="../src/css/output.css" rel="stylesheet" />
 
     <!-- Scripts -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
 </head>
-    <body>
+<body>
     <!-- Menu -->
-    
     <div class="menu">
-        <img src="../img/logos/logo.png" alt="Logo" class="logo">
+        <img src="../img/logos/logo.png" alt="Logo" class="logo" />
         <ul class="menu-list">
             <li><a href="../index.html"><ion-icon name="home-outline" class="icon"></ion-icon>Página Inicial</a></li>
             <li><a href="../src/criar.html"><ion-icon name="create-outline" class="icon"></ion-icon>Criar</a></li>
@@ -41,10 +39,9 @@
             <li><a href="../src/meu_perfil.html"><ion-icon name="person-circle-outline" class="icon"></ion-icon>Meu Perfil</a></li>
         </ul>
     </div>
-    <div class="separador "></div>
+    <div class="separador"></div>
 
     <!-- Menu Responsivo -->
-
     <div class="menu-responsivo">
         <ul class="menu-list-responsivo">
             <li><a href="../index.html"><ion-icon name="home-outline" class="icon"></ion-icon></a></li>
@@ -59,38 +56,49 @@
     <!-- Amigos -->
     <div class="amigos-container">
         <h1>Mensagens - Amigos</h1>
-        
-        <div class="amigo flex items-center justify-between p-4 border-b">
-            <div class="flex items-center">
-                <a href="../src/perfil-amigo.html"><ion-icon name="person-circle-outline"></ion-icon></a>
-                <p><strong>Pedro</strong></p>
-             </div>
-             <a href="../src/chat.html"><ion-icon name="chatbubbles-outline" class="icon"></ion-icon></a>
-         </div>
-
-        <div class="amigo flex items-center justify-between p-4 border-b">
-           <div class="flex items-center">
-                <a href="../src/perfil-amigo.html"><ion-icon name="person-circle-outline"></ion-icon></a>
-                <p><strong>João</strong></p>
-            </div>
-            <a href="../src/chat.html"><ion-icon name="chatbubbles-outline" class="icon"></ion-icon></a>
-        </div>
-
-        <div class="amigo flex items-center justify-between p-4 border-b">
-            <div class="flex items-center">
-                <a href="../src/perfil-amigo.html"><ion-icon name="person-circle-outline"></ion-icon></a>
-                <p><strong>Maria</strong></p>
-            </div>
-            <a href="../src/chat.html"><ion-icon name="chatbubbles-outline" class="icon"></ion-icon></a>
-        </div>
-
-        <div class="amigo flex items-center justify-between p-4 border-b">
-            <div class="flex items-center">
-                <a href="../src/perfil-amigo.html"><ion-icon name="person-circle-outline"></ion-icon></a>
-                <p><strong>Ricardo</strong></p>
-            </div>
-            <a href="../src/chat.html"><ion-icon name="chatbubbles-outline" class="icon"></ion-icon></a>
-        </div>
+        <!-- Amigos inseridos pelo JavaScript -->
     </div>
+
+    <!-- Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const usuarioId = localStorage.getItem("usuario_id");
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/amigos/${usuarioId}`);
+                const amigos = await response.json();
+
+                const container = document.querySelector('.amigos-container');
+
+                container.innerHTML = '<h1>Mensagens - Amigos</h1>';
+
+                if (amigos.length === 0) {
+                    container.innerHTML += '<p>Você ainda não tem amigos adicionados.</p>';
+                    return;
+                }
+
+                amigos.forEach(amigo => {
+                    const div = document.createElement('div');
+                    div.classList.add('amigo', 'flex', 'items-center', 'justify-between', 'p-4', 'border-b');
+
+                    div.innerHTML = `
+                        <div class="flex items-center">
+                            <a href="../src/perfil-amigo.html?id=${amigo.id}">
+                                <ion-icon name="person-circle-outline"></ion-icon>
+                            </a>
+                            <p><strong>${amigo.nome}</strong></p>
+                        </div>
+                        <a href="../src/chat.html?amigo_id=${amigo.id}&amigo_nome=${encodeURIComponent(amigo.nome)}">
+                            <ion-icon name="chatbubbles-outline" class="icon"></ion-icon>
+                        </a>
+                    `;
+
+                    container.appendChild(div);
+                });
+            } catch (error) {
+                console.error("Erro ao carregar amigos:", error);
+            }
+        });
+    </script>
 </body>
 </html>

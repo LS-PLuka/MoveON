@@ -1,43 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MoveON - Chat</title>
-    <link rel="stylesheet" href="../src/css/chat.css">
-    <link rel="stylesheet" href="../src/css/style.css">
-    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="../src/css/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="../src/css/chat.css" />
+    <link rel="stylesheet" href="../src/css/style.css" />
+    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../src/css/output.css" rel="stylesheet" />
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <a href="../index.html" class="back-btn-header" aria-label="Voltar">
+            <a href="amigos.html" class="back-btn-header" aria-label="Voltar">
                 <ion-icon name="arrow-back-outline"></ion-icon>
                 Voltar
             </a>
-            <h2>[Nome do Amigo]</h2>
+            <h2 id="friend-name">Carregando...</h2>
         </div>
-        <div class="chat-messages">
-            <div class="message received">
-                <div class="bubble">
-                    <p>Olá! Como você está?</p>
-                    <span class="timestamp">10:30</span>
-                </div>
-            </div>
-            <div class="message sent">
-                <div class="bubble">
-                    <p>Oi! Eu estou bem, e você?</p>
-                    <span class="timestamp">10:31</span>
-                </div>
-            </div>
-        </div>
+        <div class="chat-messages"></div>
         <form class="chat-input" autocomplete="off">
             <input type="text" placeholder="Digite sua mensagem..." aria-label="Mensagem" />
             <button type="submit" aria-label="Enviar mensagem">
@@ -46,26 +36,93 @@
             </button>
         </form>
     </div>
-    <script>
-    // Scroll automático para a última mensagem
-    window.addEventListener('DOMContentLoaded', () => {
-        const messages = document.querySelector('.chat-messages');
-        messages.scrollTop = messages.scrollHeight;
-    });
-    // Simulação: Enter envia mensagem (sem backend)
-    document.querySelector('.chat-input').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const input = this.querySelector('input');
-        const text = input.value.trim();
-        if(text) {
-            const div = document.createElement('div');
-            div.className = 'message sent';
-            div.innerHTML = `<div class="bubble"><p>${text}</p><span class="timestamp">${new Date().toLocaleTimeString().slice(0,5)}</span></div>`;
-            document.querySelector('.chat-messages').appendChild(div);
-            input.value = '';
-            document.querySelector('.chat-messages').scrollTop = document.querySelector('.chat-messages').scrollHeight;
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const params = new URLSearchParams(window.location.search);
+  const amigoId = params.get('amigo_id');
+  const amigoNome = params.get('amigo_nome');
+  const usuarioId = localStorage.getItem('usuario_id');
+
+  if (!amigoId || !usuarioId) {
+    alert('Dados do chat inválidos. Volte e tente novamente.');
+    window.location.href = 'amigos.html';
+    return;
+  }
+
+  document.getElementById('friend-name').textContent = decodeURIComponent(amigoNome);
+
+  const mensagensContainer = document.querySelector('.chat-messages');
+  const inputMensagem = document.querySelector('.chat-input input');
+
+  function formatarHora(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  }
+
+  async function carregarMensagens() {
+    try {
+      const response = await fetch(`http://localhost:3000/api/mensagens?usuario1=${usuarioId}&usuario2=${amigoId}`);
+      if (!response.ok) throw new Error('Erro ao carregar mensagens');
+      const mensagens = await response.json();
+
+      mensagensContainer.innerHTML = '';
+
+      mensagens.forEach(msg => {
+        const div = document.createElement('div');
+        div.classList.add('message');
+        if (msg.remetente_id == usuarioId) {
+          div.classList.add('sent');
+        } else {
+          div.classList.add('received');
         }
-    });
-    </script>
+
+        div.innerHTML = `
+          <div class="bubble">
+            <p>${msg.conteudo}</p>
+            <span class="timestamp">${formatarHora(msg.criado_em)}</span>
+          </div>
+        `;
+        mensagensContainer.appendChild(div);
+      });
+
+      mensagensContainer.scrollTop = mensagensContainer.scrollHeight;
+    } catch (err) {
+      console.error(err);
+      mensagensContainer.innerHTML = '<p>Erro ao carregar mensagens.</p>';
+    }
+  }
+
+  await carregarMensagens();
+
+  document.querySelector('.chat-input').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const conteudo = inputMensagem.value.trim();
+    if (!conteudo) return;
+
+    try {
+      const response = await fetch('http://localhost:3000/api/mensagens', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          remetente_id: usuarioId,
+          destinatario_id: amigoId,
+          conteudo
+        }),
+      });
+
+      if (!response.ok) throw new Error('Erro ao enviar mensagem');
+
+      inputMensagem.value = '';
+      await carregarMensagens();
+    } catch (err) {
+      alert('Erro ao enviar mensagem, tente novamente.');
+      console.error(err);
+    }
+  });
+
+  setInterval(carregarMensagens, 5000);
+});
+</script>
 </body>
 </html>

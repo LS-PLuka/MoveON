@@ -13,6 +13,7 @@ import notificacoesRoutes from './backend/routers/notificacoesRoutes.js';
 import mensagensRoutes from './backend/routers/mensagensRoutes.js';
 import atividadesRoutes from './backend/routers/atividadesRoutes.js';
 import usuarioAtividadesRoutes from './backend/routers/usuarioAtividadesRoutes.js';
+import amigosRoutes from './backend/routers/amigosRoutes.js';
 
 const app = express();
 const PORT = 3000;
@@ -51,6 +52,7 @@ app.use('/api/notificacoes', notificacoesRoutes);
 app.use('/api/mensagens', mensagensRoutes);
 app.use('/api/atividades', atividadesRoutes);
 app.use('/api/usuario-atividades', usuarioAtividadesRoutes);
+app.use('/api/amigos', amigosRoutes);
 
 // Servir arquivos estáticos da pasta 'public' (imagens, etc)
 app.use(express.static('public'));
