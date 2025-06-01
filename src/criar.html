@@ -50,6 +50,7 @@
         </ul>
     </div>
 
+    <div class="main-content">
     <main class="container-postagem">
     <div class="h1-text">
         <h1>Publique Fotos/Vídeos ou Textos</h1>
@@ -74,56 +75,62 @@
         </button>
     </div>
 </main>
+</div>
 
 <script>
-    // Preview da imagem selecionada
-    document.getElementById('image-upload').addEventListener('change', function(event) {
-        const preview = document.getElementById('upload-preview');
-        preview.innerHTML = '';
-        if (event.target.files && event.target.files[0]) {
-            const img = document.createElement('img');
-            img.src = URL.createObjectURL(event.target.files[0]);
-            img.className = 'preview-img';
-            img.onload = () => URL.revokeObjectURL(img.src);
-            preview.appendChild(img);
-        } else {
-            preview.innerHTML = '<ion-icon name="cloud-upload-outline" class="icon-upload"></ion-icon>';
-        }
-    });
+  document.getElementById('image-upload').addEventListener('change', function(event) {
+      const preview = document.getElementById('upload-preview');
+      preview.innerHTML = '';
+      if (event.target.files && event.target.files[0]) {
+          const img = document.createElement('img');
+          img.src = URL.createObjectURL(event.target.files[0]);
+          img.className = 'preview-img';
+          img.onload = () => URL.revokeObjectURL(img.src);
+          preview.appendChild(img);
+      } else {
+          preview.innerHTML = '<ion-icon name="cloud-upload-outline" class="icon-upload"></ion-icon>';
+      }
+  });
+
+  document.getElementById('postar-btn').addEventListener('click', async () => {
+      const usuario_id = localStorage.getItem('usuario_id');
+      const conteudo = document.querySelector('textarea').value.trim();
+      const imagem = document.getElementById('image-upload').files[0];
+
+      if (!usuario_id) {
+          alert('Usuário não autenticado. Faça login novamente.');
+          return;
+      }
+
+      if (!conteudo && !imagem) {
+          alert('Escreva algo ou selecione uma imagem para postar!');
+          return;
+      }
+
+      const formData = new FormData();
+      formData.append('usuario_id', usuario_id);
+      formData.append('conteudo', conteudo);
+      if (imagem) {
+          formData.append('imagem', imagem);
+      }
+
+      try {
+          const response = await fetch('http://localhost:3000/api/postagens', {
+              method: 'POST',
+              body: formData
+          });
+
+          if (!response.ok) {
+              throw new Error('Erro ao criar a postagem');
+          }
+
+          const resultado = await response.json();
+          alert('Postagem criada com sucesso!');
+      } catch (error) {
+          console.error(error);
+          alert('Erro ao enviar a postagem.');
+      }
+  });
 </script>
-
-<script>
-    document.getElementById("postar-btn").addEventListener("click", async () => {
-    const usuario_id = 1; // pegar de login real
-    const conteudo = document.querySelector("textarea").value.trim();
-    const imagemInput = document.getElementById("image-upload");
-    const formData = new FormData();
-
-    formData.append("usuario_id", usuario_id);
-    formData.append("conteudo", conteudo);
-
-    if (imagemInput.files.length > 0) {
-        formData.append("imagem", imagemInput.files[0]);
-    }
-
-    try {
-        const response = await fetch("http://localhost:3000/api/postagens", {
-            method: "POST",
-            body: formData
-        });
-
-        if (response.ok) {
-            alert("Postagem enviada!");
-            window.location.href = "../index.html";
-        } else {
-            const erro = await response.json();
-            alert("Erro: " + (erro.mensagem || erro.erro));
-        }
-    } catch (err) {
-        alert("Erro ao conectar com o servidor.");
-        console.error(err);
-    }
-});
-</script>    
 </body>
 </html>

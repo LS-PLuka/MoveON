@@ -20,9 +20,12 @@
 
 body {
     font-family: var(--ff-khand);
-    margin: auto;
-    padding: auto;
+    margin: 0;
+    padding: 0;
     background-color: var(--background);
+    min-height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
 }
 
 /* Menu */
@@ -149,14 +152,23 @@ body {
     background-color: var(--background);
 }
 
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(100vh - var(--header-height, 96px));
+    /* Ajuste var(--header-height) conforme altura real do seu header */
+    padding-top: var(--header-height, 96px);
+    /* Isso garante que nada fique atrás do header fixo */
+    box-sizing: border-box;
+}
+
 .container-postagem {
     background: #161b22;
     box-shadow: 0 2px 16px 0 rgba(24, 32, 44, 0.14);
-    margin-left: 50rem; 
-    margin-right: auto;
-    margin-top: 9.5rem; 
     padding: 2.8rem 2.3rem 2.2rem 2.3rem;
     max-width: 650px;
+    width: 100%;
     border-radius: 14px;
     display: flex;
     flex-direction: column;
@@ -164,6 +176,10 @@ body {
     min-width: 330px;
     min-height: 380px;
     align-items: center;
+    margin: 0; /* Tirar margens laterais fixas */
+    position: relative;
+    z-index: 1;
+    margin-top: 5rem;
 }
 
 .h1-text h1 {
@@ -286,18 +302,52 @@ button#postar-btn:hover, button#postar-btn:focus {
     outline: none;
 }
 
-/* Responsividade */
-/* Responsividade para mobile: menu lateral some, menu responsivo aparece */
-@media (max-width: 900px) {
-    .menu, .separador {
-        display: none;
+/* Para telas grandes, deixa espaço lateral para o menu fixo */
+@media (min-width: 901px) {
+    .main-content {
+        margin-left: 220px; /* espaço para o menu lateral fixo */
+    }
+    .menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 200px;
+        height: 100vh;
+        background: var(--background);
+        z-index: 1100;
+    }
+    .separador {
+        display: block;
+        left: 200px;
+        width: 2px;
+        background-color: var(--cor-primaria);
+        height: 100vh;
+        top: 0;
     }
     .menu-responsivo {
-        display: flex;
+        display: none !important;
+    }
+}
+
+/* Responsividade para telas menores: menu lateral some, menu responsivo aparece */
+@media (max-width: 900px) {
+    .menu,
+    .separador {
+        display: none !important;
+    }
+    .menu-responsivo {
+        display: flex !important;
+    }
+    .main-content {
+        margin-left: 0;
+        padding-top: var(--header-height, 96px);
+        justify-content: center;
     }
     .container-postagem {
-        margin: 24px 2vw 68px 3vw; /* espaço inferior para o menu responsivo */
-        margin-top: 10rem;
+        margin: 24px 2vw 68px 2vw;
         max-width: 99vw;
         min-width: unset;
         padding: 1.2rem 4vw 1.2rem 4vw;
@@ -306,7 +356,7 @@ button#postar-btn:hover, button#postar-btn:focus {
     }
 }
 
-/* Para garantir espaço extra para o menu responsivo fixo no rodapé */
+/* Espaço extra para o menu responsivo fixo no rodapé em telas bem pequenas */
 @media (max-width: 600px) {
     .container-postagem {
         margin-bottom: 80px;
@@ -314,15 +364,9 @@ button#postar-btn:hover, button#postar-btn:focus {
 }
 @media (max-width: 420px) {
     .container-postagem {
-        margin: 7px 0 90px 0; /* mais espaço para o menu responsivo */
+        margin: 7px 0 90px 0;
         max-width: 100vw;
         padding: 1rem 2vw 1rem 2vw;
         border-radius: 0;
-    }
-}
-
-@media (max-width: 900px) {
-    .container-postagem {
-        align-items: stretch;
     }
 }
