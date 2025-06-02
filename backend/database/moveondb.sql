@@ -61,15 +61,16 @@ CREATE TABLE seguidores (
 
 -- Tabela de Notificações
 CREATE TABLE notificacoes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    tipo ENUM('curtida', 'comentario', 'seguido', 'mensagem') NOT NULL,
-    referencia_id INT,
-    referencia_tipo ENUM('postagem', 'comunidade') DEFAULT 'postagem',
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    lida BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (referencia_id) REFERENCES postagens(id) ON DELETE CASCADE
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  usuario_id INT NOT NULL,
+  remetente_id INT,
+  tipo ENUM('comentario', 'curtida', 'mensagem', 'seguindo') NOT NULL,
+  referencia_id INT NOT NULL,
+  criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+  lida BOOLEAN DEFAULT FALSE,
+
+  FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+  FOREIGN KEY (remetente_id) REFERENCES usuarios(id)
 );
 
 -- Tabela de Mensagens Diretas

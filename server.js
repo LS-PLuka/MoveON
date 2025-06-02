@@ -25,9 +25,7 @@ if (!fs.existsSync(uploadDir)) {
   console.log('Pasta public/uploads criada com sucesso!');
 }
 
-// Configuração CORS para liberar apenas origens específicas
 const allowedOrigins = ['http://127.0.0.1:5500'];
-
 app.use(cors({
   origin: function(origin, callback) {
     if (!origin) return callback(null, true);

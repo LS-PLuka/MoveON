@@ -123,29 +123,45 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     // Curtir
-    const likeBtn = postDiv.querySelector('.like-button');
-    likeBtn.addEventListener('click', async () => {
-      try {
-        const postagem_id = likeBtn.getAttribute('data-post-id');
-        const resposta = await fetch(`http://localhost:3000/api/curtidas/toggle/${postagem_id}`, {
+const likeBtn = postDiv.querySelector('.like-button');
+likeBtn.addEventListener('click', async () => {
+  try {
+    const postagem_id = likeBtn.getAttribute('data-post-id');
+    const resposta = await fetch(`http://localhost:3000/api/curtidas/toggle/${postagem_id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ usuario_id: usuarioId }),
+    });
+
+    const dados = await resposta.json();
+    if (resposta.ok) {
+      const numeroCurtidas = likeBtn.querySelector('.like-number');
+      const atual = parseInt(numeroCurtidas.textContent);
+      const foiCurtido = dados.mensagem === "Postagem curtida";
+
+      numeroCurtidas.textContent = foiCurtido ? atual + 1 : atual - 1;
+
+      const autorPost = post.usuario?.id;
+      if (foiCurtido && autorPost && autorPost !== parseInt(usuarioId)) {
+        await fetch('http://localhost:3000/api/notificacoes', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ usuario_id: usuarioId }),
-        });
-
-        const dados = await resposta.json();
-        if (resposta.ok) {
-          const numeroCurtidas = likeBtn.querySelector('.like-number');
-          const atual = parseInt(numeroCurtidas.textContent);
-          numeroCurtidas.textContent = dados.mensagem === "Postagem curtida" ? atual + 1 : atual - 1;
-        } else {
-          alert(dados.erro || 'Erro ao curtir postagem');
-        }
-      } catch (erro) {
-        console.error('Erro ao curtir:', erro);
-        alert('Erro ao curtir postagem');
+          body: JSON.stringify({
+            usuario_id: autorPost,
+            tipo: 'curtida',
+            referencia_id: postagem_id,
+            remetente_id: usuarioId
+          })
+        });        
       }
-    });
+    } else {
+      alert(dados.erro || 'Erro ao curtir postagem');
+    }
+  } catch (erro) {
+    console.error('Erro ao curtir:', erro);
+    alert('Erro ao curtir postagem');
+  }
+});
 
     // Mostrar/ocultar comentários
     const commentButton = postDiv.querySelector('.coment-button');

@@ -1,14 +1,17 @@
-import { criarNotificacao, buscarNotificacoes, marcarComoLida } from '../models/notificacoes.js';
+import {
+  criarNotificacao,
+  buscarNotificacoes,
+} from '../models/notificacoes.js';
 
 export async function novaNotificacao(req, res) {
-  const { usuario_id, tipo, referencia_id } = req.body;
+  const { usuario_id, tipo, referencia_id, remetente_id } = req.body;
 
   try {
-    if (!usuario_id || !tipo) {
+    if (!usuario_id || !tipo || !remetente_id) {
       return res.status(400).json({ erro: 'Campos obrigatórios ausentes.' });
     }
 
-    const id = await criarNotificacao(usuario_id, tipo, referencia_id);
+    const id = await criarNotificacao(usuario_id, tipo, referencia_id, remetente_id);
     res.status(201).json({ mensagem: 'Notificação criada!', id });
   } catch (error) {
     console.error('Erro ao criar notificação:', error);
@@ -29,25 +32,5 @@ export async function listarNotificacoes(req, res) {
   } catch (error) {
     console.error('Erro ao buscar notificações:', error);
     res.status(500).json({ erro: 'Erro ao buscar notificações: ' + error.message });
-  }
-}
-
-export async function lerNotificacao(req, res) {
-  const { id } = req.params;
-
-  try {
-    if (!id) {
-      return res.status(400).json({ erro: 'ID da notificação é obrigatório.' });
-    }
-
-    const resultado = await marcarComoLida(id);
-    if (resultado === 0) {
-      return res.status(404).json({ erro: 'Notificação não encontrada.' });
-    }
-
-    res.json({ mensagem: 'Notificação marcada como lida.' });
-  } catch (error) {
-    console.error('Erro ao marcar notificação como lida:', error);
-    res.status(500).json({ erro: 'Erro ao marcar notificação como lida: ' + error.message });
   }
 }

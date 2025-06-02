@@ -2,7 +2,9 @@ import {
   criarPostagem,
   deletarPostagem,
   buscarPostagensDeSeguidos,
-  buscarFeed
+  buscarFeed,
+  buscarPostagensDoUsuario,
+  atualizarTextoPostagem
 } from '../models/postagens.js';
 
 export async function novaPostagem(req, res) {
@@ -48,5 +50,32 @@ export async function buscarFeedComCurtidas(req, res) {
   } catch (erro) {
     console.error('Erro ao buscar feed:', erro);
     res.status(500).json({ erro: 'Erro ao buscar feed' });
+  }
+}
+
+export async function buscarPostagensUsuario(req, res) {
+  const { usuarioId } = req.params;
+  try {
+    const postagens = await buscarPostagensDoUsuario(usuarioId);
+    res.json(postagens);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ erro: 'Erro ao buscar postagens do usuário' });
+  }
+}
+
+export async function editarPostagem(req, res) {
+  const { id } = req.params;
+  const { conteudo } = req.body;
+
+  if (!conteudo) {
+    return res.status(400).json({ erro: 'O campo "conteudo" é obrigatório.' });
+  }
+
+  try {
+    await atualizarTextoPostagem(id, conteudo);
+    res.json({ mensagem: 'Postagem atualizada com sucesso!' });
+  } catch (error) {
+    res.status(500).json({ erro: 'Erro ao atualizar postagem: ' + error.message });
   }
 }

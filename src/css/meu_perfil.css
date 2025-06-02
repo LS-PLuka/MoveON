@@ -182,3 +182,66 @@ body {
     padding: 5px 10px;
     border-radius: 5px;
 }
+
+/* Posts */
+
+.meus-posts-container {
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 800px;
+    border-top: 2px solid var(--cor-secundaria);
+}
+  
+.meus-posts-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+  
+.lista-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+  
+.card-post {
+    display: flex;
+    align-items: center;
+    background-color: #f7f7f7;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+  
+.card-post .conteudo {
+    flex: 1;
+}
+  
+.card-post .conteudo p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+  
+.card-post .acoes {
+    display: flex;
+    gap: 10px;
+}
+  
+.card-post .acoes button {
+    background-color: #d9534f;
+    color: white;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+.card-post .acoes button.editar {
+    background-color: #0275d8;
+}
+
+.texto-post {
+    color: #333;
+}

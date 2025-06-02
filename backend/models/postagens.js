@@ -72,4 +72,17 @@ async function buscarFeed(usuarioId) {
   }));  
 }
 
-export { criarPostagem, buscarPostagens, deletarPostagem, buscarPostagensDeSeguidos, buscarFeed };
+async function buscarPostagensDoUsuario(usuarioId) {
+  const [rows] = await db.execute(
+    'SELECT id, conteudo, imagem, criado_em FROM postagens WHERE usuario_id = ? ORDER BY criado_em DESC',
+    [usuarioId]
+  );
+  return rows;
+}
+
+async function atualizarTextoPostagem(id, conteudo) {
+  const sql = 'UPDATE postagens SET conteudo = ? WHERE id = ?';
+  await db.execute(sql, [conteudo, id]);
+}
+
+export { criarPostagem, buscarPostagens, deletarPostagem, buscarPostagensDeSeguidos, buscarFeed, buscarPostagensDoUsuario, atualizarTextoPostagem };

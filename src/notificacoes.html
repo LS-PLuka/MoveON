@@ -64,28 +64,26 @@
     </div>
 
     <script type="module">
-  // Função para transformar o tipo em texto amigável
-  function textoNotificacao(notificacao) {
-  switch (notificacao.tipo) {
-    case 'curtida':
-      if (notificacao.referencia_tipo === 'postagem') {
-        return `${notificacao.nome_usuario_acao} curtiu sua postagem.`;
-      }
-      break;
-    case 'comentario':
-      if (notificacao.referencia_tipo === 'postagem') {
-        return `${notificacao.nome_usuario_acao} comentou na sua postagem.`;
-      }
-      break;
-    case 'seguido':
-      return `${notificacao.nome_usuario_acao} começou a te seguir.`;
-    case 'mensagem':
-      return `${notificacao.nome_usuario_acao} enviou uma mensagem para você.`;
+    function textoNotificacao(notificacao) {
+    switch (notificacao.tipo) {
+      case 'curtida':
+        if (notificacao.referencia_tipo === 'postagem') {
+          return `${notificacao.nome_usuario_acao} curtiu sua postagem.`;
+        }
+        break;
+      case 'comentario':
+        if (notificacao.referencia_tipo === 'postagem') {
+          return `${notificacao.nome_usuario_acao} comentou na sua postagem.`;
+        }
+        break;
+      case 'seguido':
+        return `${notificacao.nome_usuario_acao} começou a te seguir.`;
+      case 'mensagem':
+        return `${notificacao.nome_usuario_acao} enviou uma mensagem para você.`;
+    }
+    return `${notificacao.nome_usuario_acao} fez uma ação.`;
   }
-  return `${notificacao.nome_usuario_acao} fez uma ação.`;
-}
 
-  // Função para carregar notificações do backend
   async function carregarNotificacoes() {
     const usuario_id = localStorage.getItem('usuario_id');
 
@@ -101,20 +99,25 @@
       const notificacoes = await response.json();
 
       const container = document.querySelector('.notificacao-container');
+      container.innerHTML = '<h1>Notificações</h1>';
 
       if (notificacoes.length === 0) {
         container.innerHTML += '<p>Você não tem notificações.</p>';
         return;
       }
 
-      // Exibe as notificações
       notificacoes.forEach(notif => {
         const div = document.createElement('div');
         div.className = 'notificacao flex items-center';
 
+        const perfilLink = `../src/perfil-amigo.html?id=${notif.remetente_id || notif.usuario_acao_id || notif.usuario_id_acao || ''}`;
+
         div.innerHTML = `
-          <a href="../src/perfil-amigo.html"><ion-icon name="person-circle-outline"></ion-icon></a>
-          <p><strong>Usuário</strong> ${textoNotificacao(notif)}</p>
+          <a href="${perfilLink}">
+            <ion-icon name="person-circle-outline"></ion-icon>
+          </a>
+          <p><strong>Usuário:</strong> ${textoNotificacao(notif)}</p>
+          <small>${new Date(notif.criado_em).toLocaleString()}</small>
         `;
 
         container.appendChild(div);
