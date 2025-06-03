@@ -66,12 +66,14 @@ CREATE TABLE notificacoes (
   remetente_id INT,
   tipo ENUM('comentario', 'curtida', 'mensagem', 'seguindo') NOT NULL,
   referencia_id INT NOT NULL,
+  mensagem TEXT,
   criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
-  lida BOOLEAN DEFAULT FALSE,
 
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
   FOREIGN KEY (remetente_id) REFERENCES usuarios(id)
 );
+
+drop table notificacoes;
 
 -- Tabela de Mensagens Diretas
 CREATE TABLE mensagens (

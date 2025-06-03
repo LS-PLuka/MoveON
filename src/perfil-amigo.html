@@ -56,102 +56,113 @@
     </div>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      const seguirBtn = document.getElementById("seguir-btn");
-      const nomeUsuarioEl = document.getElementById("nome-usuario");
-      const seguidoresEl = document.getElementById("quantidade-seguidores");
-      const tagsListEl = document.getElementById("tags-list");
+  <!-- ... cabeçalho HTML igual ... -->
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const seguirBtn = document.getElementById("seguir-btn");
+    const nomeUsuarioEl = document.getElementById("nome-usuario");
+    const seguidoresEl = document.getElementById("quantidade-seguidores");
+    const tagsListEl = document.getElementById("tags-list");
 
-      const seguidoId = new URLSearchParams(window.location.search).get("id");
-      const seguidorId = localStorage.getItem("usuario_id");
+    const seguidoId = new URLSearchParams(window.location.search).get("id");
+    const seguidorId = localStorage.getItem("usuario_id");
 
-      if (!seguidoId) {
-        alert("Usuário inválido.");
-        window.location.href = "../index.html";
-        return;
-      }
+    if (!seguidoId) {
+      alert("Usuário inválido.");
+      window.location.href = "../index.html";
+      return;
+    }
 
-      // Se o perfil for do próprio usuário, esconde botão seguir
-      if (seguidoId === seguidorId) {
-        seguirBtn.style.display = "none";
-      }
+    // Esconde botão se for o próprio perfil
+    if (seguidoId === seguidorId) {
+      seguirBtn.style.display = "none";
+    }
 
-      // Função para buscar dados do perfil
-      async function carregarPerfil() {
-        try {
-            // Busca dados do usuário
-            const respostaUsuario = await fetch(`http://localhost:3000/api/usuarios/${seguidoId}`);
-            if (!respostaUsuario.ok) throw new Error("Erro ao buscar perfil");
-            const usuario = await respostaUsuario.json();
+    async function carregarPerfil() {
+      try {
+        const respostaUsuario = await fetch(`http://localhost:3000/api/usuarios/${seguidoId}`);
+        if (!respostaUsuario.ok) throw new Error("Erro ao buscar perfil");
+        const usuario = await respostaUsuario.json();
 
-            // Atualiza nome e seguidores
-            nomeUsuarioEl.textContent = usuario.nome || "[Sem nome]";
-            seguidoresEl.textContent = usuario.total_seguidores ?? 0;
+        nomeUsuarioEl.textContent = usuario.nome || "[Sem nome]";
+        seguidoresEl.textContent = usuario.total_seguidores ?? 0;
 
-            // Busca tags separadamente
-            const respostaTags = await fetch(`http://localhost:3000/api/usuario-atividades/${seguidoId}`);
-            if (!respostaTags.ok) throw new Error("Erro ao buscar tags");
-            const tags = await respostaTags.json();
+        const respostaTags = await fetch(`http://localhost:3000/api/usuario-atividades/${seguidoId}`);
+        if (!respostaTags.ok) throw new Error("Erro ao buscar tags");
+        const tags = await respostaTags.json();
 
-            // Atualiza lista de tags
-            tagsListEl.innerHTML = "";
-            if (tags.length > 0) {
-            tags.forEach((tag) => {
-                const tagEl = document.createElement("span");
-                tagEl.classList.add("tag");
-                tagEl.textContent = tag.nome || tag;
-                tagsListEl.appendChild(tagEl);
-            });
-            } else {
-            tagsListEl.textContent = "Nenhuma tag registrada.";
-            }
-
-        } catch (e) {
-            console.error(e);
-            alert("Erro ao carregar perfil.");
+        tagsListEl.innerHTML = "";
+        if (tags.length > 0) {
+          tags.forEach((tag) => {
+            const tagEl = document.createElement("span");
+            tagEl.classList.add("tag");
+            tagEl.textContent = tag.nome || tag;
+            tagsListEl.appendChild(tagEl);
+          });
+        } else {
+          tagsListEl.textContent = "Nenhuma tag registrada.";
         }
+      } catch (e) {
+        console.error(e);
+        alert("Erro ao carregar perfil.");
+      }
     }
 
     async function verificarEstado() {
-        try {
-          const resposta = await fetch(
-            `http://localhost:3000/api/seguidores/verificar?seguidor_id=${seguidorId}&seguido_id=${seguidoId}`
-          );
-          if (!resposta.ok) throw new Error("Erro ao verificar seguimento");
-          const dados = await resposta.json();
-          seguirBtn.textContent = dados.seguindo ? "Seguindo" : "Seguir";
-        } catch (e) {
-          console.error("Erro ao verificar seguimento:", e);
-        }
+      try {
+        const resposta = await fetch(
+          `http://localhost:3000/api/seguidores/verificar?seguidor_id=${seguidorId}&seguido_id=${seguidoId}`
+        );
+        if (!resposta.ok) throw new Error("Erro ao verificar seguimento");
+        const dados = await resposta.json();
+        seguirBtn.textContent = dados.seguindo ? "Seguindo" : "Seguir";
+      } catch (e) {
+        console.error("Erro ao verificar seguimento:", e);
       }
+    }
 
-      seguirBtn.addEventListener("click", async () => {
-        try {
-          const resposta = await fetch("http://localhost:3000/api/seguidores", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ seguidor_id: seguidorId, seguido_id: seguidoId }),
-          });
-          const resultado = await resposta.json();
-          if (resposta.ok) {
-            seguirBtn.textContent = resultado.mensagem.includes("Deixou") ? "Seguir" : "Seguindo";
+    seguirBtn.addEventListener("click", async () => {
+      try {
+        const resposta = await fetch("http://localhost:3000/api/seguidores", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ seguidor_id: seguidorId, seguido_id: seguidoId }),
+        });
 
-            await carregarPerfil();
-          } else {
-            alert(resultado.erro || "Erro ao seguir/desseguir");
+        const resultado = await resposta.json();
+
+        if (resposta.ok) {
+          const seguindoAgora = !resultado.mensagem.includes("Deixou");
+          seguirBtn.textContent = seguindoAgora ? "Seguindo" : "Seguir";
+
+          await carregarPerfil();
+
+          if (seguindoAgora) {
+            // Envia notificação para o seguido
+            await fetch("http://localhost:3000/api/notificacoes", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                usuario_id: seguidoId,
+                tipo: "seguindo",
+                remetente_id: seguidorId
+              }),
+            });
           }
-        } catch (e) {
-          alert("Erro ao seguir/desseguir");
-          console.error(e);
+        } else {
+          alert(resultado.erro || "Erro ao seguir/desseguir");
         }
-      });
-
-      await carregarPerfil();
-      if (seguidorId && seguidoId && seguidoId !== seguidorId) {
-        await verificarEstado();
+      } catch (e) {
+        alert("Erro ao seguir/desseguir");
+        console.error(e);
       }
     });
-  </script>
+
+    await carregarPerfil();
+    if (seguidorId && seguidoId && seguidoId !== seguidorId) {
+      await verificarEstado();
+    }
+  });
+</script>
 </body>
 </html>

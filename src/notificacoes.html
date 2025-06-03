@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     
-    <!-- Título -->
     <title>MoveON - Notificações</title>
-    
-    <!-- Links -->
-    <link rel="stylesheet" href="../src/css/notificacoes.css">
-    <link rel="stylesheet" href="../src/css/style.css">
 
-    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon">
-    
-    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../src/css/notificacoes.css" />
+    <link rel="stylesheet" href="../src/css/style.css" />
+    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css" />
+    <link href="../src/css/output.css" rel="stylesheet" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon" />
 
-    <!-- Output -->
-    <link href="../src/css/output.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
 
-    <!-- Scripts -->
+    <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
 </head>
 <body>
+
     <!-- Menu -->
-    
     <div class="menu">
-        <img src="../img/logos/logo.png" alt="Logo" class="logo">
+        <img src="../img/logos/logo.png" alt="Logo" class="logo" />
         <ul class="menu-list">
             <li><a href="../index.html"><ion-icon name="home-outline" class="icon"></ion-icon>Página Inicial</a></li>
             <li><a href="../src/criar.html"><ion-icon name="create-outline" class="icon"></ion-icon>Criar</a></li>
@@ -41,10 +38,9 @@
             <li><a href="../src/meu_perfil.html"><ion-icon name="person-circle-outline" class="icon"></ion-icon>Meu Perfil</a></li>
         </ul>
     </div>
-    <div class="separador "></div>
+    <div class="separador"></div>
 
     <!-- Menu Responsivo -->
-
     <div class="menu-responsivo">
         <ul class="menu-list-responsivo">
             <li><a href="../index.html"><ion-icon name="home-outline" class="icon"></ion-icon></a></li>
@@ -60,75 +56,68 @@
     <div class="notificacao-container">
         <h1>Notificações</h1>
         
-        <!-- Notificações inseridas pelo JavaScript -->
+        <div id="notificacoes-lista">
+            <!-- Notificações inseridas pelo JavaScript -->
+        </div>
     </div>
 
     <script type="module">
-    function textoNotificacao(notificacao) {
-    switch (notificacao.tipo) {
-      case 'curtida':
-        if (notificacao.referencia_tipo === 'postagem') {
-          return `${notificacao.nome_usuario_acao} curtiu sua postagem.`;
+        async function carregarNotificacoes() {
+            const lista = document.getElementById('notificacoes-lista');
+            if (!lista) {
+                console.error('Elemento #notificacoes-lista não encontrado no HTML');
+                return;
+            }
+
+            lista.innerHTML = 'Carregando notificações...';
+
+            try {
+                const usuarioId = localStorage.getItem('usuario_id');
+                if (!usuarioId) {
+                    lista.innerHTML = '<p>Faça login para ver notificações.</p>';
+                    return;
+                }
+
+                const resposta = await fetch(`http://localhost:3000/api/notificacoes/${usuarioId}`);
+
+                if (!resposta.ok) throw new Error('Erro ao buscar notificações');
+
+                const notificacoes = await resposta.json();
+
+                if (notificacoes.length === 0) {
+                    lista.innerHTML = '<p>Sem notificações.</p>';
+                    return;
+                }
+
+                lista.innerHTML = '';
+
+                notificacoes.forEach(n => {
+                    const dataFormatada = new Date(n.criado_em).toLocaleString();
+                    const remetente = n.remetente?.nome || 'Alguém';
+
+                    const item = document.createElement('div');
+                    item.classList.add('notificacao');
+
+                    item.innerHTML = `
+                        <div>
+                            <ion-icon name="notifications-outline"></ion-icon>
+                        </div>
+                        <p><strong>${remetente}</strong>: ${n.mensagem}</p>
+                        <small>${dataFormatada}</small>
+                    `;
+
+                    lista.appendChild(item);
+                });
+
+            } catch (erro) {
+                console.error('Erro ao carregar notificações:', erro);
+                lista.innerHTML = '<p>Erro ao carregar notificações.</p>';
+            }
         }
-        break;
-      case 'comentario':
-        if (notificacao.referencia_tipo === 'postagem') {
-          return `${notificacao.nome_usuario_acao} comentou na sua postagem.`;
-        }
-        break;
-      case 'seguido':
-        return `${notificacao.nome_usuario_acao} começou a te seguir.`;
-      case 'mensagem':
-        return `${notificacao.nome_usuario_acao} enviou uma mensagem para você.`;
-    }
-    return `${notificacao.nome_usuario_acao} fez uma ação.`;
-  }
 
-  async function carregarNotificacoes() {
-    const usuario_id = localStorage.getItem('usuario_id');
-
-    if (!usuario_id) {
-      document.querySelector('.notificacao-container').innerHTML = '<p>Você precisa estar logado para ver as notificações.</p>';
-      return;
-    }
-
-    try {
-      const response = await fetch(`http://localhost:3000/api/notificacoes/${usuario_id}`);
-      if (!response.ok) throw new Error('Erro ao buscar notificações');
-
-      const notificacoes = await response.json();
-
-      const container = document.querySelector('.notificacao-container');
-      container.innerHTML = '<h1>Notificações</h1>';
-
-      if (notificacoes.length === 0) {
-        container.innerHTML += '<p>Você não tem notificações.</p>';
-        return;
-      }
-
-      notificacoes.forEach(notif => {
-        const div = document.createElement('div');
-        div.className = 'notificacao flex items-center';
-
-        const perfilLink = `../src/perfil-amigo.html?id=${notif.remetente_id || notif.usuario_acao_id || notif.usuario_id_acao || ''}`;
-
-        div.innerHTML = `
-          <a href="${perfilLink}">
-            <ion-icon name="person-circle-outline"></ion-icon>
-          </a>
-          <p><strong>Usuário:</strong> ${textoNotificacao(notif)}</p>
-          <small>${new Date(notif.criado_em).toLocaleString()}</small>
-        `;
-
-        container.appendChild(div);
-      });
-    } catch (error) {
-      console.error('Erro ao carregar notificações:', error);
-      document.querySelector('.notificacao-container').innerHTML = '<p>Erro ao carregar notificações.</p>';
-    }
-  }
-
-  carregarNotificacoes();
-</script>
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarNotificacoes();
+        });
+    </script>
 </body>
 </html>
