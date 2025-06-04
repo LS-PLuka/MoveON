@@ -3,15 +3,11 @@
 :root {
     /* Fontes */
     --ff-khand: "Raleway", serif;
-
-    /* Cores */
     --cor-primaria: #56AEFF;
     --cor-secundaria: #316697;
     --preto: #000;
     --branco: #fff;
-    
     --background: #262626;
-
     --botao: #f0f0f0;
     --botao-hover: #ddd;
 }
@@ -197,13 +193,14 @@ body {
     transform: scale(1.05);
 }
 
+/* Ajuste das imagens dos cards */
 .card-img {
-    width: 100%; 
-    height: auto; 
-    display: block; 
+    width: 100%;
+    height: 600px;      /* Aumenta a altura, deixando os cards visualmente maiores e mais imponentes */
+    object-fit: cover;  /* Mantém a proporção sem distorcer, cortando se necessário */
+    display: block;
     cursor: pointer;
 }
-
 .card-comunidade .card-title {
     position: absolute;
     bottom: 0;
@@ -221,6 +218,7 @@ body {
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease;
     transform: translateY(20px);
+    background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
 }
 
 .card-comunidade:hover .card-title {
@@ -238,75 +236,188 @@ body {
     opacity: 1;
 }
 
-/* Media Queries */
+/* Zoom-in animado nos cards */
+.card-comunidade {
+    background-color: var(--botao);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.25s cubic-bezier(.21,1.02,.73,1.01), background-color 0.3s;
+    position: relative;
+    cursor: pointer;
+}
+.card-comunidade:hover {
+    background-color: var(--botao-hover);
+    transform: scale(1);
+}
+.card-img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(.21,1.02,.73,1.01);
+}
+.card-comunidade:hover .card-img {
+    transform: scale(1.07);
+}
 
-/* Celulares pequenos */
+/* ...seu CSS anterior permanece igual até a seção MODAL... */
+
+/* ========== MODAL MODERNO ========== */
+.modal-comunidade {
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    left: 0; top: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.7);
+    align-items: center;
+    justify-content: center;
+}
+.modal-comunidade.show {
+    display: flex;
+    animation: fadeInBg 0.3s;
+}
+@keyframes fadeInBg { from { opacity:0; } to { opacity:1; } }
+
+.modal-content-modern {
+    display: flex;
+    max-width: 900px;
+    width: 92vw;
+    min-height: 420px;
+    background: none;
+    border-radius: 22px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.42);
+    position: relative;
+    overflow: hidden;
+    animation: modalZoomIn 0.24s cubic-bezier(.17,.67,.75,1.32);
+}
+@keyframes modalZoomIn { from { transform:scale(.97); opacity:0; } to { transform:scale(1); opacity:1; } }
+
+.close-modal {
+    position: absolute;
+    top: 18px;
+    right: 28px;
+    font-size: 2.5rem;
+    color: var(--cor-primaria);
+    cursor: pointer;
+    z-index: 2;
+    text-shadow: 0 2px 16px #222c;
+    transition: color .2s;
+}
+.close-modal:hover {
+    color: var(--cor-secundaria);
+}
+
+/* Lado da imagem com gradiente para o texto */
+.modal-img-modern {
+    position: relative;
+    width: 430px;
+    min-width: 210px;
+    height: auto;
+    background: #222;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+.modal-img-modern img {
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    left: 0; top: 0;
+    z-index: 1;
+}
+.modal-img-gradient-modern {
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Lado do texto com gradiente vindo da imagem */
+.modal-info-modern {
+    flex: 1 1 0;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 56px 44px 44px 44px;
+    background: white;
+    position: relative;
+}
+.modal-info-modern h2 {
+    font-size: 2.4rem;
+    font-family: var(--ff-khand);
+    color: var(--cor-primaria);
+    margin: 0 0 18px 0;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.modal-info-modern p {
+    font-size: 1.17rem;
+    color: #222;
+    line-height: 1.48;
+    margin-bottom: 32px;
+}
+.btn-ingressar {
+    background: var(--cor-primaria);
+    color: #fff;
+    font-family: var(--ff-khand);
+    font-size: 1.15rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 16px 0;
+    transition: background 0.22s;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(44,62,80,0.07);
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.btn-ingressar:hover {
+    background: var(--cor-secundaria);
+}
+
+@media (max-width: 900px) {
+    .modal-content-modern {
+        flex-direction: column;
+        max-width: 98vw;
+        min-height: 0;
+    }
+    .modal-img-modern {
+        width: 100%;
+        min-width: 0;
+        height: 210px;
+    }
+    .modal-img-modern img {
+        min-height: 210px;
+        position: static;
+    }
+    .modal-info-modern {
+        max-width: 100vw;
+        padding: 30px 16px 24px 16px;
+        background: linear-gradient(180deg, rgba(38,38,38,0.0) 0%,rgba(240,240,240,0.98) 40%, #f0f0f0 100%);
+    }
+}
 @media (max-width: 479px) {
-    .menu,
-    .separador {
-        display: none;
+    .modal-content-modern {
+        min-width: 0;
+        width: 98vw;
+        padding: 0;
     }
-
-    .menu-responsivo {
-        display: flex;
+    .modal-img-modern {
+        height: 110px;
     }
-
-    .search {
-        width: 100%;
-        margin: 20px auto;
-        margin-left: 0;
+    .modal-img-modern img {
+        min-height: 110px;
     }
-
-    .comunidade-container {
-        margin-left: 0;
-        padding: 10px;
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-  
-/* Celulares e tablets pequenos */
-@media (min-width: 480px) and (max-width: 767px) {
-    .menu,
-    .separador {
-        display: none;
-    }
-
-    .menu-responsivo {
-        display: flex;
-    }
-
-    .search {
-        width: 100%;
-        margin: 20px auto;
-        margin-left: 0;
-    }
-
-    .comunidade-container {
-        margin-left: 0;
-        padding: 10px;
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-  
-/* Tablets */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .menu,
-    .separador {
-        display: none;
-    }
-
-    .menu-responsivo {
-        display: flex;
-    }
-
-    .search {
-        width: 100%;
-        margin: 20px auto;
-        margin-left: 0;
-    }
-
-    .comunidade-container {
-        margin-left: 0;
-        padding: 10px;
+    .modal-info-modern {
+        padding: 12px 5px 15px 5px;
     }
 }

@@ -4,31 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Título -->
     <title>MoveON - Comunidades</title>
-    
-    <!-- Links -->
     <link rel="stylesheet" href="css/comunidade.css">
-
     <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon">
-    
     <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-    <!-- Output -->
     <link href="../src/css/output.css" rel="stylesheet">
 
-    <!-- Scripts -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
 </head>
-    <body>
+<body>
     <!-- Menu -->
-
     <div class="menu">
         <img src="../img/logos/logo.png" alt="Logo" class="logo">
         <ul class="menu-list">
@@ -43,7 +32,6 @@
     <div class="separador"></div>
 
     <!-- Menu Responsivo -->
-
     <div class="menu-responsivo">
         <ul class="menu-list-responsivo">
             <li><a href="../index.html"><ion-icon name="home-outline" class="icon"></ion-icon></a></li>
@@ -56,7 +44,6 @@
     </div>
 
     <!-- Comunidade -->
-
     <div class="search">
         <label for="searchInput">
             <ion-icon name="search-outline" class="icon"></ion-icon>
@@ -65,50 +52,99 @@
     </div>
 
     <div class="comunidade-container">
-        <div class="card-comunidade">
-            <img src="../img/imagens/basquete.jpg" alt="Comunidade 1" class="card-img">
-            <div class="card-title">[Nome da Comunidade]</div>
+        <div class="card-comunidade" data-nome="Basquete" data-img="../img/imagens/basquete.jpg"
+            data-desc="Para amantes do basquete, treinos, jogos e eventos para todos os níveis.">
+            <img src="../img/imagens/basquete.jpg" alt="Basqueteiros MoveON" class="card-img">
+            <div class="card-title">Basquete</div>
         </div>
-
-        <div class="card-comunidade">
-            <img src="../img/imagens/fut-comunidade.jpg" alt="Comunidade 2" class="card-img">
-            <div class="card-title">[Nome da Comunidade]</div>
+        <div class="card-comunidade" data-nome="Futebol" data-img="../img/imagens/fut-comunidade.jpg"
+            data-desc="Junte-se para peladas, amistosos e campeonatos de futebol. Diversão garantida!">
+            <img src="../img/imagens/fut-comunidade.jpg" alt="Futebol na Veia" class="card-img">
+            <div class="card-title">Futebol</div>
         </div>
-
-        <div class="card-comunidade">
-            <img src="../img/imagens/volei.jpg" alt="Comunidade 3" class="card-img">
-            <div class="card-title">[Nome da Comunidade]</div>
+        <div class="card-comunidade" data-nome="Vôlei" data-img="../img/imagens/volei.jpg"
+            data-desc="Comunidade para quem ama vôlei de quadra ou de praia. Bora jogar juntos!">
+            <img src="../img/imagens/volei.jpg" alt="Vôlei Galera" class="card-img">
+            <div class="card-title">Vôlei</div>
         </div>
-
-        <div class="card-comunidade">
-            <img src="../img/imagens/tennis.jpg" alt="Comunidade 4" class="card-img">
-            <div class="card-title">[Nome da Comunidade]</div>
+        <div class="card-comunidade" data-nome="Tênis" data-img="../img/imagens/tennis.jpg"
+            data-desc="Desafios, aulas e encontros para praticar tênis em todos os níveis.">
+            <img src="../img/imagens/tennis.jpg" alt="Tênis & Raquetes" class="card-img">
+            <div class="card-title">Tênis</div>
         </div>
-
-        <div class="card-comunidade">
-            <img src="../img/imagens/natacao.jpg" alt="Comunidade 5" class="card-img">
-            <div class="card-title">[Nome da Comunidade]</div>
+        <div class="card-comunidade" data-nome="Natação" data-img="../img/imagens/natacao.jpg"
+            data-desc="Para quem quer melhorar a técnica, nadar em grupo ou competir. Venha nadar!">
+            <img src="../img/imagens/natacao.jpg" alt="Nadadores MoveON" class="card-img">
+            <div class="card-title">Natação</div>
         </div>
-
-        <div class="card-comunidade">
-            <img src="../img/imagens/bike.jpg" alt="Comunidade 6" class="card-img">
-            <div class="card-title">[Nome da Comunidade]</div>
+        <div class="card-comunidade" data-nome="Pedal" data-img="../img/imagens/bike.jpg"
+            data-desc="Passeios, trilhas e pedaladas urbanas para todos que amam bicicleta.">
+            <img src="../img/imagens/bike.jpg" alt="Pedal Livre" class="card-img">
+            <div class="card-title">Pedal</div>
         </div>
-
-        <div class="card-comunidade">
-            <img src="../img/imagens/boxe.jpg" alt="Comunidade 7" class="card-img">
-            <div class="card-title">[Nome da Comunidade]</div>
+        <div class="card-comunidade" data-nome="Boxe" data-img="../img/imagens/boxe.jpg"
+            data-desc="Treinos, sparrings e técnicas de boxe para iniciantes e avançados.">
+            <img src="../img/imagens/boxe.jpg" alt="Boxe Forte" class="card-img">
+            <div class="card-title">Boxe</div>
         </div>
-
-        <div class="card-comunidade">
-            <img src="../img/imagens/muaythai.jpg" alt="Comunidade 8" class="card-img">
-            <div class="card-title">[Nome da Comunidade]</div>
+        <div class="card-comunidade" data-nome="Muay-Thai" data-img="../img/imagens/muaythai.jpg"
+            data-desc="Venha treinar Muay-Thai, melhorar o condicionamento e fazer amigos!">
+            <img src="../img/imagens/muaythai.jpg" alt="Muay Thai Power" class="card-img">
+            <div class="card-title">Muay-Thai</div>
         </div>
-
-        <div class="card-comunidade">
-            <img src="../img/imagens/gym.jpg" alt="Comunidade 9" class="card-img">
-            <div class="card-title">[Nome da Comunidade]</div>
+        <div class="card-comunidade" data-nome="GYM" data-img="../img/imagens/gym.jpg"
+            data-desc="Comunidade de academia para treinar junto, trocar dicas e motivação.">
+            <img src="../img/imagens/gym.jpg" alt="Movimente-se Gym" class="card-img">
+            <div class="card-title">GYM</div>
         </div>
     </div>
+
+   <!-- Modal moderno e funcional -->
+<div class="modal-comunidade" id="modalComunidade">
+    <div class="modal-content-modern">
+        <button class="close-modal" id="closeModal" aria-label="Fechar modal">&times;</button>
+        <div class="modal-img-modern">
+            <img id="modalImg" src="" alt="Comunidade">
+            <div class="modal-img-gradient-modern"></div>
+        </div>
+        <div class="modal-info-modern">
+            <h2 id="modalNome"></h2>
+            <p id="modalDesc"></p>
+            <button class="btn-ingressar">Ingressar na comunidade</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Abrir modal com dados da comunidade
+    document.querySelectorAll('.card-comunidade').forEach(card => {
+        card.addEventListener('click', function() {
+            // Pega a imagem que está dentro do card (a tag img com classe card-img)
+            const cardImage = this.querySelector('.card-img');
+            
+            // Carrega imagem, nome e descrição
+            document.getElementById('modalImg').src = cardImage.src;
+            document.getElementById('modalImg').alt = card.getAttribute('data-nome');
+            document.getElementById('modalNome').textContent = card.getAttribute('data-nome');
+            document.getElementById('modalDesc').textContent = card.getAttribute('data-desc');
+            document.getElementById('modalComunidade').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Fechar modal
+    document.getElementById('closeModal').onclick = function() {
+        document.getElementById('modalComunidade').classList.remove('show');
+        document.body.style.overflow = '';
+    };
+
+    // Fechar ao clicar fora do modal
+    document.getElementById('modalComunidade').onclick = function(e) {
+        if(e.target === this) {
+            this.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    };
+</script>
 </body>
 </html>
