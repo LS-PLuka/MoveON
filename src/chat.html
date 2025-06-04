@@ -1,128 +1,167 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MoveON - Chat</title>
-    <link rel="stylesheet" href="../src/css/chat.css" />
-    <link rel="stylesheet" href="../src/css/style.css" />
-    <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link href="../src/css/output.css" rel="stylesheet" />
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoveON - Chat</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../src/css/chat.css" />
+  <link rel="stylesheet" href="../src/css/style.css" />
+  <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css" />
+  <link rel="stylesheet" href="../src/css/output.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon" />
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+
+  <!-- Ícones -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="chat-header">
-            <a href="amigos.html" class="back-btn-header" aria-label="Voltar">
-                <ion-icon name="arrow-back-outline"></ion-icon>
-                Voltar
-            </a>
-            <h2 id="friend-name">Carregando...</h2>
-        </div>
-        <div class="chat-messages"></div>
-        <form class="chat-input" autocomplete="off">
-            <input type="text" placeholder="Digite sua mensagem..." aria-label="Mensagem" />
-            <button type="submit" aria-label="Enviar mensagem">
-                <ion-icon name="send-outline"></ion-icon>
-                Enviar
-            </button>
-        </form>
+  <div class="chat-container">
+    <div class="chat-header">
+      <a href="amigos.html" class="back-btn-header" aria-label="Voltar para a lista de amigos">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        Voltar
+      </a>
+      <h2 id="friend-name">Carregando...</h2>
     </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-  const params = new URLSearchParams(window.location.search);
-  const amigoId = params.get('amigo_id');
-  const amigoNome = params.get('amigo_nome');
-  const usuarioId = localStorage.getItem('usuario_id');
+    <div class="chat-messages" aria-live="polite"></div>
 
-  if (!amigoId || !usuarioId) {
-    alert('Dados do chat inválidos. Volte e tente novamente.');
-    window.location.href = 'amigos.html';
-    return;
-  }
+    <form class="chat-input" autocomplete="off" aria-label="Enviar mensagem">
+      <input type="text" placeholder="Digite sua mensagem..." aria-label="Campo de mensagem" autofocus />
+      <button type="submit" aria-label="Botão de envio">
+        <ion-icon name="send-outline"></ion-icon>
+        Enviar
+      </button>
+    </form>
+  </div>
 
-  document.getElementById('friend-name').textContent = decodeURIComponent(amigoNome);
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      const amigoId = params.get('amigo_id');
+      const amigoNome = params.get('amigo_nome');
+      const usuarioId = localStorage.getItem('usuario_id');
 
-  const mensagensContainer = document.querySelector('.chat-messages');
-  const inputMensagem = document.querySelector('.chat-input input');
+      if (!amigoId || !usuarioId) {
+        alert('Dados do chat inválidos. Volte e tente novamente.');
+        window.location.href = 'amigos.html';
+        return;
+      }
 
-  function formatarHora(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-  }
+      document.getElementById('friend-name').textContent = decodeURIComponent(amigoNome);
 
-  async function carregarMensagens() {
-    try {
-      const response = await fetch(`http://localhost:3000/api/mensagens?usuario1=${usuarioId}&usuario2=${amigoId}`);
-      if (!response.ok) throw new Error('Erro ao carregar mensagens');
-      const mensagens = await response.json();
+      const mensagensContainer = document.querySelector('.chat-messages');
+      const inputMensagem = document.querySelector('.chat-input input');
 
-      mensagensContainer.innerHTML = '';
+      function formatarHora(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
 
-      mensagens.forEach(msg => {
-        const div = document.createElement('div');
-        div.classList.add('message');
-        if (msg.remetente_id == usuarioId) {
-          div.classList.add('sent');
-        } else {
-          div.classList.add('received');
+      async function carregarMensagens() {
+        try {
+          const response = await fetch(`http://localhost:3000/api/mensagens?usuario1=${usuarioId}&usuario2=${amigoId}`);
+          if (!response.ok) throw new Error('Erro ao carregar mensagens');
+
+          const mensagens = await response.json();
+          mensagensContainer.innerHTML = '';
+
+          mensagens.forEach(msg => {
+            const div = document.createElement('div');
+            div.classList.add('message', msg.remetente_id == usuarioId ? 'sent' : 'received');
+
+            div.innerHTML = `
+              <div class="bubble" data-id="${msg.id}" data-conteudo="${msg.conteudo}">
+                <p>${msg.conteudo}</p>
+                <span class="timestamp">${formatarHora(msg.criado_em)}</span>
+              </div>
+            `;
+
+            // Adiciona evento de clique apenas se a mensagem for do usuário atual
+            if (msg.remetente_id == usuarioId) {
+              div.querySelector('.bubble').addEventListener('click', async () => {
+                const escolha = confirm('Deseja excluir esta mensagem?\nClicando em "Cancelar" você poderá editar a mensagem.');
+                const id = msg.id;
+
+                if (escolha) {
+                  const res = await fetch(`http://localhost:3000/api/mensagens/${id}`, {
+                    method: 'DELETE',
+                  });
+                  if (res.ok) {
+                    await carregarMensagens();
+                  } else {
+                    alert('Erro ao excluir mensagem.');
+                  }
+                } else {
+                  const novoConteudo = prompt('Editar mensagem:', msg.conteudo);
+                  if (novoConteudo !== null && novoConteudo.trim() !== '') {
+                    const res = await fetch(`http://localhost:3000/api/mensagens/${id}`, {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ conteudo: novoConteudo })
+                    });
+
+                    if (res.ok) {
+                      await carregarMensagens();
+                    } else {
+                      alert('Erro ao editar mensagem.');
+                    }
+                  }
+                }
+              });
+            }
+
+            mensagensContainer.appendChild(div);
+          });
+
+          mensagensContainer.scrollTop = mensagensContainer.scrollHeight;
+        } catch (err) {
+          console.error(err);
+          mensagensContainer.innerHTML = '<p>Erro ao carregar mensagens.</p>';
         }
+      }
 
-        div.innerHTML = `
-          <div class="bubble">
-            <p>${msg.conteudo}</p>
-            <span class="timestamp">${formatarHora(msg.criado_em)}</span>
-          </div>
-        `;
-        mensagensContainer.appendChild(div);
-      });
-
-      mensagensContainer.scrollTop = mensagensContainer.scrollHeight;
-    } catch (err) {
-      console.error(err);
-      mensagensContainer.innerHTML = '<p>Erro ao carregar mensagens.</p>';
-    }
-  }
-
-  await carregarMensagens();
-
-  document.querySelector('.chat-input').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const conteudo = inputMensagem.value.trim();
-    if (!conteudo) return;
-
-    try {
-      const response = await fetch('http://localhost:3000/api/mensagens', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          remetente_id: usuarioId,
-          destinatario_id: amigoId,
-          conteudo
-        }),
-      });
-
-      if (!response.ok) throw new Error('Erro ao enviar mensagem');
-
-      inputMensagem.value = '';
+      // Carrega mensagens inicialmente
       await carregarMensagens();
-    } catch (err) {
-      alert('Erro ao enviar mensagem, tente novamente.');
-      console.error(err);
-    }
-  });
 
-  setInterval(carregarMensagens, 5000);
-});
-</script>
+      document.querySelector('.chat-input').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const conteudo = inputMensagem.value.trim();
+        if (!conteudo) return;
+
+        try {
+          const response = await fetch('http://localhost:3000/api/mensagens', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              remetente_id: usuarioId,
+              destinatario_id: amigoId,
+              conteudo
+            }),
+          });
+
+          if (!response.ok) throw new Error('Erro ao enviar mensagem');
+
+          inputMensagem.value = '';
+          await carregarMensagens();
+        } catch (err) {
+          alert('Erro ao enviar mensagem, tente novamente.');
+          console.error(err);
+        }
+      });
+
+      // Atualiza mensagens a cada 5 segundos
+      setInterval(carregarMensagens, 5000);
+    });
+  </script>
 </body>
 </html>
