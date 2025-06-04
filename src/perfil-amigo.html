@@ -56,7 +56,6 @@
     </div>
   </div>
 
-  <!-- ... cabeçalho HTML igual ... -->
 <script>
   document.addEventListener("DOMContentLoaded", async () => {
     const seguirBtn = document.getElementById("seguir-btn");
@@ -66,6 +65,12 @@
 
     const seguidoId = new URLSearchParams(window.location.search).get("id");
     const seguidorId = localStorage.getItem("usuario_id");
+
+    if (!seguidorId) {
+      alert("Você precisa estar logado.");
+      window.location.href = "../login.html";
+      return;
+    }
 
     if (!seguidoId) {
       alert("Usuário inválido.");
@@ -145,7 +150,8 @@
               body: JSON.stringify({
                 usuario_id: seguidoId,
                 tipo: "seguindo",
-                remetente_id: seguidorId
+                remetente_id: seguidorId,
+                referencia_id: 0
               }),
             });
           }

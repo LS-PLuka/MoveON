@@ -93,7 +93,7 @@
 
                 notificacoes.forEach(n => {
                     const dataFormatada = new Date(n.criado_em).toLocaleString();
-                    const remetente = n.remetente?.nome || 'Alguém';
+                    const remetente = n.remetente?.nome || '';
 
                     const item = document.createElement('div');
                     item.classList.add('notificacao');
@@ -102,7 +102,7 @@
                         <div>
                             <ion-icon name="notifications-outline"></ion-icon>
                         </div>
-                        <p><strong>${remetente}</strong>: ${n.mensagem}</p>
+                        <p>${n.mensagem}</p>
                         <small>${dataFormatada}</small>
                     `;
 

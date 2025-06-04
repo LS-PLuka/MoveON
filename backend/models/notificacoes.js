@@ -1,21 +1,33 @@
 import db from '../config/database.js';
 
+/**
+ * @param {number} usuario_id
+ * @param {string} tipo
+ * @param {number|null} referencia_id
+ * @param {number|null} remetente_id
+ * @returns {Promise<number>}
+ */
 async function criarNotificacao(usuario_id, tipo, referencia_id = null, remetente_id = null) {
   const [remetente] = await db.execute('SELECT nome FROM usuarios WHERE id = ?', [remetente_id]);
   const nomeRemetente = remetente[0]?.nome || 'Um usuário';
 
   let mensagem = '';
 
-  if (tipo === 'curtida') {
-    mensagem = `${nomeRemetente} curtiu sua postagem.`;
-  } else if (tipo === 'comentario') {
-    mensagem = `${nomeRemetente} comentou em sua postagem.`;
-  } else if (tipo === 'seguindo') {
-    mensagem = `${nomeRemetente} começou a te seguir.`;
-  } else if (tipo === 'mensagem') {
-    mensagem = `${nomeRemetente} enviou uma mensagem direta.`;
-  } else {
-    mensagem = `${nomeRemetente} fez uma ação.`;
+  switch (tipo) {
+    case 'curtida':
+      mensagem = `${nomeRemetente} curtiu sua postagem.`;
+      break;
+    case 'comentario':
+      mensagem = `${nomeRemetente} comentou em sua postagem.`;
+      break;
+    case 'seguindo':
+      mensagem = `${nomeRemetente} começou a te seguir.`;
+      break;
+    case 'mensagem':
+      mensagem = `${nomeRemetente} enviou uma mensagem direta.`;
+      break;
+    default:
+      mensagem = `${nomeRemetente} fez uma ação.`;
   }
 
   const sql = `
@@ -26,28 +38,23 @@ async function criarNotificacao(usuario_id, tipo, referencia_id = null, remetent
   return result.insertId;
 }
 
+/**
+ * @param {number} usuario_id
+ * @returns {Promise<Array>}
+ */
 async function buscarNotificacoes(usuario_id) {
   const sql = `
-    SELECT n.id, n.tipo, n.referencia_id, n.mensagem, n.criado_em,
-           u.id AS remetente_id, u.nome AS remetente_nome
+    SELECT n.id, n.tipo, n.referencia_id, n.mensagem, n.criado_em, u.nome AS remetente_nome
     FROM notificacoes n
-    LEFT JOIN usuarios u ON u.id = n.remetente_id
+    LEFT JOIN usuarios u ON n.remetente_id = u.id
     WHERE n.usuario_id = ?
     ORDER BY n.criado_em DESC
   `;
   const [rows] = await db.execute(sql, [usuario_id]);
-
-  return rows.map(n => ({
-    id: n.id,
-    tipo: n.tipo,
-    referencia_id: n.referencia_id,
-    criado_em: n.criado_em,
-    mensagem: n.mensagem,
-    remetente: {
-      id: n.remetente_id,
-      nome: n.remetente_nome || 'Sistema'
-    }
-  }));
+  return rows;
 }
 
-export { criarNotificacao, buscarNotificacoes };
+export {
+  criarNotificacao,
+  buscarNotificacoes,
+};

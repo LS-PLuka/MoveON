@@ -4,11 +4,15 @@ import {
 } from '../models/notificacoes.js';
 
 export async function novaNotificacao(req, res) {
-  const { usuario_id, tipo, referencia_id, remetente_id } = req.body;
-
   try {
+    let { usuario_id, tipo, referencia_id, remetente_id } = req.body;
+
     if (!usuario_id || !tipo || !remetente_id) {
       return res.status(400).json({ erro: 'Campos obrigatórios ausentes.' });
+    }
+
+    if (!referencia_id) {
+      referencia_id = 0;
     }
 
     const id = await criarNotificacao(usuario_id, tipo, referencia_id, remetente_id);
@@ -20,9 +24,9 @@ export async function novaNotificacao(req, res) {
 }
 
 export async function listarNotificacoes(req, res) {
-  const { usuario_id } = req.params;
-
   try {
+    const { usuario_id } = req.params;
+
     if (!usuario_id) {
       return res.status(400).json({ erro: 'ID do usuário é obrigatório.' });
     }
