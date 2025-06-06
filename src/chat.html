@@ -11,15 +11,11 @@
   <link rel="stylesheet" href="../src/css/Josh.Reset/Reset.css" />
   <link rel="stylesheet" href="../src/css/output.css" />
 
-  <!-- Favicon -->
   <link rel="icon" href="../img/logos/favicon.ico" type="image/x-icon" />
-
-  <!-- Fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Raleway:wght@100..900&display=swap" rel="stylesheet" />
 
-  <!-- Ícones -->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
@@ -44,6 +40,16 @@
     </form>
   </div>
 
+  <div id="overlay" class="overlay" style="display:none;"></div>
+  <div id="editPopup" class="edit-popup" style="display:none;">
+    <textarea id="editMessageInput"></textarea>
+    <div class="buttons">
+      <button class="delete-btn">Excluir</button>
+      <button class="cancel-btn">Cancelar</button>
+      <button class="save-btn">Salvar</button>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const params = new URLSearchParams(window.location.search);
@@ -62,10 +68,66 @@
       const mensagensContainer = document.querySelector('.chat-messages');
       const inputMensagem = document.querySelector('.chat-input input');
 
-      function formatarHora(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const editPopup = document.getElementById('editPopup');
+      const overlay = document.getElementById('overlay');
+      const editMessageInput = document.getElementById('editMessageInput');
+      const saveBtn = editPopup.querySelector('.save-btn');
+      const cancelBtn = editPopup.querySelector('.cancel-btn');
+      const deleteBtn = editPopup.querySelector('.delete-btn');
+
+      let mensagemIdSelecionada = null;
+
+      function abrirPopupEditar(conteudo, id) {
+        mensagemIdSelecionada = id;
+        editMessageInput.value = conteudo;
+        editPopup.style.display = 'block';
+        overlay.style.display = 'block';
       }
+
+      function fecharPopup() {
+        editPopup.style.display = 'none';
+        overlay.style.display = 'none';
+        mensagemIdSelecionada = null;
+      }
+
+      saveBtn.addEventListener('click', async () => {
+        const novoConteudo = editMessageInput.value.trim();
+        if (!mensagemIdSelecionada || novoConteudo === '') return;
+
+        const res = await fetch(`http://localhost:3000/api/mensagens/${mensagemIdSelecionada}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ conteudo: novoConteudo })
+        });
+
+        if (res.ok) {
+          fecharPopup();
+          await carregarMensagens();
+        } else {
+          alert('Erro ao editar mensagem.');
+        }
+      });
+
+      cancelBtn.addEventListener('click', () => {
+        fecharPopup();
+      });
+
+      deleteBtn.addEventListener('click', async () => {
+        if (!mensagemIdSelecionada) return;
+        const confirmacao = confirm('Tem certeza que deseja excluir esta mensagem?');
+        if (!confirmacao) return;
+
+        const res = await fetch(`http://localhost:3000/api/mensagens/${mensagemIdSelecionada}`, {
+          method: 'DELETE',
+        });
+
+        if (res.ok) {
+          fecharPopup();
+          await carregarMensagens();
+        } else {
+          alert('Erro ao excluir mensagem.');
+        }
+      });
 
       async function carregarMensagens() {
         try {
@@ -86,37 +148,9 @@
               </div>
             `;
 
-            // Adiciona evento de clique apenas se a mensagem for do usuário atual
             if (msg.remetente_id == usuarioId) {
-              div.querySelector('.bubble').addEventListener('click', async () => {
-                const escolha = confirm('Deseja excluir esta mensagem?\nClicando em "Cancelar" você poderá editar a mensagem.');
-                const id = msg.id;
-
-                if (escolha) {
-                  const res = await fetch(`http://localhost:3000/api/mensagens/${id}`, {
-                    method: 'DELETE',
-                  });
-                  if (res.ok) {
-                    await carregarMensagens();
-                  } else {
-                    alert('Erro ao excluir mensagem.');
-                  }
-                } else {
-                  const novoConteudo = prompt('Editar mensagem:', msg.conteudo);
-                  if (novoConteudo !== null && novoConteudo.trim() !== '') {
-                    const res = await fetch(`http://localhost:3000/api/mensagens/${id}`, {
-                      method: 'PUT',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ conteudo: novoConteudo })
-                    });
-
-                    if (res.ok) {
-                      await carregarMensagens();
-                    } else {
-                      alert('Erro ao editar mensagem.');
-                    }
-                  }
-                }
+              div.querySelector('.bubble').addEventListener('click', () => {
+                abrirPopupEditar(msg.conteudo, msg.id);
               });
             }
 
@@ -130,7 +164,11 @@
         }
       }
 
-      // Carrega mensagens inicialmente
+      function formatarHora(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+
       await carregarMensagens();
 
       document.querySelector('.chat-input').addEventListener('submit', async (e) => {
@@ -159,7 +197,6 @@
         }
       });
 
-      // Atualiza mensagens a cada 5 segundos
       setInterval(carregarMensagens, 5000);
     });
   </script>

@@ -212,6 +212,68 @@ body, html {
     transform: translateY(-1.5px) scale(1.07);
 }
 
+/* Excluir / Editar */
+
+.edit-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--cor-secundaria);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.edit-popup textarea {
+    width: 100%;
+    height: 80px;
+    padding: 8px;
+    margin-bottom: 10px;
+    resize: none;
+    font-size: 14px;
+}
+
+.edit-popup .buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.edit-popup button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-popup .cancel-btn {
+    background-color: #ccc;
+}
+
+.edit-popup .save-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.edit-popup .delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    margin-right: auto;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
+}
+
 /* Responsivo para tablets e mobile */
 @media (max-width: 1200px) {
     .chat-messages, .chat-input {
