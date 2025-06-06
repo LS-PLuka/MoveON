@@ -8,7 +8,7 @@
 
 MoveON é uma rede social que permite aos usuários compartilhar suas atividades físicas, interagir com outros atletas, seguir pessoas, enviar mensagens diretas e participar de comunidades.
 
-## ✨ Funcionalidades
+## ⚙️ Funcionalidades
 
 - Cadastro, login e perfil de usuário  
 - Postagens com texto e imagens  
@@ -48,7 +48,6 @@ MoveON é uma rede social que permite aos usuários compartilhar suas atividades
 ---
 
 ## 👥 Contribuições da Equipe
-
 ### 🎨 Design  
 - Pedro Luka  
 - Gabriel Muniz  
