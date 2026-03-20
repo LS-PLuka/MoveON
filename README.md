@@ -1,73 +1,61 @@
 # MoveON
 
-> Rede social focada em atividades físicas e interação entre amigos, com funcionalidades de postagens, comentários, curtidas e chat em tempo real.
+Rede social voltada para atividades físicas — compartilhe treinos, interaja com amigos e acompanhe sua comunidade em tempo real.
 
 ---
 
-## 📌 Sobre
+## Sobre
 
-MoveON é uma rede social que permite aos usuários compartilhar suas atividades físicas, interagir com outros atletas, seguir pessoas, enviar mensagens diretas e participar de comunidades.
+MoveON é uma plataforma social onde usuários podem registrar e compartilhar atividades físicas, seguir outros atletas, trocar mensagens e participar de comunidades temáticas.
 
-## ⚙️ Funcionalidades
+## Funcionalidades
 
-- Cadastro, login e perfil de usuário  
-- Postagens com texto e imagens  
-- Curtidas e comentários em postagens  
-- Sistema de seguidores (seguir/deixar de seguir)  
-- Mensagens diretas (chat)  
-- Comunidades temáticas (Seção estática, sem funcionalidades) 
-- Sistema de notificações  
-- Feed com atualizações em tempo real  
+- Cadastro, login e perfil de usuário
+- Postagens com texto e imagens
+- Curtidas, comentários e sistema de seguidores
+- Mensagens diretas em tempo real
+- Feed com atualizações ao vivo
+- Notificações
+- Comunidades temáticas *(seção estática)*
 
-## 🛠️ Tecnologias
+## Tecnologias
 
-- Frontend: HTML5, CSS3 (puro), JavaScript  
-- Backend: Node.js (ES Modules)  
-- Banco de dados: MySQL  
-- API RESTful para comunicação entre frontend e backend  
+| Camada | Tecnologias |
+|---|---|
+| Frontend | HTML5, CSS3, JavaScript |
+| Backend | Node.js (ES Modules), Express |
+| Banco de dados | MySQL, Sequelize |
+| Infra/Dev | Nodemon, Sucrase, ESLint, dotenv |
 
-## 🧩 Dependências Utilizadas
+## Como rodar o projeto
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/moveon.git
+cd moveon
 
-### Dependências principais:
-- **body-parser**: ^2.2.0 — Middleware para lidar com dados no corpo das requisições.  
-- **cors**: ^2.8.5 — Permite requisições entre diferentes origens (Cross-Origin Resource Sharing).  
-- **dotenv**: ^16.5.0 — Carrega variáveis de ambiente de um arquivo `.env`.  
-- **express**: ^5.1.0 — Framework web para Node.js.  
-- **multer**: ^2.0.0 — Middleware para upload de arquivos.  
-- **mysql2**: ^3.14.1 — Cliente MySQL para Node.js, compatível com `sequelize`.  
-- **sequelize**: ^6.37.7 — ORM para interação com o banco de dados.  
+# Instale as dependências
+npm install
 
-### Dependências de desenvolvimento:
-- **@eslint/js**: ^9.27.0 — Regras básicas de linting JavaScript.  
-- **eslint**: ^9.27.0 — Ferramenta para análise estática de código.  
-- **globals**: ^16.1.0 — Conjunto de variáveis globais para diferentes ambientes.  
-- **nodemon**: ^3.1.10 — Reinicia automaticamente o servidor ao salvar arquivos.  
-- **sequelize-cli**: ^6.6.3 — CLI para gerenciamento de models, migrations e seeders com Sequelize.  
-- **sucrase**: ^3.35.0 — Compilador rápido para usar ES Modules e JSX no Node.js.  
+# Configure as variáveis de ambiente
+cp .env.example .env
 
----
+# Execute as migrations
+npx sequelize db:migrate
 
-## 👥 Contribuições da Equipe
-### 🎨 Design  
-- Pedro Luka  
-- Gabriel Muniz  
-- Pedro Meira  
-- Thiago Godoy  
-- Pablo  
+# Inicie o servidor
+npm run dev
+```
 
-### 💻 Frontend  
-- Pedro Luka  
-- Pedro Meira  
-- Thiago Godoy  
+## Equipe
 
-### 🧠 Backend  
-- Pedro Luka  
+| Membro | Área |
+|---|---|
+| Pedro Luka | Design, Frontend, Backend, Banco de dados |
+| Pedro Meira | Design, Frontend |
+| Thiago Godoy | Design, Frontend |
+| Gabriel Muniz | Design |
+| Pablo | Design |
 
-### 🗃️ Banco de Dados  
-- Pedro Luka  
+## Licença
 
----
-
-## 📜 Licença
-
-Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](./LICENSE) para mais detalhes.
+Distribuído sob a licença MIT. Veja [`LICENSE`](./LICENSE) para mais detalhes.
